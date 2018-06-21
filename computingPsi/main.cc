@@ -20,7 +20,7 @@ long double psi(uint64_t);
 long double S1(uint64_t, uint64_t);
 long double S2(uint64_t, uint64_t);
 long double S3(uint64_t, uint64_t);
-long double S3_B(uint64_t, uint64_t, uint64_t);
+long long S3_B(uint64_t, uint64_t, uint64_t);
 long double S3_A(uint64_t, uint64_t, uint64_t);
 long double S4(uint64_t, uint64_t);
 long long mobius(long long);
@@ -55,7 +55,7 @@ int main() {
   //   std::cout<<"sum of mobius up to " << v << ": " << ((long long)tmp)<<std::endl;
   // }
   // std::cout<<mobius(30)<<std::endl;
-  long double ans = psi(10000000000000);
+  long double ans = psi(10);
   std::cout << "S3 is " << ans << std::endl;
   return 0;
 }
@@ -83,7 +83,8 @@ long double psi(uint64_t x) {
 }
 
 long double psi_work(uint64_t x) {
-  uint64_t u = floor(pow(x, (1.0/3.0)) * pow(log(log(x)), (2.0/3.0)));
+  // uint64_t u = floor(pow(x, (1.0/3.0)) * pow(log(log(x)), (2.0/3.0)));
+  uint64_t u = 1;
   std::cout<<u<<std::endl;
   // std::cout<<x<<" "<<u<< std::endl;
   // const long double S1 = psi(u);
@@ -131,11 +132,19 @@ long double S2(uint64_t x, uint64_t u) {
   return S;
 }
 
-long double S3_B(const uint64_t x, const uint64_t u, const uint64_t p) {
-  long double result = 0.0;
+uint64_t pow(uint64_t a, uint64_t b) {
+  uint64_t ans = 1;
+  for (int i = 0; i < b; ++i) {
+    ans *= a;
+  }
+  return ans;
+}
+
+long long S3_B(const uint64_t x, const uint64_t u, const uint64_t p, const uint64_t l) {
+  long long result = 0;
   const uint64_t L = (uint64_t) (log((long double) u)/log((long double) p)); //intentional floor
   for (uint64_t k = 1; k <= L; ++k) {
-    result += ((long double) x) / log((long double) pow((long double) p,(long double) k));
+    result += x / (l * pow( p, k)); //intentional floor
   }
   // std::cout<< " result from S3_B = "<<result<<std::endl;
   return result;
@@ -144,9 +153,8 @@ long double S3_B(const uint64_t x, const uint64_t u, const uint64_t p) {
 long double S3_A(const uint64_t x, const uint64_t u, const uint64_t p) {
   long double S = 0.0;
   // uint64_t tmpMu = 0;
-  long double S3_B_temp = S3_B(x, u, p);
   for (uint64_t l = 1; l <= u; ++l) {
-    S += mobius(l)*S3_B_temp;
+    S += mobius(l)*S3_B(x, u, p, l);
     // tmpMu += mobius(l);
     // std::cout<<tmpMu<<std::endl;
   }
