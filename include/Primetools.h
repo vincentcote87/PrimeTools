@@ -2,7 +2,9 @@
 #define PRIMETOOLS_H
 #include <primesieve.hpp>
 #include <primecount.hpp>
+#include <cmath>
 #include "int_double.h"
+
 
 namespace primetools {
 
@@ -11,6 +13,7 @@ namespace primetools {
   int_double calculateTheta(uint64_t);
   int_double calculateTheta(uint64_t, uint64_t);
   int_double calculatePsi(uint64_t);
+  int_double calculatePsiNoTheta(uint64_t);
   int_double logpOverp(uint64_t);
 
   // helper functions

@@ -1,7 +1,5 @@
 #include "../include/Primetools.h"
 
-
-
 int64_t primetools::getPi(int64_t x) {
   return primecount::pi(x);
 }
@@ -43,8 +41,20 @@ int_double primetools::calculatePsi(uint64_t x) {
   return psi;
 }
 
-int_double primetools::logpOverp(uint64_t x) {
+int_double primetools::calculatePsiNoTheta(uint64_t x) {
+  int_double psi(0.0, 0.0);
+  primesieve::iterator it;
+  it.skipto(0);
+  uint64_t prime = it.next_prime();
+  for (; prime <= x; prime = it.next_prime()) {
+    psi += static_cast<int_double>((static_cast<long double>(log(prime)) * (floor(static_cast<long double>(log(x))/static_cast<long double>(log(prime))))));
+  }
+  return psi;
+}
 
+
+int_double primetools::logpOverp(uint64_t x) {
+  return -1.0;
 }
 
 uint64_t primetools::getKValue(uint64_t x) {
