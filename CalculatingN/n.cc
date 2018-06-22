@@ -9,11 +9,8 @@ int main() {
       integer x, u, l, k;
       cin >> x >> u >> l >> k;
       integer result = N(x, u, l, k);
-      integer result2 = slowN(x, u, l, k);
       std::cout << "N(" << x << ", " << u << ", " << l << ", " << k << ") = ";
-      std::cout << result << std::endl;
-      std::cout << "N(" << x << ", " << u << ", " << l << ", " << k << ") = ";
-      std::cout << result2 << "\n\n" << std::endl;
+      std::cout << result << "\n\n" << std::endl;
    }
    return 0;
 }
