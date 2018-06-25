@@ -73,7 +73,7 @@ long double S2(uint64_t x, uint64_t u) {
     S2b = x/m;
     long double sum = 0.0;
     if(S2b > 100000)
-      S += static_cast<long double>(mobius(m)) * T(x/m);
+      S += static_cast<long double>(mobius(m)) * T(S2b);
     else {
       for(uint i = 1; i <= S2b; ++i)
         sum += log(i);
@@ -146,9 +146,9 @@ long double S4a(uint64_t x, uint64_t u, long double psiOfU) {
 long double S4a_innerLoop(uint64_t x, uint64_t u, uint64_t l, long double psiOfU) {
   long double result = 0.0;
   uint64_t lowerM = u/l;
-  uint64_t upperM = sqrt(x/l);
-  for(uint64_t m = lowerM; m <= upperM; ++m) {
-    result += (primetools::calculatePsiLongDouble(x/(l * m)) - psiOfU);
+  long double upperM = sqrt(x/l);
+  for(uint64_t m = lowerM + 1; m <= upperM; ++m) {
+     result += (primetools::calculatePsiLongDouble(x/(l * m)) - psiOfU);
   }
   return result;
 }
