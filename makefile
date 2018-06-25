@@ -1,8 +1,8 @@
-CXX =g++ -std=c++11
-IFLAGS = -I /usr/local/include
+CXX =g++ -std=c++0x -g
+IFLAGS = -I /usr/local/include -I include
 LFLAGS = -L /usr/local/lib64
 SRC_DIR = ./src
-LINKFLAGS = -lprimesieve -lprimecount -lmpfr -lgmp
+LINKFLAGS = -lprimesieve -lprimecount
 RPATH = -Wl,-rpath=/usr/local/lib64
 PROGRAM = main
 C ?= na
@@ -10,7 +10,7 @@ F ?=
 
 .PHONY: all
 main: clean
-	$(CXX) $(IFLAGS) $(LFLAGS) $(PROGRAM).cc $(SRC_DIR)/* -o $(PROGRAM) $(LINKFLAGS) $(RPATH)
+	$(CXX) -o $(PROGRAM) $(LFLAGS) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH)
 
 static: clean
 	$(CXX) $(IFLAGS) $(LFLAGS) $(PROGRAM).cc $(SRC_DIR)/* -o $(PROGRAM) $(LINKFLAGS) $(RPATH) -static
@@ -22,4 +22,7 @@ min: clean
 	$(CXX) $(PROGRAM).cc $(SRC_DIR)/* -o $(PROGRAM)
 
 clean:
-	rm -rf *.o *~ main ./include/*.h.gch
+	rm -rf *.o *~ main ./include/*.gch
+
+oiginal:
+	$(CXX) $(IFLAGS) $(LFLAGS) $(PROGRAM).cc $(SRC_DIR)/* -o $(PROGRAM) $(LINKFLAGS) $(RPATH)
