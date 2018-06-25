@@ -8,9 +8,8 @@ using std::endl;
 
 int main() {
   cout<<setprecision(30);
-  cout<<S1(1000000000000000, 230000)<<endl;
-  cout<<primetools::calculatePsiLongDouble(230000)<<endl;
-  cout<<primetools::calculatePsi(230000)<<endl;
+  setupEnvironment();
+  cout<<S4(1000000, 230000)<<endl;
   // T(100);
   // uint64_t x = 100000000;
   // std::cout<<primetools::calculateTheta(0, x)<<std::endl;

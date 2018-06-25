@@ -128,14 +128,29 @@ long double S3(const uint64_t x, const uint64_t u) {
   return S;
 }
 long double S4(uint64_t x, uint64_t u) {
-  return 1.0;
+  long double psi_of_u = primetools::calculatePsiLongDouble(u);
+  return S4a(x, u, psi_of_u) + S4b(x, u, psi_of_u);
 }
 
-long double S4a(uint64_t x, uint64_t u) {
-  return 1.0;
+long double S4a(uint64_t x, uint64_t u, long double psiU) {
+  long double result = 0.0;
+  for(uint64_t l = 1; l <= u; ++l) {
+    result += mobius(l) * S4a_innerLoop(x, u, l, psiU);
+  }
+  return result;
 }
 
-long double S4b(uint64_t x, uint64_t u) {
+long double S4a_innerLoop(uint64_t x, uint64_t u, uint64_t l, long double psiU) {
+  long double result = 0.0;
+  uint64_t lowerM = u/l;
+  uint64_t upperM = sqrt(x/l);
+  for(uint64_t m = lowerM; m <= upperM; ++m) {
+    result += (primetools::calculatePsiLongDouble(x/(l * m)) - psiU);
+  }
+  return result;
+}
+
+long double S4b(uint64_t x, uint64_t u, long double psiU) {
   return 1.0;
 }
 
