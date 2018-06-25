@@ -135,8 +135,24 @@ long double S4a(uint64_t x, uint64_t u) {
   return 1.0;
 }
 
-long double S4b(uint64_t x, uint64_t u) {
-  return 1.0;
+long double S4b(uint64_t x, uint64_t u, const long double psiOfU) {
+   long double sum = 0.0;
+   for (uint64_t l = 1; l <= u; ++l) {
+      mobius(l)*S4b_innerSum(x, u, l, psiOfU);
+   }
+   return sum;
+}
+
+long double S4b_innerSum(const uint64_t x , const uint64_t u, const uint64_t l, const long double psiOfU) {
+   long double sum = 0.0;
+   const long double end = std::sqrt(x/l); //k <= sqrt(x/l), k is an integer...
+   for (uint64_t k = 1; k <= end; ++k) {
+      const long long n = N(x, u, l, k);
+      if (n != 0) {
+	 sum += (primetools::calculatePsiLongDouble(k) - psiOfU)*n;
+      }
+   }
+   return sum;
 }
 
 long long mobius (long long x) {

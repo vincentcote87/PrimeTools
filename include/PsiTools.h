@@ -8,6 +8,7 @@
 #include <climits>
 #include "B2.h"
 #include "Primetools.h"
+#incldue "N.hpp"
 
 typedef uint64_t natural;
 typedef long long integer;
@@ -22,6 +23,7 @@ long double S3_A(uint64_t, uint64_t, uint64_t);
 long double S4(uint64_t, uint64_t);
 long double S4a(uint64_t, uint64_t);
 long double S4b(uint64_t, uint64_t);
+long double S4b_innerSum(uint64_t, uint64_t, uint64_t);
 long long mobius(long long);
 long long mobius_work(long long);
 void mobius_setup();
