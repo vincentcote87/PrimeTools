@@ -132,26 +132,42 @@ long double S4(uint64_t x, uint64_t u) {
   return S4a(x, u, psi_of_u) + S4b(x, u, psi_of_u);
 }
 
-long double S4a(uint64_t x, uint64_t u, long double psiU) {
+long double S4a(uint64_t x, uint64_t u, long double psiOfU) {
   long double result = 0.0;
   for(uint64_t l = 1; l <= u; ++l) {
-    result += mobius(l) * S4a_innerLoop(x, u, l, psiU);
+    result += mobius(l) * S4a_innerLoop(x, u, l, psiOfU);
   }
   return result;
 }
 
-long double S4a_innerLoop(uint64_t x, uint64_t u, uint64_t l, long double psiU) {
+long double S4a_innerLoop(uint64_t x, uint64_t u, uint64_t l, long double psiOfU) {
   long double result = 0.0;
   uint64_t lowerM = u/l;
   uint64_t upperM = sqrt(x/l);
   for(uint64_t m = lowerM; m <= upperM; ++m) {
-    result += (primetools::calculatePsiLongDouble(x/(l * m)) - psiU);
+    result += (primetools::calculatePsiLongDouble(x/(l * m)) - psiOfU);
   }
   return result;
 }
 
-long double S4b(uint64_t x, uint64_t u, long double psiU) {
-  return 1.0;
+long double S4b(uint64_t x, uint64_t u, const long double psiOfU) {
+   long double sum = 0.0;
+   for (uint64_t l = 1; l <= u; ++l) {
+      mobius(l)*S4b_innerSum(x, u, l, psiOfU);
+   }
+   return sum;
+}
+
+long double S4b_innerSum(const uint64_t x , const uint64_t u, const uint64_t l, const long double psiOfU) {
+   long double sum = 0.0;
+   const long double end = std::sqrt(x/l); //k <= sqrt(x/l), k is an integer...
+   for (uint64_t k = 1; k <= end; ++k) {
+      const long long n = N(x, u, l, k);
+      if (n != 0) {
+	 sum += (primetools::calculatePsiLongDouble(k) - psiOfU)*n;
+      }
+   }
+   return sum;
 }
 
 long long mobius (long long x) {
