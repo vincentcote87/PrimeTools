@@ -83,11 +83,14 @@ long double S2(uint64_t x, uint64_t u) {
 }
 
 uint64_t pow(uint64_t a, uint64_t b) {
-  uint64_t ans = 1;
-  for (int i = 0; i < b; ++i) {
-    ans *= a;
-  }
-  return ans;
+   if (b == 0)
+      return 1;
+   if (b == 1)
+      return a;
+   const uint64_t half = pow(a, b/2);
+   if (b%2)
+      return half*half;
+   return half*half*a;
 }
 
 long long S3_B(const uint64_t x, const uint64_t u, const uint64_t p, const uint64_t l) {
@@ -142,7 +145,7 @@ long double S4a_innerLoop(uint64_t x, uint64_t u, uint64_t l, long double psiOfU
   long double result = 0.0;
   uint64_t lowerM = u/l;
   uint64_t upperM = sqrt(x/l);
-  for(uint64_t m = lowerM; m <= upperM; ++m) {
+  for(uint64_t m = lowerM + 1; m <= upperM; ++m) {
     result += (primetools::calculatePsiLongDouble(x/(l * m)) - psiOfU);
   }
   return result;
