@@ -20,6 +20,8 @@ long double S3(uint64_t, uint64_t);
 long long S3_B(uint64_t, uint64_t, uint64_t);
 long double S3_A(uint64_t, uint64_t, uint64_t);
 long double S4(uint64_t, uint64_t);
+long double S4a(uint64_t, uint64_t);
+long double S4b(uint64_t, uint64_t);
 long long mobius(long long);
 long long mobius_work(long long);
 void mobius_setup();

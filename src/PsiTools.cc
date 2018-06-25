@@ -131,6 +131,14 @@ long double S4(uint64_t x, uint64_t u) {
   return 1.0;
 }
 
+long double S4a(uint64_t x, uint64_t u) {
+  return 1.0;
+}
+
+long double S4b(uint64_t x, uint64_t u) {
+  return 1.0;
+}
+
 long long mobius (long long x) {
   if (x < mobiusCutoff) {
     if (mobiusTable[x] == -2000)
