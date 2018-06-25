@@ -28,5 +28,5 @@ integer N(const integer x, const integer u, const integer l, const integer k) {
    const integer low = std::max(L1,M1);
    if (high < low)
       return 0;
-   return high - low;
+   return high - low + 1; //inclusive count of consecutive integers from low through high
 }
