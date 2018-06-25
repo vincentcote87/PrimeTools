@@ -7,9 +7,13 @@ using std::cout;
 using std::endl;
 
 int main() {
-  cout<<setprecision(30);
   setupEnvironment();
-  cout<<S4(1000000, 230000)<<endl;
+  uint64_t x;
+  while (true) {
+    cin >> x;
+  cout<<"psi("<<x<<") = "<<psi(x)<<" aka " <<primetools::calculatePsiLongDouble(x) << endl;
+
+}
   // T(100);
   // uint64_t x = 100000000;
   // std::cout<<primetools::calculateTheta(0, x)<<std::endl;

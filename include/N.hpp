@@ -8,10 +8,10 @@
 #include <algorithm>
 typedef long long integer;
 typedef long double rational;
-integer N(const integer x, const integer u, const integer l, const integer k);
+static integer N(const integer x, const integer u, const integer l, const integer k);
 #endif
 
-integer N(const integer x, const integer u, const integer l, const integer k) {
+static integer N(const integer x, const integer u, const integer l, const integer k) {
    assert(x < 10000000000000000);
    assert(l < 10000000000000000);
    const integer L2 = x/(u*l); //deliberate floor

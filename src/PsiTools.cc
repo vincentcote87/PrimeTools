@@ -42,8 +42,8 @@ long double psi_work(uint64_t x) {
   // std::cout<<x<<" "<<u<< std::endl;
   // const long double S1 = psi(u);
   // long double S3_temp = S3(x, u);
-  return S3(x,u);
-  // return S1(x, u) + S2(x, u) + S3(x, u) + S4(x, u);
+  // return S3(x,u);
+  return S1(x, u) + S2(x, u) - S3(x, u) - S4(x, u);
 }
 
 long double T(long double t) {
@@ -122,9 +122,9 @@ long double S3(const uint64_t x, const uint64_t u) {
 
   for (; prime <= u; prime = it.next_prime()) {
     S += log(prime)*S3_A(x, u, prime);
-    std::cout<<S<<std::endl;
+    // std::cout<<S<<std::endl;
   }
-  std::cout<<u<<std::endl;
+  // std::cout<<u<<std::endl;
   return S;
 }
 long double S4(uint64_t x, uint64_t u) {

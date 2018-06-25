@@ -8,7 +8,7 @@
 #include <climits>
 #include "B2.h"
 #include "Primetools.h"
-#incldue "N.hpp"
+#include "N.hpp"
 
 typedef uint64_t natural;
 typedef long long integer;
