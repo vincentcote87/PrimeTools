@@ -214,7 +214,7 @@ long double slowS4(uint64_t x, uint64_t u) {
 long double slowS4_inner(uint64_t x, uint64_t u, uint64_t l, long double psiOfU) {
   long double result = 0.0;
   uint64_t uOverl = u/l;
-  long double xOverul = x/(u * l);
+  uint64_t xOverul = x/(u * l);
   for(uint64_t m = uOverl + 1; m <= xOverul; ++m) {
     result += (primetools::calculatePsiLongDouble(x/(l * m)) - psiOfU);
   }
