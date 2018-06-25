@@ -84,12 +84,15 @@ long double S2(uint64_t x, uint64_t u) {
   return S;
 }
 
-uint64_t pow(uint64_t a, uint64_t b) {
-  uint64_t ans = 1;
-  for (int i = 0; i < b; ++i) {
-    ans *= a;
-  }
-  return ans;
+uint64_t pow(const uint64_t a, const uint64_t b) {
+   if (b == 0)
+      return 1;
+   if (b == 1)
+      return a;
+   const uint64_t half = pow(a, b/2);
+   if (b%2)
+      return half*half;
+   return half*half*a;
 }
 
 long long S3_B(const uint64_t x, const uint64_t u, const uint64_t p, const uint64_t l) {
