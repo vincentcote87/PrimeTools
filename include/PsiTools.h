@@ -30,6 +30,9 @@ long long mobius_work(long long);
 void mobius_setup();
 void psi_setup();
 void setupEnvironment();
+
+long double slowS4(uint64_t x, uint64_t u);
+long double slowS4_inner(uint64_t x, uint64_t u, uint64_t l, long double psiOfU);
 #endif //PSITOOLS_H
 
 static B2Class B2;

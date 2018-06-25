@@ -8,6 +8,8 @@ using std::endl;
 
 int main() {
   setupEnvironment();
+  // cout<<S4(1000000, 190)<<endl;
+  // cout<<slowS4(1000000, 190)<<endl;
   uint64_t x;
   while (true) {
     cin >> x;

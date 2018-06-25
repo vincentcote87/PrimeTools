@@ -39,11 +39,8 @@ long double psi(uint64_t x) {
 
 long double psi_work(uint64_t x) {
   uint64_t u = floor(pow(x, (1.0/3.0)) * pow(log(log(x)), (2.0/3.0)));
-  // std::cout<<x<<" "<<u<< std::endl;
-  // const long double S1 = psi(u);
-  // long double S3_temp = S3(x, u);
-  // return S3(x,u);
-  return S1(x, u) + S2(x, u) - S3(x, u) - S4(x, u);
+  return S1(x, u) + S2(x, u) - S3(x, u) - slowS4(x, u);
+  // return S1(x, u) + S2(x, u) - S3(x, u) - S4(x, u);
 }
 
 long double T(long double t) {
@@ -73,6 +70,7 @@ long double S2(uint64_t x, uint64_t u) {
     S2b = x/m;
     long double sum = 0.0;
     if(S2b > 100000)
+    // if(true)
       S += static_cast<long double>(mobius(m)) * T(x/m);
     else {
       for(uint i = 1; i <= S2b; ++i)
@@ -153,7 +151,7 @@ long double S4a_innerLoop(uint64_t x, uint64_t u, uint64_t l, long double psiOfU
 long double S4b(uint64_t x, uint64_t u, const long double psiOfU) {
    long double sum = 0.0;
    for (uint64_t l = 1; l <= u; ++l) {
-      mobius(l)*S4b_innerSum(x, u, l, psiOfU);
+      sum += mobius(l)*S4b_innerSum(x, u, l, psiOfU);
    }
    return sum;
 }
@@ -202,4 +200,23 @@ long long mobius_work(long long x) {
     }
   }
   return (k % 2 == 0) ? -1 : 1;
+}
+
+long double slowS4(uint64_t x, uint64_t u) {
+  long double psi_of_u = primetools::calculatePsiLongDouble(u);
+  long double result = 0.0;
+  for(uint64_t l = 1; l <= u; ++l) {
+    result += mobius(l) * slowS4_inner(x, u, l, psi_of_u);
+  }
+  return result;
+}
+
+long double slowS4_inner(uint64_t x, uint64_t u, uint64_t l, long double psiOfU) {
+  long double result = 0.0;
+  uint64_t uOverl = u/l;
+  long double xOverul = x/(u * l);
+  for(uint64_t m = uOverl + 1; m <= xOverul; ++m) {
+    result += (primetools::calculatePsiLongDouble(x/(l * m)) - psiOfU);
+  }
+  return result;
 }
