@@ -38,7 +38,11 @@ long double psi(uint64_t x) {
 }
 
 long double psi_work(uint64_t x) {
-  uint64_t u = floor(pow(x, (1.0/3.0)) * pow(log(log(x)), (2.0/3.0)));
+  if (x < 2)
+    return 0.0;
+  long long u = floor(pow(static_cast<long double>(x), (1.0L/3.0L)) * cbrtl(pow(log(log(x)), 2)));
+  if (u < 1)
+    u = 1;
   return S1(x, u) + S2(x, u) - S3(x, u) - slowS4(x, u);
   // return S1(x, u) + S2(x, u) - S3(x, u) - S4(x, u);
 }
@@ -88,7 +92,7 @@ uint64_t pow(uint64_t a, uint64_t b) {
    if (b == 1)
       return a;
    const uint64_t half = pow(a, b/2);
-   if (b%2)
+   if (b%2 == 0)
       return half*half;
    return half*half*a;
 }
@@ -209,8 +213,17 @@ long double slowS4(uint64_t x, uint64_t u) {
   long double psi_of_u = primetools::calculatePsiLongDouble(u);
   long double result = 0.0;
   for(uint64_t l = 1; l <= u; ++l) {
-    result += mobius(l) * slowS4_inner(x, u, l, psi_of_u);
+    // std::cout<<"initial Result = "<<result<<std::endl;
+    long double sum = (mobius(l) * slowS4_inner(x, u, l, psi_of_u));
+    // std::cout<<"The sum is "<<sum<<std::endl;
+    result += sum;
+    // std::cout<<"New result is "<<result<<std::endl<<std::endl;
+    // std::cout<<mobius(l) <<" * "<< slowS4_inner(x,u,l,psi_of_u);
+    // result += (mobius(l) * slowS4_inner(x, u, l, psi_of_u));
+    // std::cout<<"outer loop is "<<result<<std::endl;
   }
+  if(result == 0)
+    std::cout<<" final result for "<<x<<" is "<<result<<std::endl;
   return result;
 }
 
@@ -220,6 +233,10 @@ long double slowS4_inner(uint64_t x, uint64_t u, uint64_t l, long double psiOfU)
   uint64_t xOverul = x/(u * l);
   for(uint64_t m = uOverl + 1; m <= xOverul; ++m) {
     result += (primetools::calculatePsiLongDouble(x/(l * m)) - psiOfU);
+    if(x == 63) {
+      // std::cout<<"result at m = "<<m<<" is "<<result<<std::endl;
+    }
   }
+  // std::cout<<"out of loop, returning result = "<<result<<std::endl;
   return result;
 }

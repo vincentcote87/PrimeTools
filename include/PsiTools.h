@@ -25,6 +25,7 @@ long double S4a(uint64_t, uint64_t, long double);
 long double S4a_innerLoop(uint64_t, uint64_t, uint64_t, long double);
 long double S4b(uint64_t, uint64_t, long double);
 long double S4b_innerSum(uint64_t, uint64_t, uint64_t, long double);
+// uint64_t pow(uint64_t, uint64_t);
 long long mobius(long long);
 long long mobius_work(long long);
 void mobius_setup();
