@@ -5,6 +5,8 @@ int64_t primetools::getPi(int64_t x) {
 }
 
 int_double primetools::calculateTheta(uint64_t x) {
+   if (x < 2)
+      return int_double{0.0};
   return primetools::calculateTheta(0, x);
 }
 
@@ -49,6 +51,8 @@ long double primetools::calculateThetaLongDouble(uint64_t start, uint64_t stop) 
 }
 
 int_double primetools::calculatePsi(uint64_t x) {
+   if (x < 2)
+      return int_double{0.0};
   int_double psi = 0.0;
   uint64_t k = primetools::getKValue(x);
   uint64_t tmpX = primetools::nextTheta(x, k);
@@ -61,6 +65,8 @@ int_double primetools::calculatePsi(uint64_t x) {
 }
 
 long double primetools::calculatePsiLongDouble(uint64_t x) {
+   if (x < 2)
+      return 0.0L;
   long double psi = 0.0;
   uint64_t k = primetools::getKValue(x);
   uint64_t tmpX = primetools::nextTheta(x, k);
@@ -73,6 +79,8 @@ long double primetools::calculatePsiLongDouble(uint64_t x) {
 }
 
 long double primetools::calculatePsiNoTheta(uint64_t x) {
+   if (x < 2)
+      return 0.0L;
   long double psi = 0.0;
 	long double temp = 0.0;
 	long double y = 0.0;

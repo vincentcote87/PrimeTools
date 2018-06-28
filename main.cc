@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 #include "Primetools.h"
 #include "int_double.h"
 #include "PsiTools.h"
@@ -12,31 +13,35 @@ void behaviour(const uint64_t i) {
           cout<<i<<" is done = "<<ans<<endl;
 }
 
-int main(int argc, char* argv[]) {
+void interpretClk(const std::chrono::milliseconds& a) {
+   long long count = a.count();
+   const long long h = count / 3600000;
+   count %= 3600000;
+   const long long min = count / 60000;
+   count %= 60000;
+   const long long s = count / 1000;
+   count %= 1000;
+   const long long us = count;
+   std::cout << "Ran for: " << h << ':' << min << ':' << s << ':' << us << std::endl;
+}
+
+int main() {
   setupEnvironment();
   uint64_t x;
-  if(argc == 2)
-    x = std::stoll(argv[1]);
-
-  // cout<<setprecision(22);
-  // cout<<"w theta = "<<primetools::calculatePsiLongDouble(x)<<endl;
-  // cout<<"without theta = "<<primetools::calculatePsiNoTheta(x)<<endl;
-    // for(uint64_t i = 1; i <= 100000; ++i) {
-    //   behaviour(i);
-    // }
-    // cout<<myArr[743]<<endl;
-  // // while(true) {
-  // //   cin >> x;
-  // //   cout<<"new psi = "<<psi(x)<<" slow psi = "<<primetools::calculatePsiLongDouble(x)<<endl;
-
-    // long double a = psi(x);
-    // long double b = primetools::calculatePsiLongDouble(x);
-    // cout<<"Formula   "<<a<<endl;
-    // cout<<"Brute cal "<<b<<endl;
-    // cout<<"Diffrence "<<a - b<<endl;
-    long long u = floor(cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x))) - 0.5);
-    cout<<"s4      = "<<S4(x, u)<<endl;
-    cout<<"s4 slow = "<<slowS4(x, u)<<endl;
+  std::chrono::steady_clock clk;
+  while (true) {
+     cin >> x;
+     auto before = clk.now();
+     long double temp = psi(x);
+     std::cout << "psi:     " << temp << std::endl;
+     interpretClk(std::chrono::duration_cast<std::chrono::milliseconds>(clk.now() - before));
+     before = clk.now();
+     long double temp2 = primetools::calculatePsiLongDouble(x);
+     std::cout << "slowPsi: " << temp2 << std::endl;
+     interpretClk(std::chrono::duration_cast<std::chrono::milliseconds>(clk.now() - before));
+     cout << "psi - slowPsi = " << temp - temp2 << std::endl;
+     std::cout << std::endl;
+  }
 
   return 0;
 }

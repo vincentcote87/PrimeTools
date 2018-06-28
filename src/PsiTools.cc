@@ -46,11 +46,18 @@ long double psi_work(uint64_t x) {
   if (x < 2)
     return 0.0;
   long double u = pow(static_cast<long double>(x), (1.0L/3.0L)) * cbrtl(pow(log(log(x)), 2));
-
   if (u < 1)
-    u = 1;
-  return S1(x, u) + S2(x, u) - S3(x, u) - slowS4(x, u);
-  // return S1(x, u) + S2(x, u) - S3(x, u) - S4(x, u);
+     u = 1;
+  //std::cout << "Chose psi_word, and doing full calculation with u = " << u << std::endl;
+  const long double s1 = S1(x, u);
+  //std::cout << "S1(" << x << ", " << u << ") = " << s1 << std::endl;
+  const long double s2 = S2(x, u);
+  //std::cout << "S2(" << x << ", " << u << ") = " << s2 << std::endl;
+  const long double s3 = S3(x, u);
+  //std::cout << "S3(" << x << ", " << u << ") = " << s3 << std::endl;
+  const long double s4 = S4(x, u);
+  //std::cout << "S4(" << x << ", " << u << ") = " << s4 << std::endl;
+  return s1 + s2 - s3 - s4;
 }
 
 long double T(long double t) {
@@ -89,7 +96,7 @@ long double S2(const uint64_t x, const long double u) {
       S += static_cast<long double>(mobius(m)) * sum;
     }
   }
-  std::cout<<"S2 Done..."<<S<<std::endl;
+  //std::cout<<"S2 Done..."<<S<<std::endl;
   return S;
 }
 
@@ -137,11 +144,12 @@ long double S3(const uint64_t x, const long double u) {
     // std::cout<<S<<std::endl;
   }
   // std::cout<<u<<std::endl;
-  std::cout<<"S3 Done..."<<S<<std::endl;
+  //std::cout<<"S3 Done..."<<S<<std::endl;
   return S;
 }
 long double S4(const uint64_t x, const long double u) {
-  long double psi_of_u = primetools::calculatePsiLongDouble(u);
+   long double psi_of_u = primetools::calculatePsiLongDouble(u);
+   //std::cout << "S4: HERE" << std::endl;
   long double result = S4a(x, u, psi_of_u) + S4b(x, u, psi_of_u);
   // std::cout<<"S4 Done..."<<result<<std::endl;
   return result;
@@ -157,11 +165,15 @@ long double S4a(const uint64_t x, const long double u, const long double psiOfU)
 
 long double S4a_innerLoop(const uint64_t x, const long double u, const uint64_t l, const long double psiOfU) {
   long double result = 0.0;
-  uint64_t lowerM = u/((long double) l); //VERY LIKELY WAS A FAILURE POINT WHEN U WAS AN INTEGER
-  uint64_t upperM = sqrt(x/l);
+  const uint64_t lowerM = u/((long double) l); //VERY LIKELY WAS A FAILURE POINT WHEN U WAS AN INTEGER
+  const uint64_t upperM = sqrt(x/l);
+  //std::cout << "S4a_innerLoop about to begin with the following parameters:" << std::endl;
+  //std::cout << "x: " << x << " u: " << u << " l: " << l << " psiOfU: " << psiOfU << " result: " << result << " lowerM: " << lowerM << " upperM: " << upperM << std::endl;
+  //std::cout << "Entering the loop now...";
   for(uint64_t m = lowerM + 1; m <= upperM; ++m) {
     result += (primetools::calculatePsiLongDouble(x/(l * m)) - psiOfU);
   }
+  //std::cout << "S4a_innerLoop returning result = " << result << std::endl;
   return result;
 }
 
@@ -176,12 +188,16 @@ long double S4b(const uint64_t x, const long double u, const long double psiOfU)
 long double S4b_innerSum(const uint64_t x, const long double u, const uint64_t l, const long double psiOfU) {
    long double sum = 0.0;
    const long double end = std::sqrt(x/l); //k <= sqrt(x/l), k is an integer...
+   //std::cout << "S4b_innerSum about to begin with the following parameters:" << std::endl;
+   //std::cout << "x: " << x << " u: " << u << " l: " << l << " psiOfU: " << psiOfU << " sum: " << sum << " end: " << end << std::endl;
+   //std::cout << "Entering the loop now...";
    for (uint64_t k = 1; k <= end; ++k) {
       const long long n = N(x, u, l, k);
       if (n != 0) {
 	       sum += (primetools::calculatePsiLongDouble(k) - psiOfU)*n;
       }
    }
+   //std::cout << "S4b_innerSum returning the sum" << sum << std::endl;
    return sum;
 }
 
