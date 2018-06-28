@@ -9,20 +9,25 @@ void setupEnvironment() {
 // const uint64_t mobiusCutoff = 3000000;
 // long long *mobiusTable;
 void mobius_setup() {
+  std::cout<<"seting up mobius table...";
   mobiusTable = new long long[mobiusCutoff];
   for (uint i = 0; i < mobiusCutoff; ++i) {
-    mobiusTable[i] = -2000;
+    // mobiusTable[i] = -2000;
+    mobiusTable[i] = mobius_work(i);
   }
+  std::cout<<"Done"<<std::endl;
 }
 
 // const size_t cutoff = 10000000; //4294967295
 // long double *psiTable;
 
 void psi_setup() {
+  std::cout<<"seting up psi table...";
   psiTable = new long double[cutoff];
   for (uint i = 0; i < cutoff; ++i) {
     psiTable[i] = 0;
   }
+  std::cout<<"Done"<<std::endl;
 }
 
 long double psi(uint64_t x) {
@@ -41,6 +46,7 @@ long double psi_work(uint64_t x) {
   if (x < 2)
     return 0.0;
   long double u = pow(static_cast<long double>(x), (1.0L/3.0L)) * cbrtl(pow(log(log(x)), 2));
+
   if (u < 1)
     u = 1;
   return S1(x, u) + S2(x, u) - S3(x, u) - slowS4(x, u);
@@ -83,7 +89,7 @@ long double S2(const uint64_t x, const long double u) {
       S += static_cast<long double>(mobius(m)) * sum;
     }
   }
-
+  std::cout<<"S2 Done..."<<S<<std::endl;
   return S;
 }
 
@@ -131,11 +137,14 @@ long double S3(const uint64_t x, const long double u) {
     // std::cout<<S<<std::endl;
   }
   // std::cout<<u<<std::endl;
+  std::cout<<"S3 Done..."<<S<<std::endl;
   return S;
 }
 long double S4(const uint64_t x, const long double u) {
   long double psi_of_u = primetools::calculatePsiLongDouble(u);
-  return S4a(x, u, psi_of_u) + S4b(x, u, psi_of_u);
+  long double result = S4a(x, u, psi_of_u) + S4b(x, u, psi_of_u);
+  // std::cout<<"S4 Done..."<<result<<std::endl;
+  return result;
 }
 
 long double S4a(const uint64_t x, const long double u, const long double psiOfU) {
@@ -170,7 +179,7 @@ long double S4b_innerSum(const uint64_t x, const long double u, const uint64_t l
    for (uint64_t k = 1; k <= end; ++k) {
       const long long n = N(x, u, l, k);
       if (n != 0) {
-	 sum += (primetools::calculatePsiLongDouble(k) - psiOfU)*n;
+	       sum += (primetools::calculatePsiLongDouble(k) - psiOfU)*n;
       }
    }
    return sum;
@@ -217,8 +226,7 @@ long double slowS4(const uint64_t x, const long double u) {
     long double sum = (mobius(l) * slowS4_inner(x, u, l, psi_of_u));
     result += sum;
   }
-  if(result == 0)
-    std::cout<<" final result for "<<x<<" is "<<result<<std::endl;
+  // std::cout<<"S4 Done..."<<result<<std::endl;
   return result;
 }
 
