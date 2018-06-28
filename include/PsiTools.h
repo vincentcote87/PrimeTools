@@ -38,9 +38,9 @@ long double slowS4_inner(uint64_t x, uint64_t u, uint64_t l, long double psiOfU)
 
 static B2Class B2;
 static const long double PI = 3.141592653589793238462643383279L;
-static const int J = 5;
+static const int J = 10;
 
-static const uint64_t mobiusCutoff = 3000000;
+static const uint64_t mobiusCutoff = 1000001;
 static long long *mobiusTable;
 
 static const size_t cutoff = 10000000; //4294967295

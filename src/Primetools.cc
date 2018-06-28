@@ -72,13 +72,23 @@ long double primetools::calculatePsiLongDouble(uint64_t x) {
   return psi;
 }
 
-int_double primetools::calculatePsiNoTheta(uint64_t x) {
-  int_double psi(0.0, 0.0);
+long double primetools::calculatePsiNoTheta(uint64_t x) {
+  long double psi = 0.0;
+	long double temp = 0.0;
+	long double y = 0.0;
+	long double errorTerm = 0.0;
+
   primesieve::iterator it;
   it.skipto(0);
   uint64_t prime = it.next_prime();
   for (; prime <= x; prime = it.next_prime()) {
-    psi += static_cast<int_double>((static_cast<long double>(log(prime)) * (floor(static_cast<long double>(log(x))/static_cast<long double>(log(prime))))));
+    const long double logOfPrime = log(prime);
+    const long double k = floor(log(x)/logOfPrime);
+    y = (logOfPrime * k) - errorTerm;
+    temp = psi + y;
+    errorTerm = (temp - psi) - y;
+    psi = temp;
+
   }
   return psi;
 }

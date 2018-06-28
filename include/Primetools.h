@@ -15,7 +15,7 @@ namespace primetools {
   long double calculateThetaLongDouble(uint64_t, uint64_t);
   int_double calculatePsi(uint64_t);
   long double calculatePsiLongDouble(uint64_t);
-  int_double calculatePsiNoTheta(uint64_t);
+  long double calculatePsiNoTheta(uint64_t);
   int_double logpOverp(uint64_t);
 
   // helper functions
