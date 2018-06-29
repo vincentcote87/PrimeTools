@@ -55,7 +55,7 @@ long double psi_work(uint64_t x) {
   //std::cout << "S2(" << x << ", " << u << ") = " << s2 << std::endl;
   const long double s3 = S3(x, u);
   //std::cout << "S3(" << x << ", " << u << ") = " << s3 << std::endl;
-  const long double s4 = S4(x, u);
+  const long double s4 = slowS4(x, u);
   //std::cout << "S4(" << x << ", " << u << ") = " << s4 << std::endl;
   return s1 + s2 - s3 - s4;
 }
