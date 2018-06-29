@@ -16,13 +16,13 @@ namespace primetools {
   int64_t getPi(int64_t);
   int_double calculateTheta(uint64_t);
   int_double calculateTheta(uint64_t, uint64_t);
-  long double calculateThetaLongDouble(uint64_t, uint64_t);
+  mpfr::mpreal calculateThetaLongDouble(uint64_t, uint64_t);
   int_double calculatePsi(uint64_t);
-  long double calculatePsiLongDouble(uint64_t);
+  mpfr::mpreal calculatePsiLongDouble(uint64_t);
   long double calculatePsiNoTheta(uint64_t);
   int_double logpOverp(uint64_t);
-  const int DIGITS = 256;
-  long double log(long double a, int digits = DIGITS);
+  // const int DIGITS = 256;
+  // long double log(long double a, int digits = DIGITS);
 
   // helper functions
   uint64_t getKValue(uint64_t);

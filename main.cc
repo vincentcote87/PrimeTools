@@ -29,16 +29,16 @@ int main(int argc, char* argv[]) {
     x = std::stoll(argv[1]);
 
   // cout<<N(1000 , 15.52, 1, 14)<<endl;
-    mpfr::mpreal::set_default_prec(256);
-    mpfr::mpreal realLD = 2.0;
-    mpfr::mpreal myReal = log(realLD, MPFR_RNDN);
-    long double myLog = 0.0;
-    myLog = primetools::log(x);
-    cout<<setprecision(33)<<endl<<myLog<<endl;
-    cout<<std::log(x)<<endl;
-    cout<<myReal<<endl;
-    cout<<mpfr::mpreal::get_default_prec()<<endl;
-  // cout<<setprecision(22);
+    mpfr::mpreal::set_default_prec(120);
+    // mpfr::mpreal realLD = 2.0;
+    // mpfr::mpreal myReal = log(realLD, MPFR_RNDN);
+    // long double myLog = 0.0;
+    // myLog = primetools::log(x);
+    // cout<<setprecision(33);
+    // cout<<std::log(x)<<endl;
+    // cout<<myReal<<endl;
+    // cout<<mpfr::mpreal::get_default_prec()<<endl;
+  cout<<setprecision(21);
   // cout<<"w theta = "<<primetools::calculatePsiLongDouble(x)<<endl;
   // cout<<"without theta = "<<primetools::calculatePsiNoTheta(x)<<endl;
     // for(uint64_t i = 1; i <= 100000; ++i) {
@@ -49,10 +49,10 @@ int main(int argc, char* argv[]) {
   // //   cin >> x;
   // //   cout<<"new psi = "<<psi(x)<<" slow psi = "<<primetools::calculatePsiLongDouble(x)<<endl;
 
-    // long double a = psi(x);
-    // long double b = primetools::calculatePsiLongDouble(x);
+    // mpfr::mpreal a = psi(x);
+    mpfr::mpreal b = primetools::calculatePsiLongDouble(x);
     // cout<<"Formula   "<<a<<endl;
-    // cout<<"Brute cal "<<b<<endl;
+    cout<<"Brute cal "<<b<<endl;
     // cout<<"Diffrence "<<a - b<<endl;
 
     // cout<<N(10000, 3.666721582566334971392540964529871417e+01, 1, 36)<<endl;

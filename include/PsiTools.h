@@ -13,18 +13,18 @@
 typedef uint64_t natural;
 typedef long long integer;
 long double T(long double);
-long double psi_work(uint64_t);
-long double psi(uint64_t);
-long double S1(uint64_t, long double);
-long double S2(uint64_t, long double);
-long double S3(uint64_t, long double);
-long long S3_B(uint64_t, long double, uint64_t);
-long double S3_A(uint64_t, long double, uint64_t);
-long double S4(uint64_t, long double);
-long double S4a(uint64_t, long double, long double);
-long double S4a_innerLoop(uint64_t, long double, uint64_t, long double);
-long double S4b(uint64_t, long double, long double);
-long double S4b_innerSum(uint64_t, long double, uint64_t, long double);
+mpfr::mpreal psi_work(uint64_t);
+mpfr::mpreal psi(uint64_t);
+mpfr::mpreal S1(uint64_t, mpfr::mpreal);
+mpfr::mpreal S2(uint64_t, mpfr::mpreal);
+mpfr::mpreal S3(uint64_t, mpfr::mpreal);
+long long S3_B(uint64_t, mpfr::mpreal, uint64_t);
+mpfr::mpreal S3_A(uint64_t, mpfr::mpreal, uint64_t);
+mpfr::mpreal S4(uint64_t, mpfr::mpreal);
+mpfr::mpreal S4a(uint64_t, mpfr::mpreal, mpfr::mpreal);
+mpfr::mpreal S4a_innerLoop(uint64_t, mpfr::mpreal, uint64_t, mpfr::mpreal);
+mpfr::mpreal S4b(uint64_t, mpfr::mpreal, mpfr::mpreal);
+mpfr::mpreal S4b_innerSum(uint64_t, mpfr::mpreal, uint64_t, mpfr::mpreal);
 // uint64_t pow(uint64_t, uint64_t);
 long long mobius(long long);
 long long mobius_work(long long);
@@ -32,8 +32,8 @@ void mobius_setup();
 void psi_setup();
 void setupEnvironment();
 
-long double slowS4(uint64_t x, long double u);
-long double slowS4_inner(uint64_t x, long double u, uint64_t l, long double psiOfU);
+mpfr::mpreal slowS4(uint64_t x, mpfr::mpreal u);
+mpfr::mpreal slowS4_inner(uint64_t x, mpfr::mpreal u, uint64_t l, mpfr::mpreal psiOfU);
 #endif //PSITOOLS_H
 
 static B2Class B2;
@@ -44,4 +44,4 @@ static const uint64_t mobiusCutoff = 1000001;
 static long long *mobiusTable;
 
 static const size_t cutoff = 10000000; //4294967295
-static long double *psiTable;
+static mpfr::mpreal *psiTable;
