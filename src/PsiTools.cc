@@ -45,12 +45,11 @@ long double psi(uint64_t x) {
 long double psi_work(uint64_t x) {
   if (x < 2)
     return 0.0;
-  long double u = pow(static_cast<long double>(x), (1.0L/3.0L)) * cbrtl(pow(log(log(x)), 2));
-
-  if (u < 1)
-    u = 1;
-  return S1(x, u) + S2(x, u) - S3(x, u) - slowS4(x, u);
-  // return S1(x, u) + S2(x, u) - S3(x, u) - S4(x, u);
+  long double u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
+  // if (u < 1)
+  //   u = 1;
+  // return S1(x, u) + S2(x, u) - S3(x, u) - slowS4(x, u);
+  return S1(x, u) + S2(x, u) - S3(x, u) - S4(x, u);
 }
 
 long double T(long double t) {
@@ -177,7 +176,7 @@ long double S4b_innerSum(const uint64_t x, const long double u, const uint64_t l
    long double sum = 0.0;
    const long double end = std::sqrt(x/l); //k <= sqrt(x/l), k is an integer...
    for (uint64_t k = 1; k <= end; ++k) {
-      const long long n = N(x, u, l, k);
+      const long long n = bruteN(x, u, l, k);
       if (n != 0) {
 	       sum += (primetools::calculatePsiLongDouble(k) - psiOfU)*n;
       }
@@ -220,11 +219,13 @@ long long mobius_work(long long x) {
 }
 
 long double slowS4(const uint64_t x, const long double u) {
-  long double psi_of_u = primetools::calculatePsiLongDouble(u);
+  long double psi_of_u = primetools::calculatePsiLongDouble(floor(u));
+  // std::cout<<"psi(u) = "<<psi_of_u<<std::endl;
   long double result = 0.0;
   for(uint64_t l = 1; l <= (uint64_t) u; ++l) { //floor was ok
     long double sum = (mobius(l) * slowS4_inner(x, u, l, psi_of_u));
     result += sum;
+    // std::cout<<"s4("<<l<<") = "<<result<<std::endl;
   }
   // std::cout<<"S4 Done..."<<result<<std::endl;
   return result;
@@ -234,14 +235,13 @@ long double slowS4(const uint64_t x, const long double u) {
 //Wed June 27 3:49pm: No time to double check that u is genuinely treated as a long double for this function.
 long double slowS4_inner(const uint64_t x, const long double u, const uint64_t l, const long double psiOfU) {
   long double result = 0.0;
-  uint64_t uOverl = u/((long double) l);
-  uint64_t xOverul = - static_cast<uint64_t>(  -   ( (long double)x)/(u * (long double)l)     );   //a less than NEED A CEILING Wikipedia: "Negating the argument switches floor and ceiling and changes the sign:"
-  for(uint64_t m = uOverl + 1; m <= xOverul; ++m) {
-    result += (primetools::calculatePsiLongDouble(x/(l * m)) - psiOfU);
-    if(x == 63) {
-      // std::cout<<"result at m = "<<m<<" is "<<result<<std::endl;
-    }
+  long long lowerBound = floor(u/static_cast<long double>(l)) + 1;
+  long long upperBound = floor(static_cast<long double>(x)/(u * static_cast<long double>(l)));
+  for(long long m = lowerBound; m <= upperBound; ++m) {
+    long long innerTerm = floor(static_cast<long double>(x)/(static_cast<long double>(l) * static_cast<long double>(m)));
+    long double firstTerm = primetools::calculatePsiLongDouble(innerTerm);
+    // std::cout<<"psi("<<innerTerm<<") = "<<firstTerm<<std::endl;
+    result += (firstTerm - psiOfU);
   }
-  // std::cout<<"out of loop, returning result = "<<result<<std::endl;
   return result;
 }

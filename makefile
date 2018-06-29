@@ -1,8 +1,8 @@
-CXX =g++ -std=c++0x -g 
+CXX =g++ -std=c++0x -g
 IFLAGS = -I /usr/local/include -I include
 LFLAGS = -L /usr/local/lib64
 SRC_DIR = ./src
-LINKFLAGS = -lprimesieve -lprimecount
+LINKFLAGS = -lprimesieve -lprimecount -lgmp -lmpfr
 RPATH = -Wl,-rpath=/usr/local/lib64
 PROGRAM = main
 C ?= na
