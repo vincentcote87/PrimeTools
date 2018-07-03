@@ -10,13 +10,13 @@
 typedef long long integer;
 typedef long double rational;
 
-static integer N(const integer x, const rational u, const integer l, const integer k);
+static integer N(const integer x, const mpfr::mpreal u, const integer l, const integer k);
 #endif
 
-static integer N(const integer x, const rational u, const integer l, const integer k) {
+static integer N(const integer x, const mpfr::mpreal u, const integer l, const integer k) {
    assert(x < 10000000000000000);
    assert(l < 10000000000000000);
-   const integer L2 = x/(u*(rational) l); //deliberate floor
+   const integer L2 = static_cast<integer>(x/(u * static_cast<long double>(l))); //deliberate floor
    const auto roundEnv = std::fegetround();
    std::fesetround(FE_TONEAREST);
    const integer L1 = ((long long) std::sqrt(((long double) x)/((long double) l))) + 1; //deliberate floor of sqrt. can replace with a pure flooring integer sqrt later

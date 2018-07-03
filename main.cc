@@ -22,37 +22,32 @@ void interpretClk(const std::chrono::milliseconds& a) {
 
 int main(int argc, char* argv[]) {
 
-  // setupEnvironment();
+  setupEnvironment();
   uint64_t x;
   // std::chrono::steady_clock clk;
   if(argc == 2)
     x = std::stoll(argv[1]);
-
-  // cout<<N(1000 , 15.52, 1, 14)<<endl;
-    mpfr::mpreal::set_default_prec(120);
-    // mpfr::mpreal realLD = 2.0;
-    // mpfr::mpreal myReal = log(realLD, MPFR_RNDN);
-    // long double myLog = 0.0;
-    // myLog = primetools::log(x);
-    // cout<<setprecision(33);
-    // cout<<std::log(x)<<endl;
-    // cout<<myReal<<endl;
-    // cout<<mpfr::mpreal::get_default_prec()<<endl;
+  else {
+    x = 100;
+    cout<<"default value of x set at "<<x<<endl;
+  }
+  mpfr::mpreal::set_default_prec(64);
   cout<<setprecision(21);
-  // cout<<"w theta = "<<primetools::calculatePsiLongDouble(x)<<endl;
-  // cout<<"without theta = "<<primetools::calculatePsiNoTheta(x)<<endl;
-    // for(uint64_t i = 1; i <= 100000; ++i) {
-    //   behaviour(i);
-    // }
-    // cout<<myArr[743]<<endl;
-  // // while(true) {
-  // //   cin >> x;
-  // //   cout<<"new psi = "<<psi(x)<<" slow psi = "<<primetools::calculatePsiLongDouble(x)<<endl;
+
+  mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
+  cout<<"S4*******************************************************************************"<<endl;
+  mpfr::mpreal a = S4(x, u);
+  cout<<endl<<endl<<"slowS4*******************************************************************************"<<endl;
+  mpfr::mpreal b = slowS4(x, u);
+  cout<<"u         "<<u<<endl;
+  cout<<"S4        "<<a<<endl;
+  cout<<"Slow S4   "<<b<<endl;
+  cout<<"Diffrence "<<a - b<<endl;
 
     // mpfr::mpreal a = psi(x);
-    mpfr::mpreal b = primetools::calculatePsiLongDouble(x);
+    // mpfr::mpreal b = primetools::calculatePsiLongDouble(x);
     // cout<<"Formula   "<<a<<endl;
-    cout<<"Brute cal "<<b<<endl;
+    // cout<<"Brute cal "<<b<<endl;
     // cout<<"Diffrence "<<a - b<<endl;
 
     // cout<<N(10000, 3.666721582566334971392540964529871417e+01, 1, 36)<<endl;
