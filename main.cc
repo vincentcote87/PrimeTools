@@ -31,24 +31,25 @@ int main(int argc, char* argv[]) {
     x = 100;
     cout<<"default value of x set at "<<x<<endl;
   }
-  mpfr::mpreal::set_default_prec(64);
+  mpfr::mpreal::set_default_prec(128);
   cout<<setprecision(21);
 
-  mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
-  cout<<"S4*******************************************************************************"<<endl;
-  mpfr::mpreal a = S4(x, u);
-  cout<<endl<<endl<<"slowS4*******************************************************************************"<<endl;
-  mpfr::mpreal b = slowS4(x, u);
-  cout<<"u         "<<u<<endl;
-  cout<<"S4        "<<a<<endl;
-  cout<<"Slow S4   "<<b<<endl;
-  cout<<"Diffrence "<<a - b<<endl;
+  // mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
+  // cout<<"S4*******************************************************************************"<<endl;
+  // mpfr::mpreal a = S4(x, u);
+  // cout<<endl<<endl<<"slowS4*******************************************************************************"<<endl;
+  // mpfr::mpreal b = slowS4(x, u);
+  // cout<<"u         "<<u<<endl;
+  // cout<<"S4        "<<a<<endl;
+  // cout<<"Slow S4   "<<b<<endl;
+  // cout<<"Diffrence "<<a - b<<endl;
 
     // mpfr::mpreal a = psi(x);
-    // mpfr::mpreal b = primetools::calculatePsiLongDouble(x);
+    mpfr::mpreal b = primetools::calculatePsiLongDouble(x);
     // cout<<"Formula   "<<a<<endl;
-    // cout<<"Brute cal "<<b<<endl;
+    cout<<"Brute cal "<<b<<endl;
     // cout<<"Diffrence "<<a - b<<endl;
+    cout<<mpfr::mpreal::get_default_prec()<<endl;
 
     // cout<<N(10000, 3.666721582566334971392540964529871417e+01, 1, 36)<<endl;
     // cout<<bruteN(10000, 3.666721582566334971392540964529871417e+01, 1, 36)<<endl;
