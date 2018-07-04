@@ -184,7 +184,7 @@ long double S4b_innerSum(const uint64_t x, const long double u, const uint64_t l
    //std::cout << "x: " << x << " u: " << u << " l: " << l << " psiOfU: " << psiOfU << " sum: " << sum << " end: " << end << std::endl;
    //std::cout << "Entering the loop now...";
    for (uint64_t k = 1; k <= end; ++k) {
-      const long long n = bruteN(x, u, l, k);
+      const long long n = N(x, u, l, k);
       if (n != 0) {
 	       sum += (primetools::calculatePsiLongDouble(k) - psiOfU)*n;
       }
