@@ -1,11 +1,11 @@
 CXX =g++ -std=c++0x -g -w
 # IFLAGS = -I /usr/local/include -I ./include
 IFLAGS = -I ./include
-LFLAGS = -L /usr/local/lib
+LFLAGS = -L /usr/local/lib64
 # LFLAGS = -L /usr/local/lib64
 SRC_DIR = ./src
 LINKFLAGS = -lprimesieve -lprimecount -lgmp -lmpfr
-RPATH = -Wl,-rpath=/usr/local/lib
+RPATH = -Wl,-rpath=/usr/local/lib64
 # RPATH = -Wl,-rpath=/usr/local/lib64
 PROGRAM = main
 C ?= na
