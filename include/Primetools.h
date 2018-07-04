@@ -29,5 +29,6 @@ namespace primetools {
 
   uint64_t nextTheta(uint64_t, long double);
 
+
 }
 #endif //PRIMETOOLS_H
