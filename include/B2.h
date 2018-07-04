@@ -1,5 +1,6 @@
 #ifndef B2_H
 #define B2_H
+#include "Environment.h"
 #include <cstddef>
 class B2Class {
 private:

@@ -1,5 +1,6 @@
 #ifndef N_HPP
 #define N_HPP
+#include "Environment.h"
 #include <cassert>
 #include <iostream>
 #include <cmath>

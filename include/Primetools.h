@@ -1,5 +1,6 @@
 #ifndef PRIMETOOLS_H
 #define PRIMETOOLS_H
+#include "Environment.h"
 #include <gmp.h>
 #include <stdio.h>
 #include <mpfr.h>

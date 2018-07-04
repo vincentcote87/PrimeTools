@@ -1,5 +1,6 @@
 #ifndef PSITOOLS_H
 #define PSITOOLS_H
+#include "Environment.h"
 #include <iostream>
 #include <cmath>
 #include <iomanip>
