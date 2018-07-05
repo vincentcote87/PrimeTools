@@ -2,5 +2,6 @@
 #define ENVIRONMENT_H
 
 //#define DEBUG
+#define DEBUG_S2
 
 #endif //ENVIRONMENT_H

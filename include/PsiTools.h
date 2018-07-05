@@ -38,7 +38,7 @@ mpfr::mpreal slowS4_inner(uint64_t x, mpfr::mpreal u, uint64_t l, mpfr::mpreal p
 #endif //PSITOOLS_H
 
 static B2Class B2;
-static const long double PI = 3.141592653589793238462643383279L;
+static const mpfr::mpreal PI = 3.141592653589793238462643383279L;
 static const int J = 10;
 
 static const uint64_t mobiusCutoff = 1000001;

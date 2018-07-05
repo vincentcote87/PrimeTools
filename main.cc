@@ -31,18 +31,30 @@ int main(int argc, char* argv[]) {
     x = 100;
     cout<<"default value of x set at "<<x<<endl;
   }
-  mpfr::mpreal::set_default_prec(64);
+  mpfr::mpreal::set_default_prec(128);
   cout<<setprecision(21);
 
+
   mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
-  cout<<"S4*******************************************************************************"<<endl;
-  mpfr::mpreal a = S4(x, u);
-  cout<<endl<<endl<<"slowS4*******************************************************************************"<<endl;
-  mpfr::mpreal b = slowS4(x, u);
-  cout<<"u         "<<u<<endl;
-  cout<<"S4        "<<a<<endl;
-  cout<<"Slow S4   "<<b<<endl;
-  cout<<"Diffrence "<<a - b<<endl;
+
+
+  cout << "S2********************************************************************************" << endl;
+  mpfr::mpreal S2_result = S2(x, u);
+  cout << "S2 DONE **************************************************************************" << endl;
+  cout << "\n\n";
+  cout << std::setfill(' ') << std::setw(10) << left << "u" << u << endl;
+  cout << std::setfill(' ') << std::setw(10) << left << "S2" << S2_result << endl;
+  cout << "." << endl << endl;
+
+  // mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
+  // cout<<"S4*******************************************************************************"<<endl;
+  // mpfr::mpreal a = S4(x, u);
+  // cout<<endl<<endl<<"slowS4*******************************************************************************"<<endl;
+  // mpfr::mpreal b = slowS4(x, u);
+  // cout<<"u         "<<u<<endl;
+  // cout<<"S4        "<<a<<endl;
+  // cout<<"Slow S4   "<<b<<endl;
+  // cout<<"Diffrence "<<a - b<<endl;
 
     // mpfr::mpreal a = psi(x);
     // mpfr::mpreal b = primetools::calculatePsiLongDouble(x);
