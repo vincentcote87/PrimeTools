@@ -9,7 +9,7 @@
 #include <climits>
 #include "B2.h"
 #include "Primetools.h"
-#include "N.hpp"
+#include "N.h"
 
 typedef uint64_t natural;
 typedef long long integer;

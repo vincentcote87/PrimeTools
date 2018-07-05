@@ -7,8 +7,6 @@ void setupEnvironment() {
   mpfr::mpreal::set_default_prec(256);
 }
 
-// const uint64_t mobiusCutoff = 3000000;
-// long long *mobiusTable;
 void mobius_setup() {
   std::cout<<"seting up mobius table...";
   mobiusTable = new long long[mobiusCutoff];
@@ -18,9 +16,6 @@ void mobius_setup() {
   }
   std::cout<<"Done"<<std::endl;
 }
-
-// const size_t cutoff = 10000000; //4294967295
-// long double *psiTable;
 
 void psi_setup() {
   std::cout<<"seting up psi table...";
@@ -49,8 +44,8 @@ mpfr::mpreal psi_work(uint64_t x) {
   mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
   // if (u < 1)
   //   u = 1;
-  return S1(x, u) + S2(x, u) - S3(x, u) - slowS4(x, u);
-  // return S1(x, u) + S2(x, u) - S3(x, u) - S4(x, u);
+  // return S1(x, u) + S2(x, u) - S3(x, u) - slowS4(x, u);
+  return S1(x, u) + S2(x, u) - S3(x, u) - S4(x, u);
 }
 //TODO Make T use mpreal as well?
 mpfr::mpreal T(uint64_t arg) {
@@ -89,9 +84,13 @@ mpfr::mpreal S2(const uint64_t x, const mpfr::mpreal u) {
       continue;
     }
     uint64_t S2b = x/m;
+    #ifdef DEBUG_S2
     std::cout << " " << "S2b aka floor(x/m)= " << S2b;
+    #endif //DEBUG_S2
     if(S2b > 100000) {
-      std::cout << "T(x/m) * mobius(m) = " << mob * T(x/m);
+      #ifdef DEBUG_S2
+    std::cout << "T(x/m) * mobius(m) = " << mob * T(x/m);
+    #endif //DEBUG_S2
       S += mob * T(x/m);
     }
     else {
@@ -100,8 +99,10 @@ mpfr::mpreal S2(const uint64_t x, const mpfr::mpreal u) {
         directSum += log((mpfr::mpreal) i, GMP_RNDN);
       S += mob * directSum;
     }
+    #ifdef DEBUG_S2
     std::cout << "directSum(1 through x/m) * mobius(m) = " << (directSum * mob);
     std::cout << " now S is " << S << std::endl;
+    #endif //DEBUG_S2
   }
   return S;
 }

@@ -1,20 +1,7 @@
-#ifndef N_HPP
-#define N_HPP
-#include "Environment.h"
-#include <cassert>
-#include <iostream>
-#include <cmath>
-#include <cassert>
-#include <cfenv>
-#include <algorithm>
-#include <vector>
-typedef long long integer;
-typedef long double rational;
+#include "../include/N.h"
 
-static integer N(const integer x, const mpfr::mpreal u, const integer l, const integer k);
-#endif
 
-static integer N(const integer x, const mpfr::mpreal u, const integer l, const integer k) {
+integer N(const integer x, const mpfr::mpreal u, const integer l, const integer k) {
    assert(x < 10000000000000000);
    assert(l < 10000000000000000);
    const integer L2 = static_cast<integer>(x/(u * static_cast<long double>(l))); //deliberate floor
@@ -33,3 +20,4 @@ static integer N(const integer x, const mpfr::mpreal u, const integer l, const i
       return 0;
    return high - low + 1; //inclusive count of consecutive integers from low through high
 }
+
