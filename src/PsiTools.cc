@@ -215,12 +215,16 @@ mpfr::mpreal S4b(const uint64_t x, const mpfr::mpreal u, const mpfr::mpreal psiO
   #endif //DEBUG
    mpfr::mpreal result = 0.0;
    mpfr::mpreal sum = 0.0;
+   long long mu = 0;
    for (uint64_t l = 1; l <= (uint64_t) u; ++l) { //floor was ok
+     mu = mobius(l);
      #ifdef DEBUG
      std::cout<<"l is = "<<l<<" <= "<<(uint64_t)u<<endl;
      #endif //DEBUG
-      sum = mobius(l)*S4b_innerSum(x, u, l, psiOfU);
-      result += sum;
+     if(mu != 0 && (((long long) std::sqrt(((long double) x)/((long double) l))) < static_cast<long long>(x/(u * static_cast<long double>(l))))) {
+        sum = mu*S4b_innerSum(x, u, l, psiOfU);
+        result += sum;
+     }
       #ifdef DEBUG
       std::cout<<"At l = "<<l<<" Mobius is = "<<mobius(l)<<" the result from the sum is = "<<sum<<" and the overall sum is = "<<result<<endl;
       #endif //DEBUG

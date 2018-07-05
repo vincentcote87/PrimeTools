@@ -32,8 +32,7 @@ int main(int argc, char* argv[]) {
     cout<<"default value of x set at "<<x<<endl;
   }
   mpfr::mpreal::set_default_prec(128);
-  cout<<setprecision(21);
-
+  cout<<setprecision(36);
 
   mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
 
@@ -57,10 +56,11 @@ int main(int argc, char* argv[]) {
   // cout<<"Diffrence "<<a - b<<endl;
 
     // mpfr::mpreal a = psi(x);
-    // mpfr::mpreal b = primetools::calculatePsiLongDouble(x);
+    //mpfr::mpreal b = primetools::calculatePsiLongDouble(x);
     // cout<<"Formula   "<<a<<endl;
-    // cout<<"Brute cal "<<b<<endl;
+    //cout<<"Brute cal "<<b<<endl;
     // cout<<"Diffrence "<<a - b<<endl;
+    //cout<<mpfr::mpreal::get_default_prec()<<endl;
 
     // cout<<N(10000, 3.666721582566334971392540964529871417e+01, 1, 36)<<endl;
     // cout<<bruteN(10000, 3.666721582566334971392540964529871417e+01, 1, 36)<<endl;
