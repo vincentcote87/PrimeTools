@@ -1,4 +1,4 @@
-#include "../include/Primetools.h"
+#include "Primetools.h"
 
 
 int64_t primetools::getPi(int64_t x) {

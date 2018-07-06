@@ -1,4 +1,4 @@
-#include "../include/N.h"
+#include "N.h"
 
 
 integer N(const integer x, const mpfr::mpreal u, const integer l, const integer k) {
