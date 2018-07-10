@@ -10,6 +10,7 @@
 #include "int_double.h"
 #include "mpreal.h"
 
+#include "s3.h"
 
 namespace primetools {
 
@@ -20,7 +21,8 @@ namespace primetools {
   mpfr::mpreal calculateThetaLongDouble(uint64_t, uint64_t);
   int_double calculatePsi(uint64_t);
   mpfr::mpreal calculatePsiLongDouble(uint64_t);
-  long double calculatePsiNoTheta(uint64_t);
+  mpfr::mpreal calculatePsiNoTheta(uint64_t);
+  long long fastK(long long, long long, long long);
   int_double logpOverp(uint64_t);
   // const int DIGITS = 256;
   // long double log(long double a, int digits = DIGITS);
@@ -30,6 +32,6 @@ namespace primetools {
 
   uint64_t nextTheta(uint64_t, long double);
 
-
+	long long fast_log2(const uint64_t x);
 }
 #endif //PRIMETOOLS_H

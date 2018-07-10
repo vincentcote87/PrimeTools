@@ -16,8 +16,8 @@ void interpretClk(const std::chrono::milliseconds& a) {
    count %= 60000;
    const long long s = count / 1000;
    count %= 1000;
-   const long long us = count;
-   std::cout << "Ran for: " << h << ':' << min << ':' << s << ':' << us << std::endl;
+   const long long ms = count;
+   std::cout << "Ran for: " << h << ':' << min << ':' << s << ':' << ms << std::endl;
 }
 
 int main(int argc, char* argv[]) {
@@ -37,13 +37,18 @@ int main(int argc, char* argv[]) {
   mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
 
 
-  cout << "S2********************************************************************************" << endl;
-  mpfr::mpreal S2_result = S2(x, u);
-  cout << "S2 DONE **************************************************************************" << endl;
-  cout << "\n\n";
-  cout << std::setfill(' ') << std::setw(10) << left << "u" << u << endl;
-  cout << std::setfill(' ') << std::setw(10) << left << "S2" << S2_result << endl;
-  cout << "." << endl << endl;
+	mpfr::mpreal ans = primetools::calculatePsiNoTheta(x);
+	mpfr::mpreal an2 = primetools::calculatePsiLongDouble(x);
+	std::cout << "Powered Psi: " << ans << std::endl;
+	std::cout << "Theta Psi:   " << an2 << std::endl;
+
+//  cout << "S2********************************************************************************" << endl;
+ // mpfr::mpreal S2_result = S2(x, u);
+  //cout << "S2 DONE **************************************************************************" << endl;
+//  cout << "\n\n";
+ // cout << std::setfill(' ') << std::setw(10) << left << "u" << u << endl;
+//  cout << std::setfill(' ') << std::setw(10) << left << "S2" << S2_result << endl;
+ // cout << "." << endl << endl;
 
 //  mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
  // cout<<"S4*******************************************************************************"<<endl;

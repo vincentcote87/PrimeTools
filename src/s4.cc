@@ -74,6 +74,9 @@ mpfr::mpreal S4b(const uint64_t x, const mpfr::mpreal u, const mpfr::mpreal psiO
       std::cout<<"At l = "<<l<<" Mobius is = "<<mobius(l)<<" the result from the sum is = "<<sum<<" and the overall sum is = "<<result<<endl;
       #endif //DEBUG
    }
+   #ifdef DEBUG
+   std::cout << "Leaving S4b" << std::endl;
+   #endif
    return result;
 }
 

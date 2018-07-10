@@ -32,8 +32,8 @@ mpfr::mpreal psi_work(uint64_t x) {
   if (x < 2)
     return 0.0;
   mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
-  // if (u < 1)
-  //   u = 1;
+  if (u < 1)
+     u = 1;
   // return S1(x, u) + S2(x, u) - S3(x, u) - slowS4(x, u);
   return S1(x, u) + S2(x, u) - S3(x, u) - S4(x, u);
 }
