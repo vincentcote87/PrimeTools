@@ -1,6 +1,57 @@
 #include "s2.h"
 
-mpfr::mpreal T(uint64_t arg) {
+void Tsetup(uint64_t x) {
+	std::cout << "Running Tsetup...";
+	mpfr::mpreal x_u = (mpfr::mpreal) (x);
+	T_table = new mpfr::mpreal[x + 1];
+	size_t oldSize = T_tableSize;
+	T_tableSize = x + 1;
+	mpfr::mpreal sum;
+	if (oldSize) {
+		sum = T_table[oldSize - 1];
+	} else {
+		sum = 0.0;
+	}
+	size_t index;
+	if (oldSize) {
+		index = oldSize;
+	} else {
+		index = 1;
+	}
+	for (mpfr::mpreal i = index; i <= x_u; ++i) {
+		sum += log(i, MPFR_RNDN);
+		T_table[index++] = sum;
+	}
+	std::cout << "Done" << std::endl;
+}
+
+size_t idealT_tableSize(uint64_t x) {
+	return x;
+}
+
+mpfr::mpreal Tbrute(uint64_t n) {
+	mpfr::mpreal sum = 0.0;
+	mpfr::mpreal N = n;
+	for (mpfr::mpreal i = 1; i <= N; ++i) {
+		sum += log(i, MPFR_RNDN);
+	}
+	return sum;
+}
+
+mpfr::mpreal T(uint64_t n) {
+	if (n >= T_tableSize || n < 1) {
+		std::cout << "OUTSIDE OF BOUNDS OF THE TABLE OF SUMS OF LOGARITHMS" << std::endl;
+		if (T_tableSize)
+			std::cout << "This is despite running Tsetup...." << "n = " << n;
+		else
+			std::cout << "Because Tsetup has not been run...." << "n = " << n;
+		std::cout << std::endl;
+		return Tbrute(n);
+	}
+	return T_table[n];
+}
+
+mpfr::mpreal fastT(uint64_t arg) {
 	mp_prec_t def_prec = mpfr::mpreal::get_default_prec();
 	mpfr::mpreal::set_default_prec(1024);
   mpfr::mpreal N = (mpfr::mpreal) arg;
@@ -9,12 +60,13 @@ mpfr::mpreal T(uint64_t arg) {
   mpfr::mpreal T2 = 0.0;
   mpfr::mpreal T3 = 0.0;
 
-  T1 = (N + (mpfr::mpreal{0.5}) * log(N, MPFR_RNDN)) - N;
+  T1 = (N + mpfr::mpreal{0.5}) * log(N, MPFR_RNDN) - N;
   T2 = mpfr::mpreal{0.5} * log(mpfr::mpreal{2.0} * PI, MPFR_RNDN);
 
   for(int j = 1; j <= J; j++) {
-    T3 += B2[j]/(mpfr::mpreal{(2*j)*(2*j-1)} * pow(N,mpfr::mpreal{2*j-1}, MPFR_RNDN));
-    //T3 += B2[j]/(mpfr::mpreal{2*j*(2*j-1)} * pow(N,mpfr::mpreal{2*j-2}, MPFR_RNDN)); //(order of mag smaller)
+  	//using 1 originally
+    T3 += B2[j]/(mpfr::mpreal{(2*j)*(2*j-1)} * pow(N,mpfr::mpreal{2*j-1}, MPFR_RNDN)); // 1
+    //T3 += B2[j]/(mpfr::mpreal{2*j*(2*j-1)} * pow(N,mpfr::mpreal{2*j-2}, MPFR_RNDN)); // 2 (order of mag worse)
   }
 	
 	mpfr::mpreal result = T1 + T2 + T3;
@@ -37,7 +89,7 @@ mpfr::mpreal S2(const uint64_t x, const mpfr::mpreal u) {
   #ifdef DEBUG_S2
   std::cout << "m from 1 through u = " << u << std::endl;
   #endif //DEBUG_S2
-  for(uint64_t m = 1; m <= (uint64_t) u; m++) { //floor is okay
+  for(uint64_t m = 1; m <= u; m++) {
     mob = mobius(m);
     #ifdef DEBUG_S2
     std::cout << " " << "m = " << m << " mobius(m) = " << mob << std::endl;

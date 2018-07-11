@@ -40,9 +40,11 @@ int main() {
 	for (int i = 0; i < B2.size(); ++i) {
 		std::cout << "Bernoulli " << i*2 << " = " << B2[i] << std::endl;
 	}
+	const uint64_t UNTIL = 1000000;
+	Tsetup(UNTIL, 1);
 	cout << "\n\n";
 	mpfr::mpreal temp;
-	for (uint64_t n = 10; n <= 1000000000; n*=10) {
+	for (uint64_t n = 10; n <= UNTIL; n*=10) {
 		cout << "T(" << n << ") = " << T(n) << std::endl;
 		cout << "T's error:      " << Terror(n) << std::endl;
 		mpfr::mpreal observed = sumLog(n);
