@@ -5,9 +5,10 @@
 #include <cstddef>
 class B2Class {
 private:
-   static const int SIZE = 11;
-   int numerator[SIZE] = {1, 1, -1, 1, -1, 5, -691, 7, -3617, 43867, -174611};
-   int denominator[SIZE] = {1, 6, 30, 42, 30, 66, 2730, 6, 510, 798, 330};
+   static const int SIZE = 12;
+   // Source: http://numbers.computation.free.fr/Constants/Miscellaneous/bernoulli.html
+   int numerator[SIZE] =   {1, 1, -1,  1, -1,  5, -691, 7, -3617, 43867, -174611, 854513};
+   int denominator[SIZE] = {1, 6, 30, 42, 30, 66, 2730, 6,   510,   798,     330,    138};
    mpfr::mpreal* bernoulli;
 public:
    B2Class ();
