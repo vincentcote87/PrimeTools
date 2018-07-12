@@ -1,5 +1,4 @@
 #include "s2.h"
-#include "s3.h"
 #include <iostream>
 
 using namespace std;
@@ -36,19 +35,21 @@ mpfr::mpreal sumLog(uint64_t n) {
 
 int main() {
 	mpfr::mpreal::set_default_prec(1024);
-	cout << scientific << setprecision(36);
+	cout << scientific << setprecision(308);
 	for (int i = 0; i < B2.size(); ++i) {
 		std::cout << "Bernoulli " << i*2 << " = " << B2[i] << std::endl;
 	}
 	const uint64_t UNTIL = 1000000;
-	Tsetup(UNTIL, 1);
+	Tsetup(UNTIL);
 	cout << "\n\n";
 	mpfr::mpreal temp;
 	for (uint64_t n = 10; n <= UNTIL; n*=10) {
-		cout << "T(" << n << ") = " << T(n) << std::endl;
+		std::cout << "J = " << J << std::endl;
+		mpfr::mpreal ft = fastT(n);
+		cout << "T(" << n << ") = " << ft << std::endl;
 		cout << "T's error:      " << Terror(n) << std::endl;
 		mpfr::mpreal observed = sumLog(n);
-		cout << "Observed Error: " << abs(observed - T(n)) << std::endl;
+		cout << "Observed Error: " << abs(observed - ft) << std::endl;
 		cout << "\n\n";
 	}
 	return 0;
