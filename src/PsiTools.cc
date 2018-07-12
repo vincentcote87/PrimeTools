@@ -1,10 +1,10 @@
 #include "PsiTools.h"
 
 void setupEnvironment() {
-  std::cout << std::setprecision(72) << std::scientific; //33-36 //15-17 //octuple: \log_10{2^237} = 71.344
+  std::cout << std::setprecision(36) << std::scientific; //33-36 //15-17 //octuple: \log_10{2^237} = 71.344
   psi_setup();
   mobius_setup();
-  mpfr::mpreal::set_default_prec(256);
+  mpfr::mpreal::set_default_prec(128);
 }
 
 void psi_setup() {

@@ -42,6 +42,7 @@ int main(int argc, char* argv[]) {
   cout<<"S4*******************************************************************************"<<endl;
   mpfr::mpreal a = S4(x, u);
   cout<<endl<<endl<<"slowS4*******************************************************************************"<<endl;
+  cout<<endl<<endl;
   mpfr::mpreal b = slowS4(x, u);
   cout<<"u         "<<u<<endl;
   cout<<"S4        "<<a<<endl;

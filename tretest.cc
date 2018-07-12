@@ -1,5 +1,4 @@
 #include "s2.h"
-#include "s3.h"
 #include <iostream>
 
 using namespace std;
@@ -45,11 +44,14 @@ int main() {
 	cout << "\n\n";
 	mpfr::mpreal temp;
 	for (uint64_t n = 10; n <= UNTIL; n*=10) {
+		for (J = 1; J < 20; ++J) {
+		std::cout << "J = " << J << std::endl;
 		cout << "T(" << n << ") = " << T(n) << std::endl;
 		cout << "T's error:      " << Terror(n) << std::endl;
 		mpfr::mpreal observed = sumLog(n);
 		cout << "Observed Error: " << abs(observed - T(n)) << std::endl;
 		cout << "\n\n";
+		}
 	}
 	return 0;
 }
