@@ -36,9 +36,6 @@ mpfr::mpreal psi_work(uint64_t x) {
  // 	Tsetup(x);
   if (u < 1)
      u = 1;
-   return S1(x, u) + S2(x, u) - S3(x, u) - slowS4(x, u);
-  //return S1(x, u) + S2(x, u) - S3(x, u) - S4(x, u);
+   // return S1(x, u) + S2(x, u) - S3(x, u) - slowS4(x, u);
+  return S1(x, u) + S2(x, u) - S3(x, u) - S4(x, u);
 }
-
-
-
