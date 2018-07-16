@@ -19,7 +19,8 @@ mpfr::mpreal S4a(const uint64_t x, const mpfr::mpreal u, const mpfr::mpreal psiO
 	const long long u_integer = (long long) floor(u);
 	for (long long l = 1; l <= u_integer; ++l) {
     #ifdef DEBUG_S4
-		std::cout << "S4a_innerloop******************************************" << std::endl;
+		std::cout << "S4a_innerloop**********************************" << std::endl;
+    std::cout << "l = " << l << ", Now modbius(l) = " << mobius(l) << std::endl;
     #endif //DEBUG_S4
     mpfr::mpreal sum = (mobius(l) *S4a_innerLoop(x, u, l, psiOfU));
     result += sum;
@@ -33,12 +34,12 @@ mpfr::mpreal S4a(const uint64_t x, const mpfr::mpreal u, const mpfr::mpreal psiO
 
 mpfr::mpreal S4a_innerLoop(const uint64_t x, const mpfr::mpreal u, const uint64_t l, const mpfr::mpreal psiOfU) {
   mpfr::mpreal result = 0.0;
-  const long long lowerBound = (long long)(u/static_cast<long double>(l)) + 1;
+  const long long lowerBound = (u/static_cast<mpfr::mpreal>(l)).toLLong() + 1;
   const long long upperBound = (long long)(sqrt(static_cast<long double>(x)/static_cast<long double>(l)));
   // const uint64_t lowerM = (uint64_t)(u.toLDouble(MPFR_RNDN)/static_cast<long double>(l)); //VERY LIKELY WAS A FAILURE POINT WHEN U WAS AN INTEGER
   // const uint64_t upperM = sqrt(static_cast<long double>(x)/static_cast<long double>(l));
   #ifdef DEBUG_S4
-  std::cout<<"  Bounds for m are: "<<lowerBound<<" < m <= "<<upperBound<<std::endl;
+  std::cout<<"  Bounds for m are: "<<(u/static_cast<mpfr::mpreal>(l))<<" < m <= "<<upperBound<<std::endl;
   #endif //DEBUG_S4
   //std::cout << "S4a_innerLoop about to begin with the following parameters:" << std::endl;
   //std::cout << "x: " << x << " u: " << u << " l: " << l << " psiOfU: " << psiOfU << " result: " << result << " lowerM: " << lowerM << " upperM: " << upperM << std::endl;
@@ -61,7 +62,14 @@ mpfr::mpreal S4b(const uint64_t x, const mpfr::mpreal u, const mpfr::mpreal psiO
 	mpfr::mpreal result = 0.0;
 	const long long u_integer = (long long) floor(u);
 	for (long long l = 1; l <= u_integer; ++l) {
+    #ifdef DEBUG_S4
+    std::cout << "S4b innerSum*************************************\n";
+    std::cout << "Now modbius(l) = " << mobius(l) << std::endl;
+    #endif //DEBUG_S4
 		result += static_cast<mpfr::mpreal>(mobius(l)) * S4b_innerSum(x, u, l, psiOfU);
+    #ifdef DEBUG_S4
+    std::cout << "end of S4b_innerSum***********************************" << std::endl;
+    #endif //DEBUG_S4
 	}
 	return result;
 }
@@ -99,15 +107,15 @@ mpfr::mpreal S4b_innerSum(const uint64_t x, const mpfr::mpreal u, const uint64_t
 mpfr::mpreal slowS4(const uint64_t x, const mpfr::mpreal u) {
   mpfr::mpreal psi_of_u = primetools::calculatePsiLongDouble(u.toLLong(MPFR_RNDD));
   mpfr::mpreal result = 0.0;
-  #ifdef DEBUG_S4
+  #ifdef DEBUG_SlowS4
   std::cout<<"Psi(u) = "<<psi_of_u<<endl;
-  #endif //DEBUG_S4
+  #endif //DEBUG_SlowS4
   for(uint64_t l = 1; l <= (uint64_t) u; ++l) { //floor was ok
     mpfr::mpreal sum = (mobius(l) * slowS4_inner(x, u, l, psi_of_u));
     result += sum;
-    #ifdef DEBUG_S4
+    #ifdef DEBUG_SlowS4
     std::cout<<"  At L = "<<l<<" The running sum is "<<result<<std::endl;
-    #endif //DEBUG_S4
+    #endif //DEBUG_SlowS4
   }
   return result;
 }
@@ -117,17 +125,17 @@ mpfr::mpreal slowS4_inner(const uint64_t x, const mpfr::mpreal u, const uint64_t
   mpfr::mpreal result = 0.0;
   long long lowerBound = (long long)(u/static_cast<long double>(l)) + 1;
   long long upperBound = (long long)(static_cast<long double>(x)/(u * static_cast<long double>(l)));
-  #ifdef DEBUG_S4
+  #ifdef DEBUG_SlowS4
   std::cout<<"    Inner loop "<<lowerBound<<" < m <= "<<upperBound<<std::endl;
-  #endif //DEBUG_S4
+  #endif //DEBUG_SlowS4
   for(long long m = lowerBound; m <= upperBound; ++m) {
     long long innerTerm = floor(static_cast<long double>(x)/(static_cast<long double>(l) * static_cast<long double>(m)));
     mpfr::mpreal firstTerm = primetools::calculatePsiLongDouble(innerTerm);
     result += (firstTerm - psiOfU);
-    #ifdef DEBUG_S4
+    #ifdef DEBUG_SlowS4
     std::cout<<"      m"<<m<<" = "<<firstTerm<<" - "<<psiOfU<<" = "<<firstTerm-psiOfU<<std::endl;
     std::cout<<"        Running result = "<<result<<std::endl;
-    #endif //DEBUG_S4
+    #endif //DEBUG_SlowS4
   }
   return result;
 }
