@@ -5,6 +5,7 @@ void setupEnvironment() {
   psi_setup();
   mobius_setup();
   mpfr::mpreal::set_default_prec(256);
+  std::cout<<"Precision set to "<<mpfr::mpreal::get_default_prec()<<std::endl;
 }
 
 void psi_setup() {

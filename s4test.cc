@@ -48,6 +48,7 @@ int main(int argc, char* argv[]) {
   cout<<"S4        "<<a<<endl;
   cout<<"Slow S4   "<<b<<endl;
   cout<<"Diffrence "<<a - b<<endl;
+  cout<<"exp = "<<exp(abs(a-b))<<endl;
 
   return 0;
 }
