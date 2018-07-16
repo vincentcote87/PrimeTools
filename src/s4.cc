@@ -45,7 +45,7 @@ mpfr::mpreal S4a_innerLoop(const uint64_t x, const mpfr::mpreal u, const uint64_
   //std::cout << "x: " << x << " u: " << u << " l: " << l << " psiOfU: " << psiOfU << " result: " << result << " lowerM: " << lowerM << " upperM: " << upperM << std::endl;
   //std::cout << "Entering the loop now...";
   for(long long m = lowerBound; m <= upperBound; ++m) {
-    long long innerTerm = floor(static_cast<long double>(x)/(static_cast<long double>(l) * static_cast<long double>(m)));
+    long long innerTerm = x/(l * m);
     mpfr::mpreal firstTerm = primetools::calculatePsiLongDouble(innerTerm);
     result += (firstTerm - psiOfU);
     #ifdef DEBUG_S4
