@@ -19,10 +19,11 @@ mpfr::mpreal S4a(const uint64_t x, const mpfr::mpreal u, const mpfr::mpreal psiO
 	mpfr::mpreal result = 0.0;
 	const long long u_integer = (long long) floor(u);
 	for (long long l = 1; l <= u_integer; ++l) {
-    // #ifdef DEBUG_S4
-		// std::cout << "S4a_innerloop******************************************" << std::endl;
-    // #endif //DEBUG_S4
-    mpfr::mpreal sum = static_cast<mpfr::mpreal>(mobius(l) * S4a_innerLoop(x, u, l, psiOfU));
+    #ifdef DEBUG_S4
+		std::cout << "S4a_innerloop**********************************" << std::endl;
+    std::cout << "l = " << l << ", Now modbius(l) = " << mobius(l) << std::endl;
+    #endif //DEBUG_S4
+    mpfr::mpreal sum = (mobius(l) *S4a_innerLoop(x, u, l, psiOfU));
     result += sum;
 		// result += static_cast<mpfr::mpreal>(mobius(l)) * S4a_innerLoop(x, u, l, psiOfU);
     // #ifdef DEBUG_S4
@@ -40,7 +41,7 @@ mpfr::mpreal S4a_innerLoop(const uint64_t x, const mpfr::mpreal u, const uint64_
   // const uint64_t upperM = sqrt(static_cast<long double>(x)/static_cast<long double>(l));
 
   #ifdef DEBUG_S4
-  std::cout<<"  Bounds for m are: "<<lowerBound<<" <= m <= "<<upperBound<<" and L = "<<l<<std::endl;
+  std::cout<<"  Bounds for m are: "<<(u/static_cast<mpfr::mpreal>(l))<<" < m <= "<<upperBound<<std::endl;
   #endif //DEBUG_S4
 
   //std::cout << "S4a_innerLoop about to begin with the following parameters:" << std::endl;
@@ -68,7 +69,14 @@ mpfr::mpreal S4b(const uint64_t x, const mpfr::mpreal u, const mpfr::mpreal psiO
 	mpfr::mpreal result = 0.0;
 	const long long u_integer = (long long) floor(u);
 	for (long long l = 1; l <= u_integer; ++l) {
+    #ifdef DEBUG_S4
+    std::cout << "S4b innerSum*************************************\n";
+    std::cout << "Now modbius(l) = " << mobius(l) << std::endl;
+    #endif //DEBUG_S4
 		result += static_cast<mpfr::mpreal>(mobius(l)) * S4b_innerSum(x, u, l, psiOfU);
+    #ifdef DEBUG_S4
+    std::cout << "end of S4b_innerSum***********************************" << std::endl;
+    #endif //DEBUG_S4
 	}
 	return result;
 }
@@ -125,17 +133,17 @@ mpfr::mpreal slowS4_inner(const uint64_t x, const mpfr::mpreal u, const uint64_t
   mpfr::mpreal result = 0.0;
   long long lowerBound = (long long)(u/static_cast<long double>(l)) + 1;
   long long upperBound = (long long)(static_cast<long double>(x)/(u * static_cast<long double>(l)));
-  // #ifdef DEBUG_SlowS4
-  // std::cout<<"    Inner loop "<<lowerBound<<" < m <= "<<upperBound<<std::endl;
-  // #endif //DEBUG_SlowS4
+  #ifdef DEBUG_SlowS4
+  std::cout<<"    Inner loop "<<lowerBound<<" < m <= "<<upperBound<<std::endl;
+  #endif //DEBUG_SlowS4
   for(long long m = lowerBound; m <= upperBound; ++m) {
     long long innerTerm = floor(static_cast<long double>(x)/(static_cast<long double>(l) * static_cast<long double>(m)));
     mpfr::mpreal firstTerm = primetools::calculatePsiLongDouble(innerTerm);
     result += (firstTerm - psiOfU);
-    // #ifdef DEBUG_SlowS4
-    // std::cout<<"      m"<<m<<" = "<<firstTerm<<" - "<<psiOfU<<" = "<<firstTerm-psiOfU<<std::endl;
-    // std::cout<<"        Running result = "<<result<<std::endl;
-    // #endif //DEBUG_SlowS4
+    #ifdef DEBUG_SlowS4
+    std::cout<<"      m"<<m<<" = "<<firstTerm<<" - "<<psiOfU<<" = "<<firstTerm-psiOfU<<std::endl;
+    std::cout<<"        Running result = "<<result<<std::endl;
+    #endif //DEBUG_SlowS4
   }
   return result;
 }
