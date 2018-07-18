@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) {
     cout<<"default value of x set at "<<x<<endl;
   }
 
-  // mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
-  mpfr::mpreal u = argv[2];
+  mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
+  // mpfr::mpreal u = argv[2];
   cout<<"S4*******************************************************************************"<<endl;
   mpfr::mpreal a = S4(x, u);
   cout<<endl<<endl<<"slowS4*******************************************************************************"<<endl;
