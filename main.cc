@@ -27,8 +27,22 @@ void interpretClk(const std::chrono::steady_clock::duration dur) {
 int main(int argc, char* argv[]) {
 
   setupEnvironment();
-  uint64_t x;
-  std::chrono::steady_clock clk;
+
+  // std::ifstream inFile;
+  // inFile.open("./psiList.txt");
+  // std::string str;
+  // std::vector<mpfr::mpreal> psiVector;
+  // std::cout<<"seting up psi table...";
+  // while(inFile >> str) {
+  //   std::cout<<str<<std::endl;
+  //   psiVector.push_back(str);
+  // }
+  // std::cout<<"Done"<<std::endl;
+  // std::cout<<psiVector.size()<<std::endl;
+
+  // uint64_t x;
+  // std::chrono::steady_clock clk;
+  long long x;
   if(argc == 2)
     x = std::stoll(argv[1]);
   else {
@@ -39,28 +53,35 @@ int main(int argc, char* argv[]) {
   //   std::cout<<"Psi("<<x<<") = "<<primetools::calculatePsiLongDouble(x)<<endl;
   //   std::cin>>x;
   // }
-  mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
+  // mpfr::mpreal u = (cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)))) / 2.0;
 
-	std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> p1, p2, p3, p4;
+	// std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> p1, p2, p3, p4;
+  //
+	// p1 = clk.now();
+	// mpfr::mpreal ans = primetools::calculatePsiNoTheta(x);
+	// p2 = clk.now();
+	// mpfr::mpreal an2 = primetools::calculatePsiLongDouble(x);
+	// p3 = clk.now();
+	// mpfr::mpreal an3 = psi(x);
+  // // mpfr::mpreal an3 = 2.0;
+	// p4 = clk.now();
+	// std::cout << "Powered Psi: " << ans << std::endl;
+	// std::cout << "Theta Psi:   " << an2 << std::endl;
+	// std::cout << "A Psi:       " << an3 << std::endl;
+  //
+	// std::cout << "Powered Psi: ";
+	// interpretClk(p2 - p1);
+	// std::cout << "Theta Psi:   ";
+	// interpretClk(p3 - p2);
+	// std::cout << "A Psi:       ";
+	// interpretClk(p4 - p3);
 
-	p1 = clk.now();
-	mpfr::mpreal ans = primetools::calculatePsiNoTheta(x);
-	p2 = clk.now();
-	mpfr::mpreal an2 = primetools::calculatePsiLongDouble(x);
-	p3 = clk.now();
-	mpfr::mpreal an3 = psi(x);
-  // mpfr::mpreal an3 = 2.0;
-	p4 = clk.now();
-	std::cout << "Powered Psi: " << ans << std::endl;
-	std::cout << "Theta Psi:   " << an2 << std::endl;
-	std::cout << "A Psi:       " << an3 << std::endl;
+//TO GENERATE PSI TABLE
+  // for(int x = 0; x < 1000000; ++x)
+  //   std::cout<<primetools::calculatePsiLongDouble(x)<<std::endl;
 
-	std::cout << "Powered Psi: ";
-	interpretClk(p2 - p1);
-	std::cout << "Theta Psi:   ";
-	interpretClk(p3 - p2);
-	std::cout << "A Psi:       ";
-	interpretClk(p4 - p3);
+  std::cout<<primetools::calculatePsiLongDouble(x)<<std::endl;
+  std::cout<<psi(x)<<std::endl;
 
 //  cout << "S2********************************************************************************" << endl;
  // mpfr::mpreal S2_result = S2(x, u);

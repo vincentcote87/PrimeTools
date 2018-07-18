@@ -1,8 +1,8 @@
 #include "s4.h"
 
 mpfr::mpreal S4(const uint64_t x, const mpfr::mpreal u) {
-  mpfr::mpreal::set_default_prec(256);
-   mpfr::mpreal psi_of_u = primetools::calculatePsiLongDouble(u.toLLong(MPFR_RNDD));
+   // mpfr::mpreal psi_of_u = primetools::calculatePsiLongDouble(u.toLLong(MPFR_RNDD));
+   mpfr::mpreal psi_of_u = psiTable(u.toLLong(MPFR_RNDD));
    #ifdef DEBUG_S4
    std::cout<<"psi(u) = "<<psi_of_u<<std::endl;
    #endif //DEBUG_S4
@@ -50,7 +50,8 @@ mpfr::mpreal S4a_innerLoop(const uint64_t x, const mpfr::mpreal u, const uint64_
   for(long long m = lowerBound; m <= upperBound; ++m) {
     long long innerTerm = floor(static_cast<long double>(x)/(static_cast<long double>(l) * static_cast<long double>(m)));
     // std::cout<<"    innerfloor with L = "<<l<<" and m = "<<m<<" is "<<innerTerm<<std::endl;
-    mpfr::mpreal firstTerm = primetools::calculatePsiLongDouble(innerTerm);
+    // mpfr::mpreal firstTerm = primetools::calculatePsiLongDouble(innerTerm);
+    mpfr::mpreal firstTerm = psiTable(innerTerm);
     result += (firstTerm - psiOfU);
 
     #ifdef DEBUG_S4
@@ -92,14 +93,23 @@ mpfr::mpreal S4b_innerSum(const uint64_t x, const mpfr::mpreal u, const uint64_t
    #endif //DEBUG_S4
    for (uint64_t k = 1; k <= end; ++k) {
       const long long n = N(x, u, l, k);
+      long long slown = slowN(x, u, l, k);
+
+      if(n != slown) {
+        cout<<"MISMATCH x = "<<x<<" u = "<<u<<" l = "<<l<<" k = "<<k<<" N = "<<n<<" and slowN = "<<slown<<endl;
+      }
+
       #ifdef DEBUG_S4
       std::cout<<"    @k = "<<k<<" N("<<x<<", u, "<<l<<", "<<k<<") = "<<n;
       #endif //DEBUG_S4
       if (n != 0) {
         #ifdef DEBUG_S4
-        std::cout<<" psi(k) = "<<primetools::calculatePsiLongDouble(k)<<" and the result is = "<<(primetools::calculatePsiLongDouble(k) - psiOfU)*n;
+        // std::cout<<" psi(k) = "<<primetools::calculatePsiLongDouble(k)<<" and the result is = "<<(primetools::calculatePsiLongDouble(k) - psiOfU)*n;
+        std::cout<<" psi(k) = "<<psiTable(k)<<" and the result is = "<<(psiTable(k) - psiOfU)*n;
+
         #endif //DEBUG_S4
-	       sum += (primetools::calculatePsiLongDouble(k) - psiOfU) * (n);
+	       // sum += (primetools::calculatePsiLongDouble(k) - psiOfU) * (n);
+         sum += (psiTable(k) - psiOfU) * (n);
       }
       #ifdef DEBUG_S4
       std::cout<<endl;
@@ -112,8 +122,8 @@ mpfr::mpreal S4b_innerSum(const uint64_t x, const mpfr::mpreal u, const uint64_t
 
 
 mpfr::mpreal slowS4(const uint64_t x, const mpfr::mpreal u) {
-  mpfr::mpreal::set_default_prec(256);
-  mpfr::mpreal psi_of_u = primetools::calculatePsiLongDouble(u.toLLong(MPFR_RNDD));
+  // mpfr::mpreal psi_of_u = primetools::calculatePsiLongDouble(u.toLLong(MPFR_RNDD));
+  mpfr::mpreal psi_of_u = psiTable(u.toLLong(MPFR_RNDD));
   mpfr::mpreal result = 0.0;
   #ifdef DEBUG_SlowS4
   std::cout<<"Psi(u) = "<<psi_of_u<<endl;
@@ -138,7 +148,8 @@ mpfr::mpreal slowS4_inner(const uint64_t x, const mpfr::mpreal u, const uint64_t
   #endif //DEBUG_SlowS4
   for(long long m = lowerBound; m <= upperBound; ++m) {
     long long innerTerm = floor(static_cast<long double>(x)/(static_cast<long double>(l) * static_cast<long double>(m)));
-    mpfr::mpreal firstTerm = primetools::calculatePsiLongDouble(innerTerm);
+    // mpfr::mpreal firstTerm = primetools::calculatePsiLongDouble(innerTerm);
+    mpfr::mpreal firstTerm = psiTable(innerTerm);
     result += (firstTerm - psiOfU);
     #ifdef DEBUG_SlowS4
     std::cout<<"      m"<<m<<" = "<<firstTerm<<" - "<<psiOfU<<" = "<<firstTerm-psiOfU<<std::endl;
