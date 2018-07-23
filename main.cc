@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
   std::cout << std::setprecision(88) << std::scientific; //33-36 //15-17 //octuple: \log_10{2^237} = 71.344
   mpfr::mpreal::set_default_prec(384);
   //TO GENERATE PSI TABLE
-  for(int x = 0; x < 20; ++x)
+  for(int x = 0; x < 1000000; ++x)
     std::cout<<primetools::calculatePsiLongDouble(x)<<std::endl;
 
   return 0;
