@@ -17,7 +17,7 @@ mpfr::mpreal S4(const uint64_t x, const mpfr::mpreal u) {
 
 mpfr::mpreal S4a(const uint64_t x, const mpfr::mpreal u, const mpfr::mpreal psiOfU) {
 	mpfr::mpreal result = 0.0;
-	const long long u_integer = (long long) floor(u);
+	const long long u_integer = u.toLLong(MPFR_RNDD);
 	for (long long l = 1; l <= u_integer; ++l) {
     #ifdef DEBUG_S4
 		std::cout << "S4a_innerloop**********************************" << std::endl;
@@ -70,7 +70,7 @@ mpfr::mpreal S4a_innerLoop(const uint64_t x, const mpfr::mpreal u, const uint64_
 
 mpfr::mpreal S4b(const uint64_t x, const mpfr::mpreal u, const mpfr::mpreal psiOfU) {
 	mpfr::mpreal result = 0.0;
-	const long long u_integer = (long long) floor(u);
+	const long long u_integer = u.toLLong(MPFR_RNDD);
 	for (long long l = 1; l <= u_integer; ++l) {
     #ifdef DEBUG_S4
     std::cout << "S4b innerSum*************************************\n";
