@@ -24,7 +24,7 @@ long long S3_B(const uint64_t x, const mpfr::mpreal u, const uint64_t p, const u
 mpfr::mpreal S3_A(const uint64_t x, const mpfr::mpreal u, const uint64_t p) {
   mpfr::mpreal S = 0.0;
   // uint64_t tmpMu = 0;
-  for (uint64_t l = 1; l <= u.toLLong(GMP_RNDD); ++l) { //floor was okay for less than or equal to u
+  for (long long l = 1; l <= u.toLLong(GMP_RNDD); ++l) { //floor was okay for less than or equal to u
     S += mobius(l)*S3_B(x, u, p, l);
     // tmpMu += mobius(l);
     // std::cout<<tmpMu<<std::endl;
@@ -49,5 +49,3 @@ mpfr::mpreal S3(const uint64_t x, const mpfr::mpreal u) {
   //std::cout<<"S3 Done..."<<S<<std::endl;
   return S;
 }
-
-

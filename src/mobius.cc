@@ -1,6 +1,6 @@
 #include "mobius.h"
 
-const uint64_t mobiusCutoff = 1000001;
+const long long mobiusCutoff = 1000001;
 long long *mobiusTable;
 
 void mobius_setup() {
@@ -46,5 +46,3 @@ long long mobius_work(long long x) {
   }
   return (k % 2 == 0) ? -1 : 1;
 }
-
-

@@ -1,4 +1,4 @@
-CXX =g++ -std=c++0x -g -w
+CXX =g++ -std=c++0x -g -Wall
 # IFLAGS = -I /usr/local/include -I ./include
 IFLAGS = -I ./include
 LFLAGS = -L /usr/local/lib64

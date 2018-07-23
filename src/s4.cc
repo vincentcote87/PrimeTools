@@ -26,9 +26,9 @@ mpfr::mpreal S4a(const uint64_t x, const mpfr::mpreal u, const mpfr::mpreal psiO
     mpfr::mpreal sum = (mobius(l) *S4a_innerLoop(x, u, l, psiOfU));
     result += sum;
 		// result += static_cast<mpfr::mpreal>(mobius(l)) * S4a_innerLoop(x, u, l, psiOfU);
-    // #ifdef DEBUG_S4
-		// std::cout << "end of S4a_innerloop***********************************" << std::endl;
-    // #endif //DEBUG_S4
+    #ifdef DEBUG_S4
+		std::cout << "S4a main sum = " << result << std::endl;
+    #endif //DEBUG_S4
 	}
 	return result;
 }
@@ -36,7 +36,10 @@ mpfr::mpreal S4a(const uint64_t x, const mpfr::mpreal u, const mpfr::mpreal psiO
 mpfr::mpreal S4a_innerLoop(const uint64_t x, const mpfr::mpreal u, const uint64_t l, const mpfr::mpreal psiOfU) {
   mpfr::mpreal result = 0.0;
   const long long lowerBound = (u/static_cast<mpfr::mpreal>(l)).toLLong(MPFR_RNDD) + 1;
-  const long long upperBound = (long long)(sqrt(static_cast<long double>(x)/static_cast<long double>(l)));
+
+  const long long a = (long long)(static_cast<long double>(x)/(u * static_cast<long double>(l)));
+  const long long b = (long long)(sqrt(static_cast<long double>(x)/static_cast<long double>(l)));
+  const long long upperBound = std::min(a,b);
   // const uint64_t lowerM = (uint64_t)(u.toLDouble(MPFR_RNDN)/static_cast<long double>(l)); //VERY LIKELY WAS A FAILURE POINT WHEN U WAS AN INTEGER
   // const uint64_t upperM = sqrt(static_cast<long double>(x)/static_cast<long double>(l));
 
@@ -83,7 +86,7 @@ mpfr::mpreal S4b(const uint64_t x, const mpfr::mpreal u, const mpfr::mpreal psiO
 
 mpfr::mpreal S4b_innerSum(const uint64_t x, const mpfr::mpreal u, const uint64_t l, const mpfr::mpreal psiOfU) {
    mpfr::mpreal sum = 0.0;
-   const long long end = std::sqrt(((long double) x)/((long double) l)); //k <= sqrt(x/l), k is an integer...
+   const uint64_t end = std::sqrt(((long double) x)/((long double) l)); //k <= sqrt(x/l), k is an integer...
    //std::cout << "S4b_innerSum about to begin with the following parameters:" << std::endl;
    //std::cout << "x: " << x << " u: " << u << " l: " << l << " psiOfU: " << psiOfU << " sum: " << sum << " end: " << end << std::endl;
    //std::cout << "Entering the loop now...";
