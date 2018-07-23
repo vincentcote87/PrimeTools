@@ -11,6 +11,8 @@ PROGRAM = main
 C ?= na
 F ?=
 
+//g++ -static -std=c++0x -o s4test -I ./include ./src/*.cc s4test.cc -fopenmp -lprimesieve -lprimecount -lgmp -lmpfr -lgmp
+
 .PHONY: all
 main: clean
 	# $(CXX) -o $(PROGRAM) $(LFLAGS) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH)
