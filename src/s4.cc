@@ -92,6 +92,7 @@ mpfr::mpreal S4b_innerSum(const uint64_t x, const mpfr::mpreal u, const uint64_t
    #endif //DEBUG_S4
    for (uint64_t k = 1; k <= end; ++k) {
       const long long n = N(x, u, l, k);
+      // const long long n = slowN(x, u, l, k);
       #ifdef DEBUG_S4
       std::cout<<"    @k = "<<k<<" N("<<x<<", u, "<<l<<", "<<k<<") = "<<n;
       #endif //DEBUG_S4

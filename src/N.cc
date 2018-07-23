@@ -31,3 +31,16 @@ integer N(const integer x, const mpfr::mpreal u, const integer l, const integer 
 
    return high - low + 1; //inclusive count of consecutive integers from low through high
 }
+
+long long slowN( long long x,  mpfr::mpreal u,  long long l,  long long k) {
+  long long result = 0;
+  long long lowerBound = floor(std::sqrt((x/l))) + 1;
+  long long upperBound = floor(x / (u.toLDouble(MPFR_RNDD) * l));
+
+  // std::cout<<"x = "<<x<<" u = "<<u<<" l = "<<l<<" k = "<<k<<" lowerBound = "<<lowerBound<<" upperBound = "<<upperBound<<std::endl;
+  for(long long m = lowerBound; m <= upperBound; ++m) {
+    if(floor(x / (l * m)) == k)
+      result++;
+  }
+  return result;
+ }
