@@ -1,7 +1,6 @@
 #include "s4.h"
 
 mpfr::mpreal S4(const uint64_t x, const mpfr::mpreal u) {
-  mpfr::mpreal::set_default_prec(256);
    mpfr::mpreal psi_of_u = primetools::calculatePsiLongDouble(u.toLLong(MPFR_RNDD));
    #ifdef DEBUG_S4
    std::cout<<"psi(u) = "<<psi_of_u<<std::endl;
@@ -115,7 +114,6 @@ mpfr::mpreal S4b_innerSum(const uint64_t x, const mpfr::mpreal u, const uint64_t
 
 
 mpfr::mpreal slowS4(const uint64_t x, const mpfr::mpreal u) {
-  mpfr::mpreal::set_default_prec(256);
   mpfr::mpreal psi_of_u = primetools::calculatePsiLongDouble(u.toLLong(MPFR_RNDD));
   mpfr::mpreal result = 0.0;
   #ifdef DEBUG_SlowS4
