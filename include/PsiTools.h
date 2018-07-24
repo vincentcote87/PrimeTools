@@ -2,6 +2,7 @@
 #define PSITOOLS_H
 #include "Environment.h"
 #include <iostream>
+#include <fstream>
 #include <cmath>
 #include <iomanip>
 #include <primesieve.hpp>
@@ -26,4 +27,4 @@ void setupEnvironment();
 #endif //PSITOOLS_H
 
 static const size_t cutoff = 10000000; //4294967295
-static mpfr::mpreal *psiTable;
+// static mpfr::mpreal *psiTable;

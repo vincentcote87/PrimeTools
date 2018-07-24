@@ -1,4 +1,4 @@
-CXX =g++ -std=c++0x -g -Wall -fprofile-arcs -ftest-coverage
+CXX =g++ -std=c++0x -g -w -fprofile-arcs -ftest-coverage
 # IFLAGS = -I /usr/local/include -I ./include
 IFLAGS = -I ./include
 LFLAGS = -L /usr/local/lib64
