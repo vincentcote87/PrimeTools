@@ -1,4 +1,4 @@
-CXX =g++ -std=c++0x -g -w
+CXX =g++ -std=c++0x -g -Wall
 # IFLAGS = -I /usr/local/include -I ./include
 IFLAGS = -I ./include
 LFLAGS = -L /usr/local/lib64
@@ -11,6 +11,8 @@ PROGRAM = main
 C ?= na
 F ?=
 
+#g++ -static -std=c++0x -o s4test -I ./include ./src/*.cc s4test.cc -fopenmp -lprimesieve -lprimecount -lgmp -lmpfr -lgmp
+
 .PHONY: all
 main: clean
 	# $(CXX) -o $(PROGRAM) $(LFLAGS) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH)
@@ -20,7 +22,7 @@ static: clean
 
 custom: clean
 	#$(CXX) $(IFLAGS) $(C).cc $(SRC_DIR)/* -o $(C) $(LINKFLAGS) $(RPATH) $(F)
-	$(CXX) -o $(C) $(IFLAGS) $(SRC_DIR)/*.cc $(C).cc $(LINKFLAGS) $(RPATH) $(F)
+	$(CXX) -o $(C) $(IFLAGS) $(SRC_DIR)/*.cc $(C).cc $(LINKFLAGS) $(RPATH) $(F) -static-libgcc
 
 min: clean
 	$(CXX) $(PROGRAM).cc $(SRC_DIR)/* -o $(PROGRAM)

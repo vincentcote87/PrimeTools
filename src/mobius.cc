@@ -1,13 +1,12 @@
 #include "mobius.h"
 
-const uint64_t mobiusCutoff = 1000001;
+const long long mobiusCutoff = 1000001;
 long long *mobiusTable;
 
 void mobius_setup() {
   std::cout<<"seting up mobius table...";
   mobiusTable = new long long[mobiusCutoff];
   for (uint i = 0; i < mobiusCutoff; ++i) {
-    // mobiusTable[i] = -2000;
     mobiusTable[i] = mobius_work(i);
   }
   std::cout<<"Done"<<std::endl;
@@ -46,5 +45,3 @@ long long mobius_work(long long x) {
   }
   return (k % 2 == 0) ? -1 : 1;
 }
-
-

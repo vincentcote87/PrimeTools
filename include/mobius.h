@@ -13,7 +13,7 @@ long long mobius(long long);
 long long mobius_work(long long);
 void mobius_setup();
 
-extern const uint64_t mobiusCutoff;
+extern const long long mobiusCutoff;
 extern long long *mobiusTable;
 
 #endif

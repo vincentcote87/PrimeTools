@@ -19,7 +19,4 @@ mpfr::mpreal S4a_innerLoop(uint64_t, mpfr::mpreal, uint64_t, mpfr::mpreal);
 mpfr::mpreal S4b(uint64_t, mpfr::mpreal, mpfr::mpreal);
 mpfr::mpreal S4b_innerSum(uint64_t, mpfr::mpreal, uint64_t, mpfr::mpreal);
 
-mpfr::mpreal slowS4(uint64_t x, mpfr::mpreal u);
-mpfr::mpreal slowS4_inner(uint64_t x, mpfr::mpreal u, uint64_t l, mpfr::mpreal psiOfU);
-
 #endif

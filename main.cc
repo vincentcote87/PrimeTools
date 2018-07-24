@@ -35,11 +35,14 @@ int main(int argc, char* argv[]) {
     x = 100;
     cout<<"default value of x set at "<<x<<endl;
   }
-
+  // while(true) {
+  //   std::cout<<"Psi("<<x<<") = "<<primetools::calculatePsiLongDouble(x)<<endl;
+  //   std::cin>>x;
+  // }
   mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
-	
+
 	std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> p1, p2, p3, p4;
-	
+
 	p1 = clk.now();
 	mpfr::mpreal ans = primetools::calculatePsiNoTheta(x);
 	p2 = clk.now();
@@ -50,7 +53,7 @@ int main(int argc, char* argv[]) {
 	std::cout << "Powered Psi: " << ans << std::endl;
 	std::cout << "Theta Psi:   " << an2 << std::endl;
 	std::cout << "A Psi:       " << an3 << std::endl;
-	
+
 	std::cout << "Powered Psi: ";
 	interpretClk(p2 - p1);
 	std::cout << "Theta Psi:   ";
@@ -89,7 +92,7 @@ int main(int argc, char* argv[]) {
  //   cout<<"u       = "<<u<<endl;
  //   cout<<"s4      = "<<S4(x, u)<<endl;
  //   cout<<"s4 slow = "<<slowS4(x, u)<<endl;
-    
+
  //   auto before = clk.now();
   //  long double temp = psi(x);
   //  std::cout << "psi:     " << temp << std::endl;

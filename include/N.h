@@ -13,5 +13,5 @@ typedef long long integer;
 typedef long double rational;
 
 integer N(const integer x, const mpfr::mpreal u, const integer l, const integer k);
-#endif
 
+#endif
