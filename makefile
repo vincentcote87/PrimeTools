@@ -1,4 +1,4 @@
-CXX =g++ -std=c++0x -g -Wall
+CXX =g++ -std=c++0x -g -Wall -fprofile-arcs -ftest-coverage
 # IFLAGS = -I /usr/local/include -I ./include
 IFLAGS = -I ./include
 LFLAGS = -L /usr/local/lib64
@@ -7,6 +7,12 @@ SRC_DIR = ./src
 LINKFLAGS = -lprimesieve -lprimecount -lgmp -lmpfr
 RPATH = -Wl,-rpath=/usr/local/lib64
 # RPATH = -Wl,-rpath=/usr/local/lib64
+
+LCOV = lcov
+GCOV = gcov
+COVERAGE_RESULTS = results.coverage
+COVERAGE_DIR = coverage
+
 PROGRAM = main
 C ?= na
 F ?=
@@ -28,10 +34,19 @@ min: clean
 	$(CXX) $(PROGRAM).cc $(SRC_DIR)/* -o $(PROGRAM)
 
 clean:
-	rm -rf *.o *~ main ./include/*.gch
+	rm -rf *.o *~ main ./include/*.gch *.gcov *.gcda *.gcno $(COVERAGE_RESULTS)
 
 musl:
 	/usr/local/musl/bin/musl-gcc -static -o $(PROGRAM) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH)
 
 original:
 	$(CXX) $(IFLAGS) $(LFLAGS) $(PROGRAM).cc $(SRC_DIR)/* -o $(PROGRAM) $(LINKFLAGS) $(RPATH)
+
+test: main
+	./main 100000
+
+coverage: test
+	$(LCOV) --capture --gcov-tool $(GCOV) --directory . --output-file $(COVERAGE_RESULTS)
+	$(LCOV) --extract $(COVERAGE_RESULTS) "*/src/*" -o $(COVERAGE_RESULTS)
+	genhtml $(COVERAGE_RESULTS) --output-directory $(COVERAGE_DIR)
+	rm -f *.gc*
