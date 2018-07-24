@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
   mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
   // mpfr::mpreal u = argv[2];
   cout<<"S4*******************************************************************************"<<endl;
-  mpfr::mpreal a = S4(x, u);
+  mpfr::mpreal a = fourthSummation(x, u);
   cout<<endl<<endl<<"slowS4*******************************************************************************"<<endl;
   cout<<endl<<endl;
   mpfr::mpreal b = slowS4(x, u);

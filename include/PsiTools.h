@@ -13,6 +13,7 @@
 #include "s2.h"
 #include "s3.h"
 #include "s4.h"
+#include "s4redo.h"
 
 typedef uint64_t natural;
 typedef long long integer;

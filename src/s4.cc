@@ -112,3 +112,39 @@ mpfr::mpreal S4b_innerSum(const uint64_t x, const mpfr::mpreal u, const uint64_t
    }
    return sum;
 }
+
+mpfr::mpreal slowS4(const uint64_t x, const mpfr::mpreal u) {
+  mpfr::mpreal psi_of_u = primetools::calculatePsiLongDouble(u.toLLong(MPFR_RNDD));
+  mpfr::mpreal result = 0.0;
+  #ifdef DEBUG_SlowS4
+  std::cout<<"Psi(u) = "<<psi_of_u<<endl;
+  #endif //DEBUG_SlowS4
+  for(uint64_t l = 1; l <= (uint64_t) u; ++l) { //floor was ok
+    mpfr::mpreal sum = (mobius(l) * slowS4_inner(x, u, l, psi_of_u));
+    result += sum;
+    #ifdef DEBUG_SlowS4
+    std::cout<<"  At L = "<<l<<" The running sum is "<<result<<std::endl;
+    #endif //DEBUG_SlowS4
+  }
+  return result;
+}
+
+
+mpfr::mpreal slowS4_inner(const uint64_t x, const mpfr::mpreal u, const uint64_t l, const mpfr::mpreal psiOfU) {
+  mpfr::mpreal result = 0.0;
+  long long lowerBound = (long long)(u/static_cast<long double>(l)) + 1;
+  long long upperBound = (long long)(static_cast<long double>(x)/(u * static_cast<long double>(l)));
+  #ifdef DEBUG_SlowS4
+  std::cout<<"    Inner loop "<<lowerBound<<" < m <= "<<upperBound<<std::endl;
+  #endif //DEBUG_SlowS4
+  for(long long m = lowerBound; m <= upperBound; ++m) {
+    long long innerTerm = floor(static_cast<long double>(x)/(static_cast<long double>(l) * static_cast<long double>(m)));
+    mpfr::mpreal firstTerm = primetools::calculatePsiLongDouble(innerTerm);
+    result += (firstTerm - psiOfU);
+    #ifdef DEBUG_SlowS4
+    std::cout<<"      m"<<m<<" = "<<firstTerm<<" - "<<psiOfU<<" = "<<firstTerm-psiOfU<<std::endl;
+    std::cout<<"        Running result = "<<result<<std::endl;
+    #endif //DEBUG_SlowS4
+  }
+  return result;
+}
