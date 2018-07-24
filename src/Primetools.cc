@@ -67,6 +67,7 @@ int_double primetools::calculatePsi(uint64_t x) {
 }
 
 mpfr::mpreal primetools::calculatePsiLongDouble(uint64_t x) {
+  // std::cout<<"in primetools Psi with x = "<<x<<std::endl;
    if (x < 2)
       return 0.0;
   mpfr::mpreal psi = 0.0;

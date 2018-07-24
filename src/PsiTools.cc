@@ -20,11 +20,15 @@ void psi_setup() {
   std::ifstream inFile;
   inFile.open("./psiList.txt");
   std::string str;
+  bool isEmpty = true;
   // psiVector = new std::std::vector<mpfr::mpreal>;
   std::cout<<"seting up psi table...";
   while(inFile >> str) {
+    isEmpty = false;
     psiTable.push_back(str);
   }
+  if(isEmpty)
+    psiTable.push_back(0.0);
 std::cout<<"Done"<<std::endl;
 }
 
@@ -36,7 +40,6 @@ mpfr::mpreal getSmallPsi(uint64_t x) {
 }
 
 mpfr::mpreal psi(uint64_t x) {
-  std::cout<<psiTable[2]<<std::endl;
   if (x < 2)
     return 0.0;
   if (x < psiTable.size()) {
@@ -53,6 +56,7 @@ mpfr::mpreal psi_work(uint64_t x) {
     return 0.0;
 
   mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
+  std::cout<<"u = "<<u<<std::endl;
 
   if (u < 1)
      u = 1;

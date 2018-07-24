@@ -1,4 +1,5 @@
-CXX =g++ -std=c++0x -g -w -fprofile-arcs -ftest-coverage
+CXX =g++ -std=c++0x -g -w
+TFLAGS = -fprofile-arcs -ftest-coverage
 # IFLAGS = -I /usr/local/include -I ./include
 IFLAGS = -I ./include
 LFLAGS = -L /usr/local/lib64
@@ -17,12 +18,12 @@ PROGRAM = main
 C ?= na
 F ?=
 
-#g++ -static -std=c++0x -o s4test -I ./include ./src/*.cc s4test.cc -fopenmp -lprimesieve -lprimecount -lgmp -lmpfr -lgmp
+#g++ -static -std=c++0x -o main -I ./include ./src/*.cc main.cc -fopenmp -lprimesieve -lprimecount -lgmp -lmpfr -lgmp
 
 .PHONY: all
 main: clean
-	# $(CXX) -o $(PROGRAM) $(LFLAGS) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH)
 	$(CXX) -o $(PROGRAM) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH)
+
 static: clean
 	$(CXX) -o $(PROGRAM) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH) -static-libgcc
 
@@ -34,7 +35,10 @@ min: clean
 	$(CXX) $(PROGRAM).cc $(SRC_DIR)/* -o $(PROGRAM)
 
 clean:
-	rm -rf *.o *~ main ./include/*.gch *.gcov *.gcda *.gcno $(COVERAGE_RESULTS)
+	rm -rf *.o *~ ./include/*.gch *.gcov *.gcda *.gcno $(COVERAGE_RESULTS)
+
+clean-all: clean
+	rm -rf $(PROGRAM) $(COVERAGE_DIR)
 
 musl:
 	/usr/local/musl/bin/musl-gcc -static -o $(PROGRAM) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH)
@@ -42,8 +46,9 @@ musl:
 original:
 	$(CXX) $(IFLAGS) $(LFLAGS) $(PROGRAM).cc $(SRC_DIR)/* -o $(PROGRAM) $(LINKFLAGS) $(RPATH)
 
-test: main
-	./main 100000
+test:
+	$(CXX) $(TFLAGS) -o $(PROGRAM) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH)
+	./main 283679221
 
 coverage: test
 	$(LCOV) --capture --gcov-tool $(GCOV) --directory . --output-file $(COVERAGE_RESULTS)
