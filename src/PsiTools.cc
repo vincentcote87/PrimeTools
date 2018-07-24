@@ -28,6 +28,13 @@ void psi_setup() {
 std::cout<<"Done"<<std::endl;
 }
 
+mpfr::mpreal getSmallPsi(uint64_t x) {
+  if(x < psiTable.size())
+    return psiTable[x];
+  else
+    return primetools::calculatePsiLongDouble(x);
+}
+
 mpfr::mpreal psi(uint64_t x) {
   std::cout<<psiTable[2]<<std::endl;
   if (x < 2)

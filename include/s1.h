@@ -9,6 +9,7 @@
 #include <climits>
 #include "mpreal.h"
 #include "Primetools.h"
+#include "PsiTools.h"
 
 mpfr::mpreal S1(uint64_t, mpfr::mpreal);
 

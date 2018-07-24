@@ -1,7 +1,7 @@
 #include "s4.h"
 
 mpfr::mpreal S4(const uint64_t x, const mpfr::mpreal u) {
-  mpfr::mpreal psi_of_u = primetools::calculatePsiLongDouble(u.toLLong(MPFR_RNDD));
+  mpfr::mpreal psi_of_u = getSmallPsi(u.toLLong(MPFR_RNDD));
 
   #ifdef DEBUG_S4
   std::cout<<"psi(u) = "<<psi_of_u<<std::endl;
@@ -46,7 +46,7 @@ mpfr::mpreal S4a_innerLoop(const uint64_t x, const mpfr::mpreal u, const uint64_
 
   for(long long m = lowerBound; m <= upperBound; ++m) {
     long long innerTerm = floor(static_cast<long double>(x)/(static_cast<long double>(l) * static_cast<long double>(m)));
-    mpfr::mpreal firstTerm = primetools::calculatePsiLongDouble(innerTerm);
+    mpfr::mpreal firstTerm = getSmallPsi(innerTerm);
     result += (firstTerm - psiOfU);
 
     #ifdef DEBUG_S4
@@ -99,10 +99,10 @@ mpfr::mpreal S4b_innerSum(const uint64_t x, const mpfr::mpreal u, const uint64_t
       if (n != 0) {
 
         #ifdef DEBUG_S4
-        std::cout<<" psi(k) = "<<primetools::calculatePsiLongDouble(k)<<" and the result is = "<<(primetools::calculatePsiLongDouble(k) - psiOfU)*n;
+        std::cout<<" psi(k) = "<<getSmallPsi(k)<<" and the result is = "<<(getSmallPsi(k) - psiOfU)*n;
         #endif //DEBUG_S4
 
-	       sum += (primetools::calculatePsiLongDouble(k) - psiOfU) * (n);
+	       sum += (getSmallPsi(k) - psiOfU) * (n);
       }
 
       #ifdef DEBUG_S4
