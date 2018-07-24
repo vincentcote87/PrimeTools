@@ -20,15 +20,10 @@ typedef long long integer;
 mpfr::mpreal psi_work(uint64_t);
 mpfr::mpreal psi(uint64_t);
 
-
-
 void psi_setup();
 void setupEnvironment();
 
-
 #endif //PSITOOLS_H
-
-
 
 static const size_t cutoff = 10000000; //4294967295
 static mpfr::mpreal *psiTable;

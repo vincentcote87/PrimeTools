@@ -1,6 +1,5 @@
 #include "Primetools.h"
 
-
 int64_t primetools::getPi(int64_t x) {
   return primecount::pi(x);
 }
@@ -89,7 +88,6 @@ long long primetools::fast_log2(const uint64_t x) {
       : "=r"(y)
       : "r" (x)
   );
-  //std::cout << "fast_log2(" << x << ") = " << y << std::endl;
   return y;
 }
 

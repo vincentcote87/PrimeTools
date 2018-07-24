@@ -17,17 +17,13 @@ long long S3_B(const uint64_t x, const mpfr::mpreal u, const uint64_t p, const u
   for (uint64_t k = 1; k <= L; ++k) {
     result += x / (l * floor_pow( p, k)); //intentional floor
   }
-  // std::cout<< " result from S3_B = "<<result<<std::endl;
   return result;
 }
 
 mpfr::mpreal S3_A(const uint64_t x, const mpfr::mpreal u, const uint64_t p) {
   mpfr::mpreal S = 0.0;
-  // uint64_t tmpMu = 0;
   for (long long l = 1; l <= u.toLLong(GMP_RNDD); ++l) { //floor was okay for less than or equal to u
     S += mobius(l)*S3_B(x, u, p, l);
-    // tmpMu += mobius(l);
-    // std::cout<<tmpMu<<std::endl;
   }
   return S;
 }
@@ -43,9 +39,6 @@ mpfr::mpreal S3(const uint64_t x, const mpfr::mpreal u) {
   for (; prime <= (uint64_t) u; prime = it.next_prime()) { //floor is okay for less than or equal to u
     p = prime;
     S += log(p, GMP_RNDN)*S3_A(x, u, prime);
-    // std::cout<<S<<std::endl;
   }
-  // std::cout<<u<<std::endl;
-  //std::cout<<"S3 Done..."<<S<<std::endl;
   return S;
 }

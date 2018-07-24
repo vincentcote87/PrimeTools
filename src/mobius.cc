@@ -7,7 +7,6 @@ void mobius_setup() {
   std::cout<<"seting up mobius table...";
   mobiusTable = new long long[mobiusCutoff];
   for (uint i = 0; i < mobiusCutoff; ++i) {
-    // mobiusTable[i] = -2000;
     mobiusTable[i] = mobius_work(i);
   }
   std::cout<<"Done"<<std::endl;
