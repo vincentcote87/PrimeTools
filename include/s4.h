@@ -2,6 +2,7 @@
 #define S4_H
 #include "Environment.h"
 #include "Primetools.h"
+#include "PsiTools.h"
 #include <iostream>
 #include <cmath>
 #include <iomanip>
