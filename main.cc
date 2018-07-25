@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 
   setupEnvironment();
   uint64_t x;
-  // std::chrono::steady_clock clk;
+  std::chrono::steady_clock clk;
   if(argc == 2)
     x = std::stoll(argv[1]);
   else {
@@ -36,7 +36,11 @@ int main(int argc, char* argv[]) {
     cout<<"default value of x set at "<<x<<endl;
   }
 
+  std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> p1, p2;
+	p1 = clk.now();
   cout<<psi(x)<<endl;
+  p2 = clk.now();
+  interpretClk(p2 - p1);
   // while(true) {
   //   std::cout<<"Psi("<<x<<") = "<<primetools::calculatePsiLongDouble(x)<<endl;
   //   std::cin>>x;
