@@ -40,6 +40,5 @@ int main(int argc, char* argv[]) {
      interpretClk(p2 - p1);
      std::cout << "     Finished Execution" << std::endl;
   }
-
   return 0;
 }
