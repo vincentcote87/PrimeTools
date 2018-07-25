@@ -1,5 +1,5 @@
-#ifndef S4REDO_H
-#define S4REDO_H
+#ifndef S4_H
+#define S4_H
 
 #include <iostream>
 #include <vector>
@@ -38,4 +38,4 @@ mpfr::mpreal innerFourthSummationOriginal(const long long, const mpfr::mpreal&, 
 
 mpfr::mpreal innerFourthSummationWithN(const long long, const mpfr::mpreal&, const long long, const mpfr::mpreal&, const long long);
 
-#endif //S4REDO_H
+#endif //S4_H
