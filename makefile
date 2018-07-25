@@ -7,7 +7,7 @@ LFLAGS = -L /usr/local/lib64
 SRC_DIR = ./src
 SRCS = $(SRC_DIR)/B2.cc $(SRC_DIR)/mobius.cc $(SRC_DIR)/N.cc $(SRC_DIR)/Primetools.cc $(SRC_DIR)/PsiTools.cc $(SRC_DIR)/s1.cc $(SRC_DIR)/s2.cc $(SRC_DIR)/s3.cc $(SRC_DIR)/s4.cc
 
-LINKFLAGS = -fopenmp  -lprimesieve -lprimecount -lgmp -lmpfr -lgtest -lpthread
+LINKFLAGS = -fopenmp -lprimesieve -lprimecount -lgmp -lmpfr -lgtest -lpthread
 
 RPATH = -Wl,-rpath=/usr/local/lib64
 # RPATH = -Wl,-rpath=/usr/local/lib64
@@ -57,6 +57,10 @@ original:
 test: $(TEST_DIR)/*.cc
 	$(CXX) $(TFLAGS) -o $(PROGRAM_TEST) $(IFLAGS) $(TEST_DIR)/*.cc  $(SRCS) $(LINKFLAGS) $(RPATH)
 	./$(PROGRAM_TEST)
+<<<<<<< HEAD
+=======
+	# ./main 384930213
+>>>>>>> Started adding testing suite
 
 coverage: test
 	$(LCOV) --capture --gcov-tool $(GCOV) --directory . --output-file $(COVERAGE_RESULTS)
