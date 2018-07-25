@@ -62,7 +62,7 @@ mpfr::mpreal fourthSummation(const long long x, const mpfr::mpreal& u) {
 							);
 		const long long smallBound = (long long)
 										(sqrt(static_cast<long double>(x)/static_cast<long double>(l)));
-		const mpfr::mpreal psiOfU = primetools::calculatePsiLongDouble(u.toLLong(MPFR_RNDD));
+		const mpfr::mpreal psiOfU = getSmallPsi(u.toLLong(MPFR_RNDD));
 		const mpfr::mpreal mob_mpfr = mob;
 		if (largeBound < smallBound) {
 			A += mob_mpfr * innerFourthSummationOriginal(x, u, l, psiOfU, largeBound);
@@ -78,7 +78,7 @@ mpfr::mpreal innerFourthSummationOriginal(const long long x, const mpfr::mpreal&
 	const long long beginning = ((long long) u.toLDouble(MPFR_RNDN)/static_cast<long double>(l)) + 1;
 	Sum s;
 	for (long long m = beginning; m <= upperBound; ++m) {
-		s += primetools::calculatePsiLongDouble(x/(l*m)) - psiOfU;
+		s += getSmallPsi(x/(l*m)) - psiOfU;
 	}
 	return s.get();
 }
@@ -88,7 +88,7 @@ mpfr::mpreal innerFourthSummationWithN(const long long x, const mpfr::mpreal& u,
 	mpfr::mpreal n;
 	for (long long k = 1; k <= upperBound; ++k) {
 		n = N(x, u, l, k);
-		s += (primetools::calculatePsiLongDouble(k) - psiOfU) * n;
+		s += (getSmallPsi(k) - psiOfU) * n;
 	}
 	return s.get();
 }
