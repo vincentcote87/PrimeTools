@@ -1,4 +1,4 @@
-#include "s4redo.h"
+#include "s4.h"
 
 Sum::Sum()
 	: sum{0.0}, error{0.0}, temp{}
