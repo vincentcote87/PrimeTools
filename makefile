@@ -5,9 +5,14 @@ IFLAGS = -I ./include
 LFLAGS = -L /usr/local/lib64
 # LFLAGS = -L /usr/local/lib64
 SRC_DIR = ./src
-LINKFLAGS = -fopenmp -lprimesieve -lprimecount -lmpfr -lgmp
+SRCS = $(SRC_DIR)/B2.cc $(SRC_DIR)/mobius.cc $(SRC_DIR)/N.cc $(SRC_DIR)/Primetools.cc $(SRC_DIR)/PsiTools.cc $(SRC_DIR)/s1.cc $(SRC_DIR)/s2.cc $(SRC_DIR)/s3.cc $(SRC_DIR)/s4.cc
+
+LINKFLAGS = -fopenmp  -lprimesieve -lprimecount -lgmp -lmpfr -lgtest -lpthread
+
 RPATH = -Wl,-rpath=/usr/local/lib64
 # RPATH = -Wl,-rpath=/usr/local/lib64
+
+TEST_DIR = ./tests
 
 LCOV = lcov
 GCOV = gcov
@@ -15,6 +20,7 @@ COVERAGE_RESULTS = results.coverage
 COVERAGE_DIR = coverage
 
 PROGRAM = main
+PROGRAM_TEST = testMain
 C ?= na
 F ?=
 
@@ -48,11 +54,12 @@ musl:
 original:
 	$(CXX) $(IFLAGS) $(LFLAGS) $(PROGRAM).cc $(SRC_DIR)/* -o $(PROGRAM) $(LINKFLAGS) $(RPATH)
 
-run:
-	$(CXX) $(TFLAGS) -o $(PROGRAM) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH)
-	./main 384930213
+test: $(TEST_DIR)/*.cc
+	$(CXX) $(TFLAGS) -o $(PROGRAM_TEST) $(IFLAGS) $(TEST_DIR)/*.cc  $(SRCS) $(LINKFLAGS) $(RPATH)
+	./$(PROGRAM_TEST)
+	# ./main 384930213
 
-coverage: run
+coverage: test
 	$(LCOV) --capture --gcov-tool $(GCOV) --directory . --output-file $(COVERAGE_RESULTS)
 	$(LCOV) --extract $(COVERAGE_RESULTS) "*/src/*" -o $(COVERAGE_RESULTS)
 	genhtml $(COVERAGE_RESULTS) --output-directory $(COVERAGE_DIR)
