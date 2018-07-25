@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
     x = 100;
     cout<<"default value of x set at "<<x<<endl;
   }
-	
+
   std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> p1, p2;
   for (long long i = 10; i <= 1000000000000000000; i*=10) {
   	 std::cout << i << std::endl;
