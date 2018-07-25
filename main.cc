@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
   cout << temp << endl;
   p2 = clk.now();
   interpretClk(p2 - p1);
-  
+
   std::cout << "     Finished Execution" << std::endl;
   return 0;
 }
