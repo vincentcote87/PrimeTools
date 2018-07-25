@@ -36,36 +36,37 @@ int main(int argc, char* argv[]) {
     cout<<"default value of x set at "<<x<<endl;
   }
 
-  std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> p1, p2;
-	p1 = clk.now();
-  cout<<psi(x)<<endl;
-  p2 = clk.now();
-  interpretClk(p2 - p1);
+  // std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> p1, p2;
+	// p1 = clk.now();
+  // mpfr::mpreal myPsi = psi(x);
+  // cout<<myPsi<<endl;
+  // p2 = clk.now();
+  // interpretClk(p2 - p1);
   // while(true) {
   //   std::cout<<"Psi("<<x<<") = "<<primetools::calculatePsiLongDouble(x)<<endl;
   //   std::cin>>x;
   // }
   // mpfr::mpreal u = cbrtl(static_cast<long double>(x)) * cbrtl(log(log(x))*log(log(x)));
   //
-	// std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> p1, p2, p3, p4;
-  //
-	// p1 = clk.now();
-	// mpfr::mpreal ans = primetools::calculatePsiNoTheta(x);
-	// p2 = clk.now();
-	// mpfr::mpreal an2 = primetools::calculatePsiLongDouble(x);
-	// p3 = clk.now();
-	// mpfr::mpreal an3 = psi(x);
-	// p4 = clk.now();
-	// std::cout << "Powered Psi: " << ans << std::endl;
-	// std::cout << "Theta Psi:   " << an2 << std::endl;
-	// std::cout << "A Psi:       " << an3 << std::endl;
-  //
-	// std::cout << "Powered Psi: ";
-	// interpretClk(p2 - p1);
-	// std::cout << "Theta Psi:   ";
-	// interpretClk(p3 - p2);
-	// std::cout << "A Psi:       ";
-	// interpretClk(p4 - p3);
+	std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> p1, p2, p3, p4;
+
+	p1 = clk.now();
+	mpfr::mpreal ans = primetools::calculatePsiNoTheta(x);
+	p2 = clk.now();
+	mpfr::mpreal an2 = primetools::calculatePsiLongDouble(x);
+	p3 = clk.now();
+	mpfr::mpreal an3 = psi(x);
+	p4 = clk.now();
+	std::cout << "Powered Psi: " << ans << std::endl;
+	std::cout << "Theta Psi:   " << an2 << std::endl;
+	std::cout << "A Psi:       " << an3 << std::endl;
+
+	std::cout << "Powered Psi: ";
+	interpretClk(p2 - p1);
+	std::cout << "Theta Psi:   ";
+	interpretClk(p3 - p2);
+	std::cout << "A Psi:       ";
+	interpretClk(p4 - p3);
 
 //  cout << "S2********************************************************************************" << endl;
  // mpfr::mpreal S2_result = S2(x, u);
