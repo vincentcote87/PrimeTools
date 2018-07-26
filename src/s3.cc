@@ -1,14 +1,22 @@
 #include "s3.h"
 
+std::map<std::pair<uint64_t, uint64_t>, uint64_t> floor_pow_table;
+
 uint64_t floor_pow(const uint64_t a, const uint64_t b) {
    if (b == 0)
       return 1;
    if (b == 1)
       return a;
-   const uint64_t half = floor_pow(a, b/2);
-   if (b%2 == 0)
-      return half*half;
-   return half*half*a;
+    auto i = make_pair(a, b);
+   if (floor_pow_table[i] == 0.0) {
+      const uint64_t half = floor_pow(a, b/2);
+      if (b%2 == 0) {
+         floor_pow_table[i] =  half*half;
+      } else {
+       floor_pow_tablep[i] = half*half*a;
+       }
+    }
+ return floor_pow_table[i];
 }
 
 long long S3_B(const uint64_t x, const mpfr::mpreal u, const uint64_t p, const uint64_t l) {

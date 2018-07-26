@@ -44,16 +44,28 @@ std::cout<<"Done"<<std::endl;
 }*/
 
 mpfr::mpreal psi(uint64_t x) {
+  std::cout << "Now we must calculate psi(" << x << ")" << std::flush;
   if (x < 2)
      return 0.0;
-  if (x < psiTable.size())
+  if (x < psiTable.size()) {
+    std::cout << "in the table" << std::flush;
   	return psiTable[x];
-  if (psiMap[x] == 0.0) {
-  	if (x < 100000000)
-  		psiMap[x] = primetools::calculatePsiLongDouble(x);
-  	else
-  		psiMap[x] = psi_work(x);
+    std::cout << std::endl << "YOU DO NOT UNDERSTAND C++" << std::endl;
   }
+  std::cout << "psiMap's size is now: " << psiMap.size() << " will calculated? " << std::flush;
+  if (psiMap[x] == 0.0) {
+  	if (x < 100000000) {
+     std::cout << " theta psi!" << std::flush;
+  		psiMap[x] = primetools::calculatePsiLongDouble(x);
+    }
+  	else {
+      std::cout << "psi work!" << std::flush;
+  		psiMap[x] = psi_work(x);
+    }
+  } else {
+      std::cout << "found it." << std::flush;
+  }
+  std::cout << " ***WE ARE DONE***  " << std::endl;
   return psiMap[x];
 }
 
