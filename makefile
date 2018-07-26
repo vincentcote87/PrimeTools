@@ -56,7 +56,6 @@ original:
 test: $(TEST_DIR)/*.cc
 	$(CXX) $(TFLAGS) -o $(PROGRAM_TEST) $(IFLAGS) $(TEST_DIR)/*.cc  $(SRCS) $(LINKFLAGS) $(RPATH)
 	./$(PROGRAM_TEST)
-	# ./main 384930213
 
 coverage: test
 	$(LCOV) --capture --gcov-tool $(GCOV) --directory . --output-file $(COVERAGE_RESULTS)
