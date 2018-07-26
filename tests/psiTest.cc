@@ -11,5 +11,10 @@ TEST (PsiTest, psi_of_2) {
 
 TEST (PsiTest, psi_of_1000000) {
   uint64_t x = 1000000;
-  EXPECT_TRUE(primetools::calculatePsiLongDouble(x) - psi(x) <= 0.0000000001 || psi(x) - primetools::calculatePsiLongDouble(x) <= 0.0000000001);
+  long double variation = 0.0000000001;
+  EXPECT_TRUE(primetools::calculatePsiLongDouble(x) - psi(x) <= variation || psi(x) - primetools::calculatePsiLongDouble(x) <= variation);
+}
+
+TEST (PsiTest, psi_of_0) {
+  EXPECT_TRUE(psi(0) == 0);
 }
