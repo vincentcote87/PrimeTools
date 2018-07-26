@@ -10,6 +10,7 @@
 #include <primecount.hpp>
 #include <climits>
 #include "mpreal.h"
+#include "PsiTools.h"
 
 size_t idealT_tableSize(uint64_t);
 static mpfr::mpreal* T_table;

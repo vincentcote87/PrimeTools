@@ -8,6 +8,7 @@
 #include <primecount.hpp>
 #include <climits>
 #include "mpreal.h"
+#include "PsiTools.h"
 
 #include "mobius.h"
 

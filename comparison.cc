@@ -3,8 +3,8 @@
 #include "Primetools.h"
 #include "int_double.h"
 #include "PsiTools.h"
-#include "N.h"
 #include "InterpretClock.h"
+#include "N.h"
 #include <exception>
 
 using std::cout;
@@ -28,14 +28,29 @@ int main(int argc, char* argv[]) {
     x = 100;
     cout<<"default value of x set at "<<x<<endl;
   }
-
-  std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> p1, p2;
-	p1 = clk.now();
-	mpfr::mpreal temp = psi(x);
-  cout << temp << endl;
-  p2 = clk.now();
-  interpretClk(p2 - p1);
   
+  
+	 std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> p1, p2, p3, p4;
+  
+	 p1 = clk.now();
+	 mpfr::mpreal ans = primetools::calculatePsiNoTheta(x);
+	p2 = clk.now();
+	 mpfr::mpreal an2 = primetools::calculatePsiLongDouble(x);
+	 p3 = clk.now();
+	 mpfr::mpreal an3 = psi(x);
+	 p4 = clk.now();
+	 std::cout << "Powered Psi: " << ans << std::endl;
+	 std::cout << "Theta Psi:   " << an2 << std::endl;
+	 std::cout << "A Psi:       " << an3 << std::endl;
+  
+	 std::cout << "Powered Psi: ";
+	 interpretClk(p2 - p1);
+	 std::cout << "Theta Psi:   ";
+	 interpretClk(p3 - p2);
+	 std::cout << "A Psi:       ";
+	 interpretClk(p4 - p3);
+
+
   std::cout << "     Finished Execution" << std::endl;
   return 0;
 }
