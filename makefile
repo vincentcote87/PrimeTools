@@ -58,9 +58,12 @@ test: $(TEST_DIR)/*.cc
 	$(CXX) $(TFLAGS) -o $(PROGRAM_TEST) $(IFLAGS) $(TEST_DIR)/*.cc  $(SRCS) $(LINKFLAGS) $(RPATH)
 	./$(PROGRAM_TEST)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	# ./main 384930213
 >>>>>>> Started adding testing suite
+=======
+>>>>>>> Added B2 unit test
 
 coverage: test
 	$(LCOV) --capture --gcov-tool $(GCOV) --directory . --output-file $(COVERAGE_RESULTS)
