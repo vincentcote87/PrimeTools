@@ -5,7 +5,7 @@ IFLAGS = -I ./include
 LFLAGS = -L /usr/local/lib64
 # LFLAGS = -L /usr/local/lib64
 SRC_DIR = ./src
-LINKFLAGS = -lprimesieve -lprimecount -lgmp -lmpfr
+LINKFLAGS = -fopenmp -lprimesieve -lprimecount -lmpfr -lgmp
 RPATH = -Wl,-rpath=/usr/local/lib64
 # RPATH = -Wl,-rpath=/usr/local/lib64
 
@@ -25,7 +25,7 @@ main: clean
 	$(CXX) -o $(PROGRAM) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH)
 
 static: clean
-	$(CXX) -o $(PROGRAM) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH) -static-libgcc
+	$(CXX) -static -o $(PROGRAM) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) -static-libgcc
 
 test: clean
 	$(CXX) -o $(C) $(IFLAGS) $(SRC_DIR)/*.cc tests/$(C).cc $(LINKFLAGS) $(RPATH) $(F) -static-libgcc

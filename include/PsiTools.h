@@ -8,6 +8,7 @@
 #include <primesieve.hpp>
 #include <primecount.hpp>
 #include <climits>
+#include <map>
 #include "mpreal.h"
 
 #include "s1.h"
