@@ -4,8 +4,8 @@ std::vector<mpfr::mpreal> psiTable;
 std::map<uint64_t, mpfr::mpreal> psiMap;
 
 void setupEnvironment() {
-  mpfr::mpreal::set_default_prec(128);
-  std::cout << std::setprecision(36) << std::scientific; //33-36 //15-17 //octuple: \log_10{2^237} = 71.344
+  mpfr::mpreal::set_default_prec(1024);
+  std::cout << std::setprecision(309) << std::scientific; //33-36 //15-17 //octuple: \log_10{2^237} = 71.344
   psi_setup();
   mobius_setup();
   std::cout<<"Precision set to "<<mpfr::mpreal::get_default_prec()<<std::endl;
