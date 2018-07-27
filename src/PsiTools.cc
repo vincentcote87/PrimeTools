@@ -57,11 +57,13 @@ void placeMapInTable() {
 
 
 void expandPsiTable(long long target) {
+	std::cout << "Now expanding the psiTable from " << psiTable.size() << " to " << target << "..." << std::flush;
 	long long i = psiTable.size();
 	psiTable.resize(target);
 	while (i < target) {
 		psiTable[i++] = psi(i);
 	}
+	std::cout << "done." << std::endl;
 	psiMap.clear();
 }
 
