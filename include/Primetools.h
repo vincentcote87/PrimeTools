@@ -1,11 +1,11 @@
 #ifndef PRIMETOOLS_H
 #define PRIMETOOLS_H
+#include <primesieve.hpp>
+#include <primecount.hpp>
 #include "Environment.h"
 #include <gmp.h>
 #include <stdio.h>
 #include <mpfr.h>
-#include <primesieve.hpp>
-#include <primecount.hpp>
 #include <cmath>
 #include "int_double.h"
 #include "mpreal.h"

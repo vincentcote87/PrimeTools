@@ -1,43 +1,5 @@
 #include "s2.h"
 
-void Tsetup(uint64_t x) {
-	std::cout << "Running Tsetup...";
-	mpfr::mpreal x_u = (mpfr::mpreal) (x);
-	T_table = new mpfr::mpreal[x + 1];
-	size_t oldSize = T_tableSize;
-	T_tableSize = x + 1;
-	mpfr::mpreal sum;
-	if (oldSize) {
-		sum = T_table[oldSize - 1];
-	} else {
-		sum = 0.0;
-	}
-	size_t index;
-	if (oldSize) {
-		index = oldSize;
-	} else {
-		index = 1;
-	}
-	for (mpfr::mpreal i = index; i <= x_u; ++i) {
-		sum += log(i, MPFR_RNDN);
-		T_table[index++] = sum;
-	}
-	std::cout << "Done" << std::endl;
-}
-
-size_t idealT_tableSize(uint64_t x) {
-	return x;
-}
-
-mpfr::mpreal Tbrute(uint64_t n) {
-	mpfr::mpreal sum = 0.0;
-	mpfr::mpreal N = n;
-	for (mpfr::mpreal i = 1; i <= N; ++i) {
-		sum += log(i, MPFR_RNDN);
-	}
-	return sum;
-}
-
 mpfr::mpreal T(uint64_t n) {
 	return fastT(n);
 }
@@ -60,12 +22,6 @@ mpfr::mpreal fastT(uint64_t arg) {
 	mpfr::mpreal result = T1 + T2 + T3;
 	mpfr::mpreal::set_default_prec(def_prec);
   return result;
-}
-
-mpfr::mpreal Terror(uint64_t N) {
-	mpfr::mpreal f3 = pow(mpfr::mpreal{N}, mpfr::mpreal{2*J+1}, MPFR_RNDN);
-	mpfr::mpreal f12 = (mpfr::mpreal) 4*(J*J+J);
-	return abs(B2[J+1], MPFR_RNDN) / (f12 * f3);
 }
 
 mpfr::mpreal S2(const uint64_t x, const mpfr::mpreal u) {
