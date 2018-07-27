@@ -45,7 +45,7 @@ clean:
 	rm -rf *.o *~ ./include/*.gch *.gcov *.gcda *.gcno $(COVERAGE_RESULTS)
 
 clean-all: clean
-	rm -rf $(PROGRAM) $(COVERAGE_DIR)
+	rm -rf $(PROGRAM) $(PROGRAM_TEST) $(COVERAGE_DIR)
 
 musl:
 	/usr/local/musl/bin/musl-gcc -static -o $(PROGRAM) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH)
