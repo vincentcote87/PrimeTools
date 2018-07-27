@@ -1,8 +1,6 @@
 #include "gtest/gtest.h"
 #include "Primetools.h"
 
-#include <iostream>
-
 TEST (PiTest, pi_10) {
   EXPECT_EQ(primetools::getPi(10), 4);
 }
