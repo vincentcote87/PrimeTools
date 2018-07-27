@@ -77,7 +77,7 @@ mpfr::mpreal fourthSummation(const long long x, const mpfr::mpreal& u) {
 mpfr::mpreal innerFourthSummationOriginal(const long long x, const mpfr::mpreal& u, const long long l, const mpfr::mpreal& psiOfU, const long long upperBound) {
 	const long long beginning = ((long long) u.toLDouble(MPFR_RNDN)/static_cast<long double>(l)) + 1;
 	Sum s;
-	for (long long m = beginning; m <= upperBound; ++m) {
+	for (long long m = upperBound; m >= beginning; --m) {
 		s += psi(x/(l*m)) - psiOfU;
 	}
 	return s.get();

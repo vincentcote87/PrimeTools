@@ -25,6 +25,8 @@ mpfr::mpreal psi(uint64_t);
 
 void psi_setup();
 void setupEnvironment();
+void placeMapInTable();
+void expandPsiTable(long long target);
 
 #endif //PSITOOLS_H
 

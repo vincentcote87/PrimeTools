@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
 	p2 = clk.now();
 	 mpfr::mpreal an2 = primetools::calculatePsiLongDouble(x);
 	 p3 = clk.now();
-	 mpfr::mpreal an3 = psi(x);
+	 mpfr::mpreal an3 = psi_work(x);
 	 p4 = clk.now();
 	 std::cout << "Powered Psi: " << ans << std::endl;
 	 std::cout << "Theta Psi:   " << an2 << std::endl;
