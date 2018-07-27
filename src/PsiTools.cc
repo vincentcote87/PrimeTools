@@ -15,19 +15,19 @@ void setupEnvironment() {
 void psi_setup() {
   std::cout<<"seting up psi table..." << std::flush;
   std::cout << "nothing ";
-  /*
-  std::ifstream inFile;
-  inFile.open("./psiList.txt");
-  std::string str;
-  bool isEmpty = true;
-  while(inFile >> str) {
-    isEmpty = false;
-    psiTable.push_back(str);
-  }
-  if(isEmpty)
-     psiTable.push_back(0.0);
-  inFile.close();
-  */
+
+  // std::ifstream inFile;
+  // inFile.open("./psiList.txt");
+  // std::string str;
+  // bool isEmpty = true;
+
+  // while(inFile >> str) {
+  //   isEmpty = false;
+  //   psiTable.push_back(str);
+  // }
+  // if(isEmpty)
+  //    psiTable.push_back(0.0);
+  // inFile.close();
   std::cout<<"Done"<<std::endl;
 }
 
