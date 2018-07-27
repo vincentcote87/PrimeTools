@@ -12,17 +12,10 @@ void setupEnvironment() {
 }
 
 void psi_setup() {
-  // std::cout<<"seting up psi table...";
-  // psiTable = new mpfr::mpreal[cutoff];
-  // for (uint i = 0; i < cutoff; ++i) {
-  //   psiTable[i] = 0;
-  // }
-  // std::cout<<"Done"<<std::endl;
   std::ifstream inFile;
   inFile.open("./psiList.txt");
   std::string str;
   bool isEmpty = true;
-  // psiVector = new std::std::vector<mpfr::mpreal>;
   std::cout<<"seting up psi table...";
   while(inFile >> str) {
     isEmpty = false;
