@@ -13,16 +13,23 @@ void fillMorePrimes(long long target) {
 	}
 }
 
+unsigned long long integer_raise2(const unsigned long long b) {
+	unsigned long long a = 1;
+		a <<= b;
+	return a;
+}
+
 void walkK(const long long x) {
 	long double xNegK;
 	long long pos = 0;
-	for (long long i = 1; ( xNegK = pow(x, 1.0/static_cast<long double>(i)) ) >= 2.0; ++i) {
+	for (long long i = 1; x >= integer_raise2(i); ++i) {
 		if (pos >= k.size()) {
 			k.push_back(0.0);
 			theta.push_back(0.0);
 			cur.push_back(0);
 			lastPrime.push_back(1);
 		}
+		xNegK = std::pow(x, 1.0/static_cast<long double>(i));
 		if (static_cast<long long>(k[pos]) < static_cast<long long>(xNegK)) {
 			k[pos] = xNegK;
 			//std::cout << "lastPime" << lastPrime[pos] << std::endl;
