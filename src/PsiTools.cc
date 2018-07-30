@@ -5,21 +5,21 @@ std::map<uint64_t, mpfr::mpreal> psiMap;
 
 //1024, 309
 void setupEnvironment() {
-  mpfr::mpreal::set_default_prec(128);
-  std::cout << std::setprecision(36) << std::scientific; //33-36 //15-17 //octuple: \log_10{2^237} = 71.344
+  mpfr::mpreal::set_default_prec(512);
+  std::cout << std::setprecision(155) << std::scientific; //33-36 //15-17 //octuple: \log_10{2^237} = 71.344
   psi_setup();
   mobius_setup();
   std::cout<<"Precision set to "<<mpfr::mpreal::get_default_prec()<<std::endl;
 }
 
 void psi_setup() {
-
+  std::cout<<"seting up psi table..." << std::flush;
+  std::cout << "nothing ";
+  /*
   std::ifstream inFile;
   inFile.open("./psiList.txt");
   std::string str;
   bool isEmpty = true;
-  // psiVector = new std::std::vector<mpfr::mpreal>;
-  std::cout<<"seting up psi table..." << std::flush;
   while(inFile >> str) {
     isEmpty = false;
     psiTable.push_back(str);
@@ -27,8 +27,8 @@ void psi_setup() {
   if(isEmpty)
      psiTable.push_back(0.0);
   inFile.close();
-std::cout<<"Done"<<std::endl;
-
+  */
+  std::cout<<"Done"<<std::endl;
 }
 
 mpfr::mpreal psi(uint64_t x) {
@@ -37,7 +37,7 @@ mpfr::mpreal psi(uint64_t x) {
   if (x < psiTable.size())
   	return psiTable[x];
   if (psiMap[x] == 0.0) {
-  	if (x < 100000000)
+  	if (x < 100)
   		psiMap[x] = primetools::calculatePsiLongDouble(x);
   	else
   		psiMap[x] = psi_work(x);
@@ -55,14 +55,20 @@ void placeMapInTable() {
 	}
 }
 
-
 void expandPsiTable(long long target) {
 	std::cout << "Now expanding the psiTable from " << psiTable.size() << " to " << target << "..." << std::flush;
+	while (psiTable.size() < target) {
+		psiTable.push_back(higherPsi(psiTable.size()));
+	}
+	/*
 	long long i = psiTable.size();
 	psiTable.resize(target);
 	while (i < target) {
+		std::cout << " psi(" << i << ") = ";
 		psiTable[i++] = psi(i);
+		std::cout << psiTable[i-1] << " ";
 	}
+	*/
 	std::cout << "done." << std::endl;
 	psiMap.clear();
 }
