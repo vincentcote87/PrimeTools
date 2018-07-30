@@ -21,6 +21,7 @@ static std::vector<long double> k;
 static std::vector<size_t> cur;
 static std::vector<long long> lastPrime;
 
+unsigned long long integer_raise2(const unsigned long long);
 void fillMorePrimes(long long target);
 void walkK(const long long x);
 mpfr::mpreal sumThetas();
