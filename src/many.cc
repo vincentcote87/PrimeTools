@@ -19,31 +19,35 @@ unsigned long long integer_raise2(const unsigned long long b) {
 	return a;
 }
 
-void walkK(const long long x) {
-	long double xNegK;
-	long long pos = 0;
-	for (long long i = 1; x >= integer_raise2(i); ++i) {
-		if (pos >= k.size()) {
-			k.push_back(0.0);
-			theta.push_back(0.0);
-			cur.push_back(0);
-			lastPrime.push_back(1);
-		}
-		xNegK = std::pow(x, 1.0/static_cast<long double>(i));
-		if (static_cast<long long>(k[pos]) < static_cast<long long>(xNegK)) {
-			k[pos] = xNegK;
-			//std::cout << "lastPime" << lastPrime[pos] << std::endl;
-			while (lastPrime[pos] <= static_cast<long long>(xNegK)) {
-				theta[pos] += log(mpfr::mpreal{lastPrime[pos]}, MPFR_RNDN);
-				if (cur[pos] >= prime.size())
-					fillMorePrimes(cur[pos] + 1);
-				lastPrime[pos] = prime[cur[pos]++];
-			}
-			//std::cout << std::endl;
-		}
-		//std::cout << i << " --- " << xNegK << " --- " << theta[pos] << std::endl;
-		++pos;
-	}
+//true if we walked
+bool walkK(const long long x) {
+   bool result = false;
+   long double xNegK;
+   long long pos = 0;
+   for (long long i = 1; x >= integer_raise2(i); ++i) {
+      if (pos >= k.size()) {
+	 k.push_back(0.0);
+	 theta.push_back(0.0);
+	 cur.push_back(0);
+	 lastPrime.push_back(1);
+      }
+      xNegK = std::pow(x, 1.0/static_cast<long double>(i));
+      if (static_cast<long long>(k[pos]) < static_cast<long long>(xNegK)) {
+	 k[pos] = xNegK;
+	 //std::cout << "lastPime" << lastPrime[pos] << std::endl;
+	 while (lastPrime[pos] <= static_cast<long long>(xNegK)) {
+	    result = true;
+	    theta[pos] += log(mpfr::mpreal{lastPrime[pos]}, MPFR_RNDN);
+	    if (cur[pos] >= prime.size())
+	       fillMorePrimes(cur[pos] + 1);
+	    lastPrime[pos] = prime[cur[pos]++];
+	 }
+	 //std::cout << std::endl;
+      }
+      //std::cout << i << " --- " << xNegK << " --- " << theta[pos] << std::endl;
+      ++pos;
+   }
+   return result;
 }
 
 mpfr::mpreal sumThetas() {

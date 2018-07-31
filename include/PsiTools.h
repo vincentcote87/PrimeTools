@@ -11,6 +11,7 @@
 #include <map>
 #include "mpreal.h"
 #include "many.h"
+#include "Consecutive.h"
 
 #include "s1.h"
 #include "s2.h"

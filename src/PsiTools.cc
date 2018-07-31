@@ -1,6 +1,6 @@
 #include "PsiTools.h"
 
-std::vector<mpfr::mpreal> psiTable;
+Consecutive psiTable;
 std::map<uint64_t, mpfr::mpreal> psiMap;
 
 //1024, 309
@@ -45,32 +45,17 @@ mpfr::mpreal psi(uint64_t x) {
   return psiMap[x];
 }
 
-void placeMapInTable() {
-	mpfr::mpreal zero = 0.0;
-	long long spot = psiTable.size();
-	for (auto i = psiMap.find(spot); i != psiMap.end() && i->first == spot; ++i) {
-		std::cout << "Tabulating psi(" << i->first << ") = " << i->second << std::endl;
-		psiTable.push_back(i->second);
-		++spot;
-	}
-}
-
 void expandPsiTable(long long target) {
-	std::cout << "Now expanding the psiTable from " << psiTable.size() << " to " << target << "..." << std::flush;
-	while (psiTable.size() < target) {
-		psiTable.push_back(higherPsi(psiTable.size()));
-	}
-	/*
-	long long i = psiTable.size();
-	psiTable.resize(target);
-	while (i < target) {
-		std::cout << " psi(" << i << ") = ";
-		psiTable[i++] = psi(i);
-		std::cout << psiTable[i-1] << " ";
-	}
-	*/
-	std::cout << "done." << std::endl;
-	psiMap.clear();
+   std::cout << "Now expanding the psiTable from " << psiTable.size() << " to " << target << "..." << std::flush;
+   while (psiTable.size() < target) {
+      if (walkK(psiTable.size())) { //faster than comparing mpfr
+	 psiTable.push_back(higherPsi(psiTable.size()));
+      } else {
+	 psiTable.tie_back();
+      }
+   }
+   std::cout << "done." << std::endl;
+   psiMap.clear();
 }
 
 mpfr::mpreal psi_work(uint64_t x) {

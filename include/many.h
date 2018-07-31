@@ -23,7 +23,7 @@ static std::vector<long long> lastPrime;
 
 unsigned long long integer_raise2(const unsigned long long);
 void fillMorePrimes(long long target);
-void walkK(const long long x);
+bool walkK(const long long x);
 mpfr::mpreal sumThetas();
 mpfr::mpreal higherPsi(long long x);
 
