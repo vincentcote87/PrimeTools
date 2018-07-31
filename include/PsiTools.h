@@ -30,6 +30,9 @@ void setupEnvironment();
 void placeMapInTable();
 void expandPsiTable(long long target);
 
+extern Consecutive psiTable;
+extern std::map<uint64_t, mpfr::mpreal> psiMap;
+
 #endif //PSITOOLS_H
 
 // static const size_t cutoff = 10000000; //4294967295

@@ -32,10 +32,13 @@ void psi_setup() {
 }
 
 mpfr::mpreal psi(uint64_t x) {
-  if (x < 2)
-     return 0.0;
-  if (x < psiTable.size())
-  	return psiTable[x];
+   if (x < 2) {
+      return 0.0;
+   }
+   if (x < psiTable.size()) {
+      return psiTable[x];
+   }
+   std::cout << "psi() We are outside of the psiTable. Attempt to use psiMap for x = " << x << std::endl;
   if (psiMap[x] == 0.0) {
   	if (x < 100)
   		psiMap[x] = primetools::calculatePsiLongDouble(x);
@@ -47,14 +50,18 @@ mpfr::mpreal psi(uint64_t x) {
 
 void expandPsiTable(long long target) {
    std::cout << "Now expanding the psiTable from " << psiTable.size() << " to " << target << "..." << std::flush;
+   if (psiTable.size() == 0) { //note: this if statement fixes an issue that did not cause any issues (issue stems from walkK returning false for walkK(0))
+      psiTable.push_back(mpfr::mpreal{0}); //psi(0)
+      psiTable.tie_back(); //psi(1)
+   }
    while (psiTable.size() < target) {
       if (walkK(psiTable.size())) { //faster than comparing mpfr
-	 psiTable.push_back(higherPsi(psiTable.size()));
+	 psiTable.push_back(sumThetas());
       } else {
 	 psiTable.tie_back();
       }
    }
-   std::cout << "done." << std::endl;
+   std::cout << " unique values: " << psiTable.internalSize() << std::endl;
    psiMap.clear();
 }
 

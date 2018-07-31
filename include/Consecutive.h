@@ -12,6 +12,8 @@ class Consecutive {
   public:
    mpfr::mpreal& operator[] (const size_t);
    mpfr::mpreal operator[] (const size_t) const;
+   mpfr::mpreal& getData (const size_t);
+   mpfr::mpreal getData (const size_t) const;
    size_t size() const;
    size_t internalSize() const;
    bool self(const size_t) const;

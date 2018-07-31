@@ -8,6 +8,14 @@ mpfr::mpreal Consecutive::operator[] (const size_t a) const {
    return data[loc[a]];
 }
 
+mpfr::mpreal& Consecutive::getData (const size_t a) {
+   return data[a];
+}
+
+mpfr::mpreal Consecutive::getData (const size_t a) const {
+   return data[a];
+}
+
 size_t Consecutive::size() const {
    return loc.size();
 }
