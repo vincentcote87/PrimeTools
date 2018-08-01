@@ -1,10 +1,10 @@
 #include "mobius.h"
 
-const long long mobiusCutoff = 1000001;
+const long long mobiusCutoff = 3000000;
 long long *mobiusTable;
 
 void mobius_setup() {
-  std::cout<<"seting up mobius table...";
+  std::cout<<"seting up mobius table..." << std::flush;
   mobiusTable = new long long[mobiusCutoff];
   for (uint i = 0; i < mobiusCutoff; ++i) {
     mobiusTable[i] = mobius_work(i);

@@ -10,6 +10,8 @@
 #include <climits>
 #include <map>
 #include "mpreal.h"
+#include "many.h"
+#include "Consecutive.h"
 
 #include "s1.h"
 #include "s2.h"
@@ -25,6 +27,11 @@ mpfr::mpreal psi(uint64_t);
 
 void psi_setup();
 void setupEnvironment();
+void placeMapInTable();
+void expandPsiTable(long long target);
+
+extern Consecutive psiTable;
+extern std::map<uint64_t, mpfr::mpreal> psiMap;
 
 #endif //PSITOOLS_H
 

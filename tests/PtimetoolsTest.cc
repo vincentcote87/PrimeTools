@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "Primetools.h"
 
+#include <iostream>
+
 TEST (PiTest, pi_10) {
   EXPECT_EQ(primetools::getPi(10), 4);
 }
@@ -36,4 +38,26 @@ TEST (PsiTest, Psi_10) {
   mpfr::mpreal b = log(2*3*2*5*7*2*3);
   long double variation = 0.0000000001;
   EXPECT_TRUE(a - b <= variation || a - b >= -variation);
+}
+
+TEST (LogOverPTest, logOverp_12) {
+  mpfr::mpreal ans = 1.530642912;
+  mpfr::mpreal testVal = primetools::logpOverp(12);
+  long double tolerance = 0.000000001;
+  EXPECT_TRUE( testVal - ans <= tolerance);
+}
+
+TEST (LogOverPTest, logOverp_11) {
+  mpfr::mpreal ans = 1.530642912;
+  mpfr::mpreal testVal = primetools::logpOverp(11);
+  long double tolerance = 0.000000001;
+  EXPECT_TRUE( testVal - ans <= tolerance);
+}
+
+TEST (oneOverpTest, oneOverp_25) {
+  mpfr::mpreal ans = 1.498956013;
+  mpfr::mpreal testVal = primetools::oneOverp(25);
+  long double tolerance = 0.000000001;
+  std::cout<<testVal<<std::endl;
+  EXPECT_TRUE( testVal - ans <= tolerance);
 }

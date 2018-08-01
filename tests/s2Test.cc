@@ -18,7 +18,6 @@ TEST (B2Test, bernoulliValue_of_10) {
   EXPECT_TRUE(B2[4] - 5.0/66.0 <= 0.000000000001);
 }
 
-
 //
 // void Tsetup(uint64_t x) {
 // 	std::cout << "Running Tsetup...";

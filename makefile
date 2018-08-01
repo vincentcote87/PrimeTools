@@ -5,8 +5,13 @@ IFLAGS = -I ./include
 LFLAGS = -L /usr/local/lib64
 # LFLAGS = -L /usr/local/lib64
 SRC_DIR = ./src
-SRCS = $(SRC_DIR)/B2.cc $(SRC_DIR)/mobius.cc $(SRC_DIR)/N.cc $(SRC_DIR)/Primetools.cc $(SRC_DIR)/PsiTools.cc $(SRC_DIR)/s1.cc $(SRC_DIR)/s2.cc $(SRC_DIR)/s3.cc $(SRC_DIR)/s4.cc
+<<<<<<< HEAD
+
+=======
+>>>>>>> 85e915e81ca93f057c2ed8f8d848875bd2cef319
+SRCS = $(SRC_DIR)/B2.cc $(SRC_DIR)/mobius.cc $(SRC_DIR)/N.cc $(SRC_DIR)/Primetools.cc $(SRC_DIR)/PsiTools.cc $(SRC_DIR)/s1.cc $(SRC_DIR)/s2.cc $(SRC_DIR)/s3.cc $(SRC_DIR)/s4.cc $(SRC_DIR)/many.cc
 LINKFLAGS = -fopenmp -lprimesieve -lprimecount -lgmp -lmpfr -lgtest -lpthread
+
 RPATH = -Wl,-rpath=/usr/local/lib64
 # RPATH = -Wl,-rpath=/usr/local/lib64
 
@@ -35,8 +40,7 @@ test: clean
 	$(CXX) -o $(C) $(IFLAGS) $(SRC_DIR)/*.cc tests/$(C).cc $(LINKFLAGS) $(RPATH) $(F) -static-libgcc
 
 custom: clean
-	#$(CXX) $(IFLAGS) $(C).cc $(SRC_DIR)/* -o $(C) $(LINKFLAGS) $(RPATH) $(F)
-	$(CXX) -o $(C) $(IFLAGS) $(SRC_DIR)/*.cc $(C).cc $(LINKFLAGS) $(RPATH) $(F) -static-libgcc
+	$(CXX) $(F) -o $(C) $(IFLAGS) $(SRC_DIR)/*.cc $(C).cc $(LINKFLAGS) $(RPATH) -static-libgcc
 
 min: clean
 	$(CXX) $(PROGRAM).cc $(SRC_DIR)/* -o $(PROGRAM)
