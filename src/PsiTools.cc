@@ -5,8 +5,8 @@ std::map<uint64_t, mpfr::mpreal> psiMap;
 
 //1024, 309
 void setupEnvironment() {
-  mpfr::mpreal::set_default_prec(512);
-  std::cout << std::setprecision(155) << std::scientific; //33-36 //15-17 //octuple: \log_10{2^237} = 71.344
+  mpfr::mpreal::set_default_prec(192);
+  std::cout << std::setprecision(30) << std::scientific; //33-36 //15-17 //octuple: \log_10{2^237} = 71.344
   psi_setup();
   mobius_setup();
   std::cout<<"Precision set to "<<mpfr::mpreal::get_default_prec()<<std::endl;
@@ -43,16 +43,6 @@ mpfr::mpreal psi(uint64_t x) {
   		psiMap[x] = psi_work(x);
   }
   return psiMap[x];
-}
-
-void placeMapInTable() {
-	mpfr::mpreal zero = 0.0;
-	long long spot = psiTable.size();
-	for (auto i = psiMap.find(spot); i != psiMap.end() && i->first == spot; ++i) {
-		std::cout << "Tabulating psi(" << i->first << ") = " << i->second << std::endl;
-		psiTable.push_back(i->second);
-		++spot;
-	}
 }
 
 void expandPsiTable(long long target) {

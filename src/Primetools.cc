@@ -108,7 +108,7 @@ long long primetools::fastK(const long long x, const long long p, const long lon
 mpfr::mpreal primetools::calculatePsiNoTheta(const uint64_t arg) {
    if (arg < 2)
       return 0.0L;
-      mpfr::mpreal x = arg;
+  mpfr::mpreal x = arg;
   mpfr::mpreal psi = 0.0;
 	mpfr::mpreal temp = 0.0;
 	mpfr::mpreal y = 0.0;
@@ -130,8 +130,26 @@ mpfr::mpreal primetools::calculatePsiNoTheta(const uint64_t arg) {
   return psi;
 }
 
-int_double primetools::logpOverp(uint64_t x) {
-  return -1.0;
+mpfr::mpreal primetools::logpOverp(uint64_t x) {
+  mpfr::mpreal sum = 0.0;
+  primesieve::iterator it;
+  it.skipto(0);
+  uint64_t prime = it.next_prime();
+  for (; prime <= x; prime = it.next_prime()) {
+    sum += mpfr::log(prime) / prime;
+  }
+  return sum;
+}
+
+mpfr::mpreal primetools::oneOverp(uint64_t x) {
+  mpfr::mpreal sum = 0.0;
+  primesieve::iterator it;
+  it.skipto(0);
+  uint64_t prime = it.next_prime();
+  for (; prime <= x; prime = it.next_prime()) {
+    sum += 1.0 / prime;
+  }
+  return sum;
 }
 
 uint64_t primetools::getKValue(uint64_t x) {

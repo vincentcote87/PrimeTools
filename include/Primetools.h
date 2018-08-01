@@ -30,7 +30,9 @@ namespace primetools {
 
   long long fastK(long long, long long, long long);
 
-  int_double logpOverp(uint64_t);
+  mpfr::mpreal logpOverp(uint64_t);
+
+  mpfr::mpreal oneOverp(uint64_t);
 
   // helper functions
   uint64_t getKValue(uint64_t);
