@@ -5,10 +5,7 @@ IFLAGS = -I ./include
 LFLAGS = -L /usr/local/lib64
 # LFLAGS = -L /usr/local/lib64
 SRC_DIR = ./src
-<<<<<<< HEAD
 
-=======
->>>>>>> 85e915e81ca93f057c2ed8f8d848875bd2cef319
 SRCS = $(SRC_DIR)/B2.cc $(SRC_DIR)/mobius.cc $(SRC_DIR)/N.cc $(SRC_DIR)/Primetools.cc $(SRC_DIR)/PsiTools.cc $(SRC_DIR)/s1.cc $(SRC_DIR)/s2.cc $(SRC_DIR)/s3.cc $(SRC_DIR)/s4.cc $(SRC_DIR)/many.cc
 LINKFLAGS = -fopenmp -lprimesieve -lprimecount -lgmp -lmpfr -lgtest -lpthread
 
