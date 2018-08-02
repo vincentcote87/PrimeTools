@@ -13,9 +13,9 @@ void setupEnvironment() {
 }
 
 void psi_setup() {
-  std::cout<<"seting up psi table..." << std::flush;
-  std::cout << "nothing ";
-  std::cout<<"Done"<<std::endl;
+  // std::cout<<"seting up psi table..." << std::flush;
+  // std::cout << "nothing ";
+  // std::cout<<"Done"<<std::endl;
 }
 
 mpfr::mpreal psi(uint64_t x) {
@@ -36,7 +36,7 @@ mpfr::mpreal psi(uint64_t x) {
 }
 
 void expandPsiTable(long long target) {
-   std::cout << "Now expanding the psiTable from " << psiTable.size() << " to " << target << "..." << std::flush;
+  //  std::cout << "Now expanding the psiTable from " << psiTable.size() << " to " << target << "..." << std::flush;
    if (psiTable.size() == 0) { //note: this if statement fixes an issue that did not cause any issues (issue stems from walkK returning false for walkK(0))
       psiTable.push_back(mpfr::mpreal{0}); //psi(0)
       psiTable.tie_back(); //psi(1)
@@ -48,7 +48,7 @@ void expandPsiTable(long long target) {
 	 psiTable.tie_back();
       }
    }
-   std::cout << " unique values: " << psiTable.internalSize() << std::endl;
+  //  std::cout << " unique values: " << psiTable.internalSize() << std::endl;
    psiMap.clear();
 }
 
