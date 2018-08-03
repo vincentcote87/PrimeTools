@@ -2,6 +2,7 @@
 
 Consecutive psiTable;
 std::map<uint64_t, mpfr::mpreal> psiMap;
+HigherPsi higherPsi;
 
 //1024, 309
 void setupEnvironment() {
@@ -42,8 +43,8 @@ void expandPsiTable(long long target) {
       psiTable.tie_back(); //psi(1)
    }
    while (psiTable.size() < target) {
-      if (walkK(psiTable.size())) { //faster than comparing mpfr
-	 psiTable.push_back(sumThetas());
+      if (higherPsi.walkK(psiTable.size())) { //faster than comparing mpfr
+	 psiTable.push_back(higherPsi.sumThetas());
       } else {
 	 psiTable.tie_back();
       }
