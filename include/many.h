@@ -2,6 +2,7 @@
 #define MANY_H
 
 #include <primesieve.hpp>
+#include <primecount.hpp>
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -21,6 +22,7 @@ static std::vector<long double> k;
 static std::vector<size_t> cur;
 static std::vector<long long> lastPrime;
 
+long long peace (const long long x);
 unsigned long long integer_raise2(const unsigned long long);
 void fillMorePrimes(long long target);
 bool walkK(const long long x);

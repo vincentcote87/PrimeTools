@@ -50,6 +50,18 @@ bool walkK(const long long x) {
    return result;
 }
 
+long long peace (const long long x) {
+   long long sum = 0;
+   const mpfr::mpreal mx;
+   const mpfr::mpreal one = 1.0;
+   mpfr::mpreal mi;
+   for (long long i = 1; x >= integer_raise2(i); ++i) {
+      mi = i;
+      sum += primecount::pi(pow(mx, one/mi, MPFR_RNDD));
+   }
+   return sum;
+}
+
 mpfr::mpreal sumThetas() {
 	mpfr::mpreal sum = 0.0;
 	for (size_t i = 0; i < theta.size(); ++i) {
