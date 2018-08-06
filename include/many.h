@@ -26,5 +26,6 @@ void fillMorePrimes(long long target);
 bool walkK(const long long x);
 mpfr::mpreal sumThetas();
 mpfr::mpreal higherPsi(long long x);
+mpfr::mpreal higherTheta(long long x);
 
 #endif //MANY_H

@@ -55,7 +55,6 @@ mpfr::mpreal sumThetas() {
 	for (size_t i = 0; i < theta.size(); ++i) {
 		sum += theta[i];
 	}
-	return sum;
 }
 
 mpfr::mpreal higherPsi(long long x) {
@@ -63,4 +62,11 @@ mpfr::mpreal higherPsi(long long x) {
 		return 0.0;
 	walkK(x);
 	return sumThetas();
+}
+
+mpfr::mpreal higherTheta(long long x) {
+		if (x < 2)
+		return 0.0;
+	walkK(x);
+	return theta[0];
 }
