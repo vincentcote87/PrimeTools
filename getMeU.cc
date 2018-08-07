@@ -1,13 +1,15 @@
 #include <iostream>
-#include <cmath>
+#include <iomanip>
+#include <mpreal.h>
 
 int main() {
-   long double x, u;
-   long long a;
+   mpfr::mpreal x, u;
+   mpfr::mpreal::set_default_prec(512);
+   std::cout << std::scientific << std::setprecision(155);
+   mpfr::mpreal third = mpfr::mpreal{1.0} / mpfr::mpreal{3.0};
    while (true) {
-      std::cin >> a;
-      x = a;
-      u = std::cbrtl(static_cast<long double>(x)) * std::cbrtl(std::log(std::log(x))*std::log(std::log(x)));
+      std::cin >> x;
+      u = mpfr::pow(x, third, MPFR_RNDN) * mpfr::pow(mpfr::log(mpfr::log(x, MPFR_RNDN), MPFR_RNDN) * mpfr::log(mpfr::log(x, MPFR_RNDN), MPFR_RNDN), third, MPFR_RNDN);
       std::cout << u << std::endl;
    }
    return 0;
