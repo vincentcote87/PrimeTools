@@ -87,10 +87,8 @@ mpfr::mpreal innerFourthSummationWithN(const long long x, const mpfr::mpreal& u,
 	Sum s;
 	mpfr::mpreal n;
 	for (long long k = 1; k <= upperBound; ++k) {
-	   n = N(x, u, l, k);
-	   if (n == 0)
-	      continue;
-	   s += (psi(k) - psiOfU) * n;
+		n = N(x, u, l, k);
+		s += (psi(k) - psiOfU) * n;
 	}
 	return s.get();
 }
