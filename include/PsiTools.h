@@ -10,7 +10,7 @@
 #include <climits>
 #include <map>
 #include "mpreal.h"
-#include "HigherPsi.h"
+#include "many.h"
 #include "Consecutive.h"
 
 #include "s1.h"
