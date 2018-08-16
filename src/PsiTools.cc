@@ -5,6 +5,7 @@ std::map<uint64_t, mpfr::mpreal> psiMap;
 HigherPsi higherPsi;
 
 //1024, 309
+//Vincent (omits some digits): 192, 30
 void setupEnvironment() {
   mpfr::mpreal::set_default_prec(192);
   std::cout << std::setprecision(30) << std::scientific; //33-36 //15-17 //octuple: \log_10{2^237} = 71.344
@@ -82,6 +83,7 @@ mpfr::mpreal psi_work(uint64_t x) {
   std::cout << '4' << std::flush;
   #endif //VERBOSE_PSI
   s4 = fourthSummation(x, u);
+  //s4 = fourthSummation(x, u);
   #ifdef VERBOSE_PSI
   std::cout << "..done" << std::endl;
   #endif //VERBOSE_PSI

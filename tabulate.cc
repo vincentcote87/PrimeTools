@@ -1,9 +1,12 @@
 #include <iostream>
+#include <iomanip>
+#include <mpreal.h>
+#include "HigherPsi.h"
 #include "PsiTools.h"
-#include "many.h"
 
 int main(int argc, char* argv[]) {
-   setupEnvironment();
+   mpfr::mpreal::set_default_prec(192);
+   std::cout << std::setprecision(58) << std::scientific;
    uint64_t x;
    if(argc == 2)
     x = std::stoll(argv[1]);
@@ -13,7 +16,9 @@ int main(int argc, char* argv[]) {
     return 0;
   }
    for (uint64_t i = 0; i <= x; ++i) {
-      std::cout << higherPsi(i) << std::endl;
+      if (higherPsi.walkK(i)) {
+	 std::cout << i << ": " << higherPsi.sumThetas() << std::endl;
+      }
    }
    return 0;
 }

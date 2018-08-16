@@ -10,7 +10,8 @@ int main() {
    while (true) {
       std::cin >> x;
       u = mpfr::pow(x, third, MPFR_RNDN) * mpfr::pow(mpfr::log(mpfr::log(x, MPFR_RNDN), MPFR_RNDN) * mpfr::log(mpfr::log(x, MPFR_RNDN), MPFR_RNDN), third, MPFR_RNDN);
-      std::cout << u << std::endl;
+      std::cout << "u: " << u << std::endl;
+      std::cout << "x/u: " << x/u << std::endl;
    }
    return 0;
 }
