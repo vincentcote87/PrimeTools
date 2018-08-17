@@ -31,6 +31,7 @@ int_double primetools::calculateTheta(uint64_t start, uint64_t stop) {
 }
 
 mpfr::mpreal primetools::calculateThetaLongDouble(uint64_t start, uint64_t stop) {
+  std::cout<<"In calc theta"<<std::endl;
   mpfr::mpreal theta = 0.0;
 	mpfr::mpreal temp = 0.0;
 	mpfr::mpreal y = 0.0;
