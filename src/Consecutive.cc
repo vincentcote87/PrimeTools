@@ -4,11 +4,20 @@ Consecutive::Consecutive()
    : data{}, loc{}, mirageCliff{0}, mirageSize{0}
 {}
 
+#include <cstdlib>
 mpfr::mpreal& Consecutive::operator[] (const size_t a) {
+   if (a < firstX() || a >= size()) {
+      std::cout << "PSI(" << a << ") not in table (" << firstX() << ", " << size() << "]. Will now exit." << std::endl;
+      exit(-1);
+   }
    return data[loc[a-mirageCliff]];
 }
 
 mpfr::mpreal Consecutive::operator[] (const size_t a) const {
+   if (a < firstX() || a >= size()) {
+      std::cout << "PSI(" << a << ") not in table (" << firstX() << ", " << size() << "]. Will now exit." << std::endl;
+      exit(-1);
+   }
    return data[loc[a-mirageCliff]];
 }
 
@@ -21,7 +30,7 @@ mpfr::mpreal Consecutive::getData (const size_t a) const {
 }
 
 size_t Consecutive::size() const {
-  return mirageSize;
+  return mirageSize + mirageCliff;
    //return loc.size();
 }
 

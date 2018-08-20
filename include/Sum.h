@@ -12,6 +12,9 @@ public:
 	Sum& operator+= (const Sum&);
 	Sum& operator+= (const mpfr::mpreal&);
 
+	Sum& operator-= (const Sum&);
+	Sum& operator-= (const mpfr::mpreal&);
+	
 	template<typename Y>
 	Sum operator+ (const Y&);
 

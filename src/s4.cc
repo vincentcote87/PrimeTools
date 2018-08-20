@@ -26,10 +26,91 @@ bool Section::operator< (const Section& a) {
 	return mob < a.mob;
 }
 
+
+LMOB_ITEM::LMOB_ITEM(const std::pair<long long, long long>& a)
+   : l{a.first}, mob{a.second}
+{}
+
+LMOB_ITEM::LMOB_ITEM(const long long a, const long long b)
+   : l{a}, mob{b}
+{}
+
+void printConsecutive(Consecutive& table) {
+   std::cout << "PRINT TABLE" << std::endl;
+   std::cout << "from " << table.firstX() << " to " << table.size() << std::endl;
+   for (long long i = table.firstX(); i < table.size(); ++i) {
+      std::cout << "psi(" << i << ") = " << table[i] << std::endl;
+   }
+   std::cout << "END OF TABLE" << std::endl;
+}
+
+std::vector<mpfr::mpreal> peeker;
+std::map<std::pair<long long, long long>, long long> seen;
+mpfr::mpreal anotherS4(const long long x, const mpfr::mpreal& u) {
+   const long long floorOfU = u.toLLong(MPFR_RNDD);
+   peeker.clear();
+   peeker.resize(floorOfU+1, 0.0);
+   const mpfr::mpreal psiOfU = psi(floorOfU); //requires tabulation up to u, or it will become recursive (and find a way to work, but slower)
+   std::vector<LMOB_ITEM> lmob; //We will traverse only the nonzero l's of the mobius function more than once, saving on the main time waste in not storing the whole table.
+   for (long long l = 1; l <= floorOfU; ++l) {
+      switch (mobius(l)) {
+	 case 1:
+	 case -1:
+	    lmob.push_back(std::make_pair(l, mobius(l)));
+	    break;
+	 case 0:
+	 default:
+	    break;
+      }
+   }
+   Sum A;
+   HigherPsi climber;
+   Consecutive spacer;
+   const long long lower = 1; //lower through upper = the region of inputs to psi
+   const long long upper = (mpfr::mpreal{x}/u).toLLong(MPFR_RNDD);
+   long long previousA = -1; //ensure previousHighPlusOne is smal
+   long long a = 1;
+   long long b;
+   do {
+      b = std::min(a + floorOfU*8, upper);
+      fillConsecutive(a, b, climber, spacer);
+      //printConsecutive(spacer);
+      for (LMOB_ITEM item : lmob) {
+	 const long long l = item.l;
+	 const long long previousHighPlusOne = div_floor(x, (l*previousA)) + 1;
+	 const long long ma_aka_high = div_floor(x, (l*a));
+	 const long long mb_aka_low = div_ceil(x, (l*b));
+	 const long long hard_low = (u/mpfr::mpreal{l}).toLLong(MPFR_RNDD) + 1; //first integer greater than u/l
+	 const long long hard_high = (mpfr::mpreal{x}/(mpfr::mpreal{l}*u)).toLLong(MPFR_RNDD); // last integer less than or equal to x/(ul)
+	 const long long low = previousA == -1 ? std::max(mb_aka_low, hard_low) : std::max(std::max(mb_aka_low, hard_low), previousHighPlusOne);
+	 const long long high = std::min(ma_aka_high, hard_high);
+	 std::cout << "a " << a << " b " << b << " l " << l << " prevHigh+1 " << previousHighPlusOne << " ma_aka_high " << ma_aka_high << " mb_aka_low " << mb_aka_low << " hard_low " << hard_low << " hard_high " << hard_high << " low " << low << " high " << high << std::endl;
+	 if (item.mob == 1) {
+	    A += anotherS4Inner(x, l, low, high, psiOfU, spacer);
+	    peeker[l] += anotherS4Inner(x, l, low, high, psiOfU, spacer);
+	 } else {
+	    A -= anotherS4Inner(x, l, low, high, psiOfU, spacer);
+	    peeker[l] -= anotherS4Inner(x, l, low, high, psiOfU, spacer);
+	 }
+      }
+      previousA = a;
+      a = b + 1;
+   } while (a <= upper);
+   return A.get();
+}
+
+mpfr::mpreal anotherS4Inner(const long long x, const long long l, const long long low, const long long high, const mpfr::mpreal& psiOfU, Consecutive& table) {
+   Sum A;
+   for (long long m = low; m <= high; ++m) {
+      A += table[x/(l*m)] - psiOfU;
+   }
+   return A.get();
+}
+
+
+
 long long fillConsecutive(const long long start, const long long stop, HigherPsi& climber, Consecutive& spacer) {
-   #ifdef DEBUG_STRANGES4
    std::cout << "S4: Replacing my personal table with" << (stop - start + 1) << "values from " << start << " to " << stop << "..." << std::flush;
-   #endif //DEBUG_STRANGES4
    spacer.clear();
    spacer.push_back(climber(start));
    spacer.setOffset(start);
@@ -40,10 +121,10 @@ long long fillConsecutive(const long long start, const long long stop, HigherPsi
 	 spacer.tie_back();
       }
    }
-   #ifdef DEBUG_STRANGES4
    std::cout << "Done" << std::endl;
-   #endif //DEBUG_STRANGES4
 }
+
+
 
 mpfr::mpreal strangeS4(const long long x, const mpfr::mpreal& u, const long long space) {
    Sum A;
@@ -71,46 +152,56 @@ mpfr::mpreal strangeS4(const long long x, const mpfr::mpreal& u, const long long
       fillConsecutive(a, b, climber, spacer);
       for (long long l = u.toLLong(MPFR_RNDD); l >= 1; --l) {
 	 const long long mob = mobius(l);
-	 if (mob == 0)
+	 if (mob == 0) {
+	    std::cout << "a " << a << " b " << b << " l " << l << " SKIP" << std::endl;
 	    continue;
+	 }
+	 const long long originalLowerBound = ((long long) u.toLDouble(MPFR_RNDN)/static_cast<long double>(l)) + 1;
 	 const long long largeBound = (long long) (
 	    static_cast<long double>(x)
 	    /
 	    (u.toLDouble(MPFR_RNDN) * static_cast<long double>(l))
-	    );
+	       );
 	 const long long smallBound = (long long)
 	    (sqrt(static_cast<long double>(x)/static_cast<long double>(l)));
 	 const mpfr::mpreal mob_mpfr = mob;
-	 #ifdef DEBUG_STRANGES4
-	 std::cout << "strangeS4: largeBound: " << largeBound << " smallBound: " << smallBound << std::endl;
-	 #endif //DEBUG_STRANGES4
+	 const long long ma_aka_high = x/(l*a);
+	 const long long mb_aka_low  = div_ceil(x, l*b);
+	 ++seen[std::make_pair(a, b)];
+	 std::cout << "a " << a << " b " << b << " l " << l << " originalLowerBound " << originalLowerBound << " largeBound " << largeBound << " smallBound " << smallBound << " mb_aka_low " << mb_aka_low << " ma_aka_high " << ma_aka_high << std::endl;
 	 if (largeBound < smallBound) {
-	    A += mob_mpfr * strangeSummationOriginal(x, u, l, psiOfU, largeBound, a, b, spacer);
+	    A += mob_mpfr * strangeSummationOriginal(x, u, l, psiOfU, std::max(mb_aka_low, originalLowerBound), std::min(ma_aka_high, largeBound), spacer);
 	 } else {
-	    A += mob_mpfr * strangeSummationOriginal(x, u, l, psiOfU, smallBound, a, b, spacer);
-	    A += mob_mpfr * strangeSummationWithN(x, u, l, psiOfU, std::max(NLowerBound, a), std::min(smallBound, b), spacer);
-	 }
+	    A += mob_mpfr * strangeSummationOriginal(x, u, l, psiOfU, std::max(mb_aka_low, originalLowerBound), std::min(ma_aka_high, smallBound), spacer);
+	    //A += mob_mpfr * strangeSummationWithN(x, u, l, psiOfU, std::max(NLowerBound, a), std::min(smallBound, b), spacer);
+         }
+	 
       }
       a = b + 1;
-      #ifdef DEBUG_STRANGES4
-      std::cout << "strangeS4: We just added to a = " << a << std::endl;
-      #endif //DEBUG_STRANGES4
    } while (a <= upper);
+   std::cout << "What bounds have we seen?" << std::endl;
+   for (auto i : seen) {
+      std::cout << '[' << i.first.first << ", " << i.first.second << "] was seen " << i.second << " times." << std::endl;
+   }
+   std::cout << "And those are the bounds." << std::endl;
    return A.get();
 }
 
+long long div_ceil(const long long a, const long long b) {
+   return (a + b - 1) / b;
+}
 
-mpfr::mpreal strangeSummationOriginal(const long long x, const mpfr::mpreal& u, const long long l, const mpfr::mpreal& psiOfU, const long long upperBound, const long long force_low, const long long force_high, Consecutive& spacer) {
+long long div_floor(const long long a, const long long b) {
+   return a/b;
+}
+
+mpfr::mpreal strangeSummationOriginal(const long long x, const mpfr::mpreal& u, const long long l, const mpfr::mpreal& psiOfU, const long long lowerBound, const long long upperBound, Consecutive& spacer) {
    Sum s;
-   const long long beginning = ((long long) u.toLDouble(MPFR_RNDN)/static_cast<long double>(l)) + 1;
-   long long temp;
-   for (long long m = upperBound; m >= beginning; --m) {
-      temp = x/(l*m);
-      if (temp < force_low)
-	 continue;
-      if (temp > force_high)
-	 break;
-      s += spacer[temp] - psiOfU;
+   #ifdef DEBUG_STRANGES4
+   std::cout << "l " << l << " lowerBound " << lowerBound << " upperBound " << upperBound << std::endl;
+   #endif //DEBUG_STRANGES4
+   for (long long m = upperBound; m >= lowerBound; --m) {
+      s += spacer[x/(l*m)] - psiOfU;
    }
    return s.get();
 }
@@ -128,12 +219,15 @@ mpfr::mpreal strangeSummationWithN(const long long x, const mpfr::mpreal& u, con
 }
 
 mpfr::mpreal fourthSummation(const long long x, const mpfr::mpreal& u) {
-   Sum A;
+	 Sum A;
+	 mpfr::mpreal NOUSE = 0.0;
    const mpfr::mpreal psiOfU = psi(u.toLLong(MPFR_RNDD));
    for (long long l = u.toLLong(MPFR_RNDD); l >= 1; --l) {
       const long long mob = mobius(l);
-      if (mob == 0)
+      if (mob == 0) {
+	 std::cout << "fourthSummation: l = " << l << " produced " << "0.000000000000000000000000000000e+00" << std::endl;
 	 continue;
+      }
       const long long largeBound = (long long) (
 	 static_cast<long double>(x)
 	               /
@@ -146,8 +240,10 @@ mpfr::mpreal fourthSummation(const long long x, const mpfr::mpreal& u) {
 	 A += mob_mpfr * innerFourthSummationOriginal(x, u, l, psiOfU, largeBound);
       } else {
 	 A += mob_mpfr * innerFourthSummationOriginal(x, u, l, psiOfU, smallBound);
-	 A += mob_mpfr * innerFourthSummationWithN(x, u, l, psiOfU, smallBound);
+	 //A += mob_mpfr * innerFourthSummationWithN(x, u, l, psiOfU, smallBound);
       }
+      std::cout << "fourthSummation: l = " << l << " produced " <<  (A.get() - NOUSE) << std::endl;
+      NOUSE = A.get();
    }
    return A.get();
 }

@@ -36,6 +36,16 @@ Sum& Sum::operator+= (const mpfr::mpreal& a) {
 	return *this;
 }
 
+Sum& Sum::operator-= (const Sum& a) {
+   neumaier(-a.get());
+   return *this;
+}
+
+Sum& Sum::operator-= (const mpfr::mpreal& a) {
+   neumaier(-a);
+   return *this;
+}
+
 template<typename Y>
 Sum Sum::operator+ (const Y& a) {
 	Sum b{*this};
