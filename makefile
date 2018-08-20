@@ -6,7 +6,7 @@ LFLAGS = -L /usr/local/lib64
 # LFLAGS = -L /usr/local/lib64
 SRC_DIR = ./src
 
-SRCS = $(SRC_DIR)/B2.cc $(SRC_DIR)/mobius.cc $(SRC_DIR)/N.cc $(SRC_DIR)/Primetools.cc $(SRC_DIR)/PsiTools.cc $(SRC_DIR)/s1.cc $(SRC_DIR)/s2.cc $(SRC_DIR)/s3.cc $(SRC_DIR)/s4.cc $(SRC_DIR)/many.cc $(SRC_DIR)/Consecutive.cc
+SRCS = $(SRC_DIR)/B2.cc $(SRC_DIR)/mobius.cc $(SRC_DIR)/N.cc $(SRC_DIR)/Primetools.cc $(SRC_DIR)/PsiTools.cc $(SRC_DIR)/s1.cc $(SRC_DIR)/s2.cc $(SRC_DIR)/s3.cc $(SRC_DIR)/s4.cc $(SRC_DIR)/many.cc $(SRC_DIR)/Consecutive.cc $(SRC_DIR)/bounds.cc
 LINKFLAGS = -fopenmp -lprimesieve -lprimecount -lgmp -lmpfr -lgtest -lpthread
 
 RPATH = -Wl,-rpath=/usr/local/lib64
