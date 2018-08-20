@@ -51,11 +51,18 @@ mpfr::mpreal primetools::calculateThetaLongDouble(uint64_t start, uint64_t stop)
 
   return theta;
 }
-
 mpfr::mpreal primetools::calculateThetaWithPsi(uint64_t x) {
+  return primetools::calculateThetaWithPsi(x, 0);
+}
+
+mpfr::mpreal primetools::calculateThetaWithPsi(uint64_t x, mpfr::mpreal psi) {
   if (x < 2)
      return 0.0;
-  mpfr::mpreal psiOfx = psi_work(x);
+  mpfr::mpreal psiOfx;
+  if(psi > 0)
+    psiOfx = psi;
+  else
+    psiOfx = psi_work(x);
   mpfr::mpreal partialTheta = 0.0;
   uint64_t k = primetools::getKValue(x);
   uint64_t tmpX = primetools::nextTheta(x, k);

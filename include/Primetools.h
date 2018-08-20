@@ -24,6 +24,8 @@ namespace primetools {
 
   mpfr::mpreal calculateThetaWithPsi(uint64_t);
 
+    mpfr::mpreal calculateThetaWithPsi(uint64_t, mpfr::mpreal);
+
   int_double calculatePsi(uint64_t);
 
   mpfr::mpreal calculatePsiLongDouble(uint64_t);
