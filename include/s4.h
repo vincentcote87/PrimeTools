@@ -50,6 +50,8 @@ long long div_floor(const long long, const long long);
 mpfr::mpreal anotherS4(const long long, const mpfr::mpreal&);
 mpfr::mpreal anotherS4Inner(const long long, const long long, const long long, const long long, const mpfr::mpreal&, Consecutive&);
 
+mpfr::mpreal endlessS4(const long long, const mpfr::mpreal&);
+
 extern std::vector<mpfr::mpreal> peeker;
 
 #endif //S4_H

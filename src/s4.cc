@@ -77,7 +77,7 @@ mpfr::mpreal anotherS4(const long long x, const mpfr::mpreal& u) {
       //printConsecutive(spacer);
       for (LMOB_ITEM item : lmob) {
 	 const long long l = item.l;
-	 const long long previousHighPlusOne = div_floor(x, (l*previousA)) + 1;
+	 const long long previousHighPlusOne = div_floor(x, (    (l == 1 ? 1 : l - 1)*previousA    )) + 1; //I must use the previous l? Or the previous l actually used?
 	 const long long ma_aka_high = div_floor(x, (l*a));
 	 const long long mb_aka_low = div_ceil(x, (l*b));
 	 const long long hard_low = (u/mpfr::mpreal{l}).toLLong(MPFR_RNDD) + 1; //first integer greater than u/l
@@ -225,7 +225,7 @@ mpfr::mpreal fourthSummation(const long long x, const mpfr::mpreal& u) {
    for (long long l = u.toLLong(MPFR_RNDD); l >= 1; --l) {
       const long long mob = mobius(l);
       if (mob == 0) {
-	 std::cout << "fourthSummation: l = " << l << " produced " << "0.000000000000000000000000000000e+00" << std::endl;
+	 //std::cout << "fourthSummation: l = " << l << " produced " << "0.000000000000000000000000000000e+00" << std::endl;
 	 continue;
       }
       const long long largeBound = (long long) (
@@ -240,9 +240,9 @@ mpfr::mpreal fourthSummation(const long long x, const mpfr::mpreal& u) {
 	 A += mob_mpfr * innerFourthSummationOriginal(x, u, l, psiOfU, largeBound);
       } else {
 	 A += mob_mpfr * innerFourthSummationOriginal(x, u, l, psiOfU, smallBound);
-	 //A += mob_mpfr * innerFourthSummationWithN(x, u, l, psiOfU, smallBound);
+	 A += mob_mpfr * innerFourthSummationWithN(x, u, l, psiOfU, smallBound);
       }
-      std::cout << "fourthSummation: l = " << l << " produced " <<  (A.get() - NOUSE) << std::endl;
+      //std::cout << "fourthSummation: l = " << l << " produced " <<  (A.get() - NOUSE) << std::endl;
       NOUSE = A.get();
    }
    return A.get();
@@ -339,4 +339,42 @@ mpfr::mpreal ascendingS4(const long long x, const mpfr::mpreal& u, HigherPsi asc
    std::cout << "***********************************************************************************" << std::endl;
    #endif //DEBUG_ASCENDINGS4
    return sum.get();
+}
+
+
+//I might have to have two separate N functions
+mpfr::mpreal endlessS4(const long long x, const mpfr::mpreal& u) {
+   HigherPsi fakeTable;
+   const mpfr::mpreal psiOfU = psi(u.toLLong(MPFR_RNDD));
+   Sum s;
+   //for h's less than or equal to the middle bound (h represents the possible lm from x/lm), the k (k represents the floor(x/lm)), nonzero k's become "sparse".
+   const long long middleBound = ((mpfr::mpreal{1} + sqrt(mpfr::mpreal{1} + mpfr::mpreal{4} * mpfr::mpreal{x}, MPFR_RNDN)) / mpfr::mpreal{2}).toLLong(MPFR_RNDD);
+   //for as middleBoundK, I want a value that can be used for the equivalent to a less than, but will appear as less than or equal to in code (less than x/middleBound)
+   const long long middleBoundAsK = (mpfr::mpreal{x} / mpfr::mpreal{middleBound}).toLLong(MPFR_RNDU) - 1;
+   //const long long upperBound = (mpfr::mpreal{x}/u).toLLong(MPFR_RNDD); //less than or equal to (floor of division)
+   //const long long upperBoundAsH = u.toLLong(MPFR_RNDD);
+   for (long long k = 1; k <= middleBoundAsK; ++k) {
+      long long sumOfF = 0;
+      for (long long l = u.toLLong(MPFR_RNDD); l >= 1; --l) {
+	 if (mobius(l) == 0)
+	    continue;
+	 sumOfF += mobius(l) * F(x, u, l, k);
+      }
+      if (sumOfF == 0)
+	 continue;
+      s += (fakeTable(k) - psiOfU) * sumOfF;
+   }
+   for (long long h = middleBound; h >= 1; --h) {
+      const long long k = x/h; //should never repeat because we are working where k's are "sparse"
+      long long sumOfF = 0;
+      for (long long l = u.toLLong(MPFR_RNDD); l >= 1; --l) {
+	 if (mobius(l) == 0)
+	    continue;
+	 sumOfF += mobius(l) * F(x, u, l, k);
+      }
+      if (sumOfF == 0)
+	 continue;
+      s += (fakeTable(k) - psiOfU) * sumOfF;
+   }
+   return s.get();
 }
