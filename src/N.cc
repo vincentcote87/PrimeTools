@@ -30,7 +30,7 @@ integer F(const integer x, const mpfr::mpreal u, const integer l, const integer 
    const integer M1 = (x/(l*(k+1))) + 1; //deliberate floor of division
    const integer high = std::min(L2,M2);
    const integer low = std::max(L1,M1);
-
+   
    if (high < low)
       return 0;
 

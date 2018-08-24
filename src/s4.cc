@@ -342,15 +342,15 @@ mpfr::mpreal ascendingS4(const long long x, const mpfr::mpreal& u, HigherPsi asc
 }
 
 
-//I might have to have two separate N functions
+
 mpfr::mpreal endlessS4(const long long x, const mpfr::mpreal& u) {
    HigherPsi fakeTable;
    const mpfr::mpreal psiOfU = psi(u.toLLong(MPFR_RNDD));
    Sum s;
    //for h's less than or equal to the middle bound (h represents the possible lm from x/lm), the k (k represents the floor(x/lm)), nonzero k's become "sparse".
-   const long long middleBound = ((mpfr::mpreal{1} + sqrt(mpfr::mpreal{1} + mpfr::mpreal{4} * mpfr::mpreal{x}, MPFR_RNDN)) / mpfr::mpreal{2}).toLLong(MPFR_RNDD);
+   const long long middleBound = ((mpfr::mpreal{1} + sqrt(mpfr::mpreal{1+4*x}, MPFR_RNDN)) / mpfr::mpreal{2}).toLLong(MPFR_RNDD);
    //for as middleBoundK, I want a value that can be used for the equivalent to a less than, but will appear as less than or equal to in code (less than x/middleBound)
-   const long long middleBoundAsK = (mpfr::mpreal{x} / mpfr::mpreal{middleBound}).toLLong(MPFR_RNDU) - 1;
+   const long long middleBoundAsK = (mpfr::mpreal{2*x} / (mpfr::mpreal{1} + sqrt(mpfr::mpreal{1+4*x}))).toLLong(MPFR_RNDU) - 1;
    //const long long upperBound = (mpfr::mpreal{x}/u).toLLong(MPFR_RNDD); //less than or equal to (floor of division)
    //const long long upperBoundAsH = u.toLLong(MPFR_RNDD);
    for (long long k = 1; k <= middleBoundAsK; ++k) {
@@ -364,7 +364,8 @@ mpfr::mpreal endlessS4(const long long x, const mpfr::mpreal& u) {
 	 continue;
       s += (fakeTable(k) - psiOfU) * sumOfF;
    }
-   for (long long h = middleBound; h >= 1; --h) {
+   const long long smallestDenominator = u.toLLong(MPFR_RNDD);
+   for (long long h = middleBound; h >= smallestDenominator; --h) {
       const long long k = x/h; //should never repeat because we are working where k's are "sparse"
       long long sumOfF = 0;
       for (long long l = u.toLLong(MPFR_RNDD); l >= 1; --l) {
@@ -372,6 +373,30 @@ mpfr::mpreal endlessS4(const long long x, const mpfr::mpreal& u) {
 	    continue;
 	 sumOfF += mobius(l) * F(x, u, l, k);
       }
+      //std::cout << "h: " << h << " sumOfF: " << sumOfF << std::endl;
+      if (sumOfF == 0)
+	 continue;
+      s += (fakeTable(k) - psiOfU) * sumOfF;
+      }
+   return s.get();
+}
+
+mpfr::mpreal denominatorS4(const long long x, const mpfr::mpreal& u) {
+   HigherPsi fakeTable;
+   const mpfr::mpreal psiOfU = psi(u.toLLong(MPFR_RNDD));
+   Sum s;
+   for (long long h = u.toLLong(MPFR_RNDD); h >= 1; --h) {
+      const long long k = x/h;
+      long long sumOfF = 0;
+      for (long long l = u.toLLong(MPFR_RNDD); l >= 1; --l) {
+	 //std::cout << "x: " << x << " u: " << u << " l: " << l << " k: " << k;
+	 //std::cout << " mob: " << mobius(l) << " F: " << F(x, u, l, k) << std::endl;
+	 if (mobius(l) == 0)
+	    continue;
+	 sumOfF += mobius(l) * F(x, u, l, k);
+	 
+      }
+      //std::cout << "sumOfF: " << sumOfF << " k: " << k << " h: " << h << std::endl;
       if (sumOfF == 0)
 	 continue;
       s += (fakeTable(k) - psiOfU) * sumOfF;

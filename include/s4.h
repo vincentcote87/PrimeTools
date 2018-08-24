@@ -52,6 +52,8 @@ mpfr::mpreal anotherS4Inner(const long long, const long long, const long long, c
 
 mpfr::mpreal endlessS4(const long long, const mpfr::mpreal&);
 
+mpfr::mpreal denominatorS4(const long long, const mpfr::mpreal&);
+
 extern std::vector<mpfr::mpreal> peeker;
 
 #endif //S4_H
