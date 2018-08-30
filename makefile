@@ -31,13 +31,16 @@ main: clean
 	$(CXX) -o $(PROGRAM) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) $(RPATH)
 
 static: clean
-	$(CXX) -static -o $(PROGRAM) $(IFLAGS) $(SRC_DIR)/*.cc main.cc $(LINKFLAGS) -static-libgcc
+	g++ -static -std=c++0x -o main -I ./include ./src/*.cc main.cc -fopenmp -lprimesieve -lprimecount -lgmp -lmpfr -lgmp
 
 test: clean
 	$(CXX) -o $(C) $(IFLAGS) $(SRC_DIR)/*.cc tests/$(C).cc $(LINKFLAGS) $(RPATH) $(F) -static-libgcc
 
 custom: clean
 	$(CXX) $(F) -o $(C) $(IFLAGS) $(SRC_DIR)/*.cc $(C).cc $(LINKFLAGS) $(RPATH) -static-libgcc
+
+customStatic: clean
+	g++ -static -std=c++0x -o $(C) -I ./include ./src/*.cc $(C).cc -fopenmp -lprimesieve -lprimecount -lgmp -lmpfr -lgmp
 
 min: clean
 	$(CXX) $(PROGRAM).cc $(SRC_DIR)/* -o $(PROGRAM)

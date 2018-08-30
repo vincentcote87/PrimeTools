@@ -5,6 +5,8 @@
 #include "PsiTools.h"
 #include "Primetools.h"
 
-std::vector<mpfr::mpreal> maxK(const uint64_t lowerBound, const uint64_t upperBound);
+std::vector<mpfr::mpreal> maxK(const uint64_t, const uint64_t);
+
+std::vector<mpfr::mpreal> maxK(const uint64_t, const uint64_t, const mpfr::mpreal);
 
 #endif //BOUNDS_H

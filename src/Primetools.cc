@@ -30,23 +30,28 @@ int_double primetools::calculateTheta(uint64_t start, uint64_t stop) {
   return theta;
 }
 
+mpfr::mpreal primetools::addToTheta(const mpfr::mpreal knownTheta,const uint64_t x, const uint64_t lastX) {
+  return knownTheta + primetools::calculateThetaLongDouble(x, lastX);
+}
+
 mpfr::mpreal primetools::calculateThetaLongDouble(uint64_t start, uint64_t stop) {
   mpfr::mpreal theta = 0.0;
-	mpfr::mpreal temp = 0.0;
-	mpfr::mpreal y = 0.0;
-	mpfr::mpreal errorTerm = 0.0;
-  mpfr::mpreal x = 0;
+	// mpfr::mpreal temp = 0.0;
+	// mpfr::mpreal y = 0.0;
+	// mpfr::mpreal errorTerm = 0.0;
+  // mpfr::mpreal x = 0;
 
   primesieve::iterator it;
   it.skipto(start);
   uint64_t prime = it.next_prime();
 
   for (; prime <= stop; prime = it.next_prime()) {
-    x = prime;
-    y = log(x, MPFR_RNDN) - errorTerm;
-    temp = theta + y;
-    errorTerm = (temp - theta) - y;
-    theta = temp;
+    theta += mpfr::log(prime, MPFR_RNDN);
+    // x = prime;
+    // y = log(x, MPFR_RNDN) - errorTerm;
+    // temp = theta + y;
+    // errorTerm = (temp - theta) - y;
+    // theta = temp;
   }
 
   return theta;
@@ -56,6 +61,8 @@ mpfr::mpreal primetools::calculateThetaWithPsi(uint64_t x) {
 }
 
 mpfr::mpreal primetools::calculateThetaWithPsi(uint64_t x, mpfr::mpreal psi) {
+  mpfr::mpreal::set_default_prec(256);
+  std::cout<<psi<<std::endl;
   if (x < 2)
      return 0.0;
   mpfr::mpreal psiOfx;

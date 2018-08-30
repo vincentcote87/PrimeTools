@@ -12,7 +12,7 @@ struct maxValue {
   long long prime;
 };
 
-int main() {
+int main(int argc, char* argv[]) {
   DIR *dir;
   struct dirent *ent;
 
@@ -32,9 +32,12 @@ int main() {
   mpfr::mpreal::set_default_prec(192);
   std::cout << std::setprecision(58) << std::scientific;
 
-  std::cout<<"Enter the file path: ";
-  std::cin>>filePath;
-
+  if(argc >= 2) {
+    filePath = argv[1];
+  } else{
+    std::cout<<"Enter the file path: ";
+    std::cin>>filePath;
+  }
   if ((dir = opendir (filePath.c_str())) != NULL) {
     while ((ent = readdir (dir)) != NULL) {
       fileName = ent->d_name;

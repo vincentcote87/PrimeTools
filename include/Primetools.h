@@ -28,6 +28,8 @@ namespace primetools {
 
   int_double calculatePsi(uint64_t);
 
+  mpfr::mpreal addToTheta(const mpfr::mpreal, const uint64_t, const uint64_t);
+
   mpfr::mpreal calculatePsiLongDouble(uint64_t);
 
   mpfr::mpreal calculatePsiNoTheta(uint64_t);

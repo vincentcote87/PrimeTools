@@ -5,7 +5,7 @@ std::map<uint64_t, mpfr::mpreal> psiMap;
 
 //1024, 309
 void setupEnvironment() {
-  mpfr::mpreal::set_default_prec(192);
+  mpfr::mpreal::set_default_prec(256);
   std::cout << std::setprecision(58) << std::scientific; //33-36 //15-17 //octuple: \log_10{2^237} = 71.344
   psi_setup();
   mobius_setup();

@@ -1,6 +1,17 @@
 #include "bounds.h"
 
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+#include <cstdlib>
+#include <mpreal.h>
+#include "InterpretClock.h"
+
 std::vector<mpfr::mpreal> maxK(const uint64_t lowerBound, const uint64_t upperBound){
+	return maxK(lowerBound, upperBound, 0.0);
+}
+
+std::vector<mpfr::mpreal> maxK(const uint64_t lowerBound, const uint64_t upperBound, const mpfr::mpreal givenPsi){
 	vector<mpfr::mpreal> M;
 	uint64_t n = upperBound;
 	mpfr::mpreal theta = 0.0;
@@ -15,7 +26,8 @@ std::vector<mpfr::mpreal> maxK(const uint64_t lowerBound, const uint64_t upperBo
 	uint64_t Pn = it.next_prime();
 	uint64_t PnPlusOne = it.next_prime();
 	cout<<"Calculating theta with psi...";
-	theta = primetools::calculateThetaWithPsi(Pn);
+	theta = primetools::calculateThetaWithPsi(lowerBound, givenPsi);
+	theta += mpfr::log(Pn, MPFR_RNDN);
 	cout<<"Done theta("<<Pn<<") = "<<theta<<endl;
 
 	M.resize(upperK * 2, 0.0);
