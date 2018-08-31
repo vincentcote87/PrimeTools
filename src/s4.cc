@@ -384,11 +384,17 @@ mpfr::mpreal endlessS4(const long long x, const mpfr::mpreal& u) {
 mpfr::mpreal denominatorS4(const long long x, const mpfr::mpreal& u) {
    HigherPsi fakeTable;
    const mpfr::mpreal psiOfU = psi(u.toLLong(MPFR_RNDD));
+   const long long largeDenominator = (u*u).toLLong(MPFR_RNDD);
+   const long long smallDenominator = u.toLLong(MPFR_RNDD);
    Sum s;
-   for (long long h = u.toLLong(MPFR_RNDD); h >= 1; --h) {
+   long long lastK = -200;
+   for (long long h = largeDenominator; h >= smallDenominator; --h) {
       const long long k = x/h;
+      if (k == lastK)
+	 continue;
+      lastK = k;
       long long sumOfF = 0;
-      for (long long l = u.toLLong(MPFR_RNDD); l >= 1; --l) {
+      for (long long l = h; l >= 1; --l) {
 	 //std::cout << "x: " << x << " u: " << u << " l: " << l << " k: " << k;
 	 //std::cout << " mob: " << mobius(l) << " F: " << F(x, u, l, k) << std::endl;
 	 if (mobius(l) == 0)

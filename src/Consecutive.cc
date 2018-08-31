@@ -21,6 +21,10 @@ mpfr::mpreal Consecutive::operator[] (const size_t a) const {
    return data[loc[a-mirageCliff]];
 }
 
+size_t Consecutive::getLoc(const size_t a) const {
+   return loc[a-mirageCliff];
+}
+
 mpfr::mpreal& Consecutive::getData (const size_t a) {
    return data[a];
 }

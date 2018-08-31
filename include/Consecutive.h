@@ -15,6 +15,7 @@ class Consecutive {
     Consecutive();
    mpfr::mpreal& operator[] (const size_t);
    mpfr::mpreal operator[] (const size_t) const;
+   size_t getLoc(const size_t) const;
    mpfr::mpreal& getData (const size_t);
    mpfr::mpreal getData (const size_t) const;
    size_t size() const;
