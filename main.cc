@@ -20,6 +20,8 @@ int main(int argc, char* argv[]) {
 	uint64_t base;
 	mpfr::mpreal givenPsi;
 
+	cout<<primetools::calculateThetaLongDouble(1,100810747)<<endl;
+	cout<<primetools::calculateThetaWithPsi(100810747)<<endl;
 	if(argc == 2){
 		lBound = 1;
     uBound = std::stoll(argv[1]);
