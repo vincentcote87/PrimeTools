@@ -62,7 +62,7 @@ mpfr::mpreal primetools::calculateThetaWithPsi(uint64_t x) {
 
 mpfr::mpreal primetools::calculateThetaWithPsi(uint64_t x, mpfr::mpreal psi) {
   mpfr::mpreal::set_default_prec(256);
-  std::cout<<psi<<std::endl;
+  // std::cout<<psi<<std::endl;
   if (x < 2)
      return 0.0;
   mpfr::mpreal psiOfx;
