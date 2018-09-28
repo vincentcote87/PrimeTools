@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
   mpfr::mpreal psi = 0.0;
   setupEnvironment();
 
-  maxK(2, 20);
+  maxK(3, 20);
   while(true) {
     std::cout<<"Enter value for x: ";
     std::cin>>x;

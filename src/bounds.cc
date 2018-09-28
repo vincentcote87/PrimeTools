@@ -28,20 +28,33 @@ std::vector<mpfr::mpreal> maxK(const uint64_t lowerBound, const uint64_t upperBo
 	// uint64_t Pn = it.next_prime();
 	// uint64_t PnPlusOne = it.next_prime();
 	cout<<"Calculating theta with psi...";
-	theta = primetools::calculateThetaWithPsi(lowerBound, givenPsi);
-	theta += mpfr::log(Pn, MPFR_RNDN);
-	cout<<"Done theta("<<Pn<<") = "<<theta<<endl;
+	theta = primetools::calculateThetaWithPsi(PnMinusOne, givenPsi);
+	// theta += mpfr::log(Pn, MPFR_RNDN);
+	cout<<"Done theta("<<PnMinusOne<<") = "<<theta<<endl;
 
 	M.resize(upperK * 2, 0.0);
 
 	mpfr::mpreal mpPn;
-	mpfr::mpreal mpPnPlusOne;
+	// mpfr::mpreal mpPnPlusOne;
 	mpfr::mpreal mpK;
 	mpfr::mpreal mpPnMinusOne;
 
 	// for (; Pn <= n; PnPlusOne = it.next_prime()) {
 	for (; Pn <= n; Pn = it.next_prime()) {
-		cout<<"Pn = "<<Pn<<" and Pn-1 = "<<PnMinusOne<<endl;
+		// cout<<"Pn = "<<Pn<<" and Pn-1 = "<<PnMinusOne<<endl;
+		mpPn = Pn;
+		mpPnMinusOne = PnMinusOne;
+		logOfp = mpfr::log(mpPn, MPFR_RNDN);
+		for(long long k = 0; k < upperK; ++k) {
+			mpK = k;
+			result = ((mpPn - theta) * mpfr::pow(logOfp, mpK, MPFR_RNDN)) / mpPn;
+			if(result > M[k]){
+				M[k] = result;
+				M[k+upperK] = Pn; //the prime associated with max
+			}
+		}
+
+		theta += mpfr::log(mpPn, MPFR_RNDN);
 		PnMinusOne = Pn;
 		// if(Pn == 2) {
 		// 	mpPnMinusOne = 0;
