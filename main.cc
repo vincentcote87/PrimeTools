@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
 	vector<mpfr::mpreal> myVec;
 	overallMax.resize(12);
 
-	for(uint64_t i = 1000000000; i <= 1000000000000000; i *= 10) {
+	for(uint64_t i = 10; i <= 1000000000000000; i *= 10) {
 		for(uint64_t j = 1; j < 10; ++j) {
 			if(j != 9){
 				myVec =  maxK(i*j, i*(j+1), 0);
