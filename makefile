@@ -21,7 +21,7 @@ COVERAGE_DIR = coverage
 
 PROGRAM = main
 PROGRAM_TEST = testMain
-C ?= na
+C ?= 
 F ?=
 
 #g++ -static -std=c++0x -o main -I ./include ./src/*.cc main.cc -fopenmp -lprimesieve -lprimecount -lgmp -lmpfr -lgmp
