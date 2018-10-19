@@ -35,7 +35,7 @@ int main() {
       condorFile<<"Arguments = "<<i<<" "<<i + range<<endl;
       condorFile<<"Log = ct.log"<<endl;
       condorFile<<"request_memory=700"<<endl;
-      condorFile<<"+xcount = 8"<<endl;
+    //   condorFile<<"+xcount = 8"<<endl;
       condorFile<<folderName;
       while(temp < stop) {
 	       if(temp == 0)

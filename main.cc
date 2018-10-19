@@ -54,24 +54,24 @@ int main(int argc, char* argv[]) {
 	bool isRunning = true;
 	bool interval = false;
 	vector<mpfr::mpreal> overallMax;
-	vector<mpfr::mpreal> myVec;
+	// vector<mpfr::mpreal> myVec;
 	overallMax.resize(12);
 
-	for(uint64_t i = 10; i <= 1000000000000000; i *= 10) {
-		for(uint64_t j = 1; j < 10; ++j) {
-			if(j != 9){
-				myVec =  maxK(i*j, i*(j+1), 0);
-				cout<<"Showing results for Max of x with "<<i*j<<" < x <= "<<i*(j+1)<<endl;
-			}
-			else {
-				myVec =  maxK(i*j, i*10, 0);
-				cout<<"Showing results for Max of x with "<<i*j<<" < x <= "<<i*10<<endl;
-			}
-			for(int i = 0; i < myVec.size()/2; ++i) {
-				cout<<std::scientific<<"M"<<i<<" = "<<myVec[i]<<" with P = "<<std::fixed<<myVec[i+6]<<endl;
-			}
-		}
-	}
+	// for(uint64_t i = 10; i <= 1000000000000000; i *= 10) {
+	// 	for(uint64_t j = 1; j < 10; ++j) {
+	// 		if(j != 9){
+	// 			myVec =  maxK(i*j, i*(j+1), 0);
+	// 			cout<<"Showing results for Max of x with "<<i*j<<" < x <= "<<i*(j+1)<<endl;
+	// 		}
+	// 		else {
+	// 			myVec =  maxK(i*j, i*10, 0);
+	// 			cout<<"Showing results for Max of x with "<<i*j<<" < x <= "<<i*10<<endl;
+	// 		}
+	// 		for(int i = 0; i < myVec.size()/2; ++i) {
+	// 			cout<<std::scientific<<"M"<<i<<" = "<<myVec[i]<<" with P = "<<std::fixed<<myVec[i+6]<<endl;
+	// 		}
+	// 	}
+	// }
 
 	// cout<<primetools::calculateThetaWithPsi(1000000, 9.995865974956329220330615330113e+05)<<endl;
 	// cout<<primetools::calculateThetaWithPsi(1000000000000)<<endl;
@@ -82,17 +82,17 @@ int main(int argc, char* argv[]) {
 	// base = lBound;
 	// while(isRunning) {
 	//
-	// 	p1 = clk.now();
-	// 	vector<mpfr::mpreal> myVec =  maxK(lBound, uBound, givenPsi);
-	// 	p2 = clk.now();
-	// 	cout<<"Showing results for Max of x with "<<lBound<<" < x <= "<<uBound<<endl;
-	// 	for(int i = 0; i < myVec.size()/2; ++i) {
-	// 		cout<<std::scientific<<"M"<<i<<" = "<<myVec[i]<<" with P = "<<std::fixed<<myVec[i+6]<<endl;
-			// if(myVec[i] > overallMax[i]){
-			// 	overallMax[i] = myVec[i];
-			// 	overallMax[i+5] = myVec[i+5];
-			// }
-		// }
+		p1 = clk.now();
+		vector<mpfr::mpreal> myVec = maxK(lBound, uBound);
+		p2 = clk.now();
+		cout<<"Showing results for Max of x with "<<lBound<<" < x <= "<<uBound<<endl;
+		for(int i = 0; i < myVec.size()/2; ++i) {
+			cout<<std::scientific<<"M"<<i<<" = "<<myVec[i]<<" with P = "<<std::fixed<<myVec[i+6]<<endl;
+			if(myVec[i] > overallMax[i]){
+				overallMax[i] = myVec[i];
+				overallMax[i+5] = myVec[i+5];
+			}
+		}
 		// lBound = uBound;
 		// uBound = base * multiplyer;
 		// uBound *= multiplyer;
