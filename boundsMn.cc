@@ -79,6 +79,8 @@ vector<vector<uint64_t>> getInterval(uint64_t bottom, uint64_t top) {
 }
 
 mpfr::mpreal getRunningSum(uint64_t upTo) {
+  if (upTo == 0)
+    return 0;
   primesieve::iterator it;
   it.skipto(0);
   uint64_t prime = it.next_prime();
