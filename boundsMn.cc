@@ -19,6 +19,13 @@ mpfr::mpreal getRunningSum(uint64_t);
 mpfr::mpreal getMax(mpfr::mpreal, mpfr::mpreal);
 
 int main() {
+  uint64_t lb = 0;
+  uint64_t ub = 0;
+  cout<<"Enter the lower bound ( > 0): ";
+  cin>>lb;
+  cout<<"Enter the upper bound (Keep interval size <= 10^9): ";
+  cin>>ub;
+
   mpfr::mpreal::set_default_prec(1024);
   std::cout << std::setprecision(12) << std::scientific;
   vector<mpfr::mpreal> max;
@@ -31,24 +38,38 @@ int main() {
   uint64_t bottom;
   uint64_t top = 0;
   uint64_t index = 0;
-  for (uint64_t i = 1; i <= 9; ++i) {
-    for (uint64_t j = 1; j <= 9; ++j) {
-      bottom = top;
-      top = j * pow(10, i);
-      max[index] = 0;
-      vector<vector<uint64_t>> interval = getInterval(bottom, top);
-      sum = getRunningSum(bottom);
-      for (int z = 0; z < interval[0].size(); ++z) {
-        tmp1 = A(interval[0][z], sum);
-        tmp2 = A(interval[1][z], sum);
-        sum += one/interval[1][z];
-        if (getMax(tmp1, tmp2) > max[index])
-          max[index] = getMax(tmp1, tmp2);
-      }
-      cout<<"Interval ("<<bottom<<","<<top<<") has a max of "<<max[index]<<endl;
-      index++;
+
+  max[index] = 0;
+
+  vector<vector<uint64_t>> interval = getInterval(lb, ub);
+  sum = getRunningSum(lb);
+  for (int z = 0; z < interval[0].size(); ++z) {
+    tmp1 = A(interval[0][z], sum);
+    tmp2 = A(interval[1][z], sum);
+    sum += one/interval[1][z];
+    if (getMax(tmp1, tmp2) > max[index])
+        max[index] = getMax(tmp1, tmp2);
     }
-  }
+      cout<<"Interval ("<<lb<<","<<ub<<") has a max of "<<max[index]<<endl;
+
+  // for (uint64_t i = 1; i <= 9; ++i) {
+  //   for (uint64_t j = 1; j <= 9; ++j) {
+  //     bottom = top;
+  //     top = j * pow(10, i);
+  //     max[index] = 0;
+  //     vector<vector<uint64_t>> interval = getInterval(bottom, top);
+  //     sum = getRunningSum(bottom);
+  //     for (int z = 0; z < interval[0].size(); ++z) {
+  //       tmp1 = A(interval[0][z], sum);
+  //       tmp2 = A(interval[1][z], sum);
+  //       sum += one/interval[1][z];
+  //       if (getMax(tmp1, tmp2) > max[index])
+  //         max[index] = getMax(tmp1, tmp2);
+  //     }
+  //     cout<<"Interval ("<<bottom<<","<<top<<") has a max of "<<max[index]<<endl;
+  //     index++;
+  //   }
+  // }
 return 0;
 }
 
