@@ -51,25 +51,7 @@ int main() {
         max[index] = getMax(tmp1, tmp2);
     }
       cout<<"Interval ("<<lb<<","<<ub<<") has a max of "<<max[index]<<endl;
-
-  // for (uint64_t i = 1; i <= 9; ++i) {
-  //   for (uint64_t j = 1; j <= 9; ++j) {
-  //     bottom = top;
-  //     top = j * pow(10, i);
-  //     max[index] = 0;
-  //     vector<vector<uint64_t>> interval = getInterval(bottom, top);
-  //     sum = getRunningSum(bottom);
-  //     for (int z = 0; z < interval[0].size(); ++z) {
-  //       tmp1 = A(interval[0][z], sum);
-  //       tmp2 = A(interval[1][z], sum);
-  //       sum += one/interval[1][z];
-  //       if (getMax(tmp1, tmp2) > max[index])
-  //         max[index] = getMax(tmp1, tmp2);
-  //     }
-  //     cout<<"Interval ("<<bottom<<","<<top<<") has a max of "<<max[index]<<endl;
-  //     index++;
-  //   }
-  // }
+  
 return 0;
 }
 
@@ -110,7 +92,6 @@ mpfr::mpreal getRunningSum(uint64_t upTo) {
   for (; prime <= upTo; prime = it.next_prime()) {
     // force it to use mpreal division
       sum += one/prime;
-    // cout<<prime<<endl;
   }
   return sum;
 }
