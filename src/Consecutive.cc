@@ -1,11 +1,28 @@
 #include "Consecutive.h"
 
+Consecutive::Consecutive()
+   : data{}, loc{}, mirageCliff{0}, mirageSize{0}
+{}
+
+#include <cstdlib>
 mpfr::mpreal& Consecutive::operator[] (const size_t a) {
-   return data[loc[a]];
+   if (a < firstX() || a >= size()) {
+      std::cout << "PSI(" << a << ") not in table (" << firstX() << ", " << size() << "]. Will now exit." << std::endl;
+      exit(-1);
+   }
+   return data[loc[a-mirageCliff]];
 }
 
 mpfr::mpreal Consecutive::operator[] (const size_t a) const {
-   return data[loc[a]];
+   if (a < firstX() || a >= size()) {
+      std::cout << "PSI(" << a << ") not in table (" << firstX() << ", " << size() << "]. Will now exit." << std::endl;
+      exit(-1);
+   }
+   return data[loc[a-mirageCliff]];
+}
+
+size_t Consecutive::getLoc(const size_t a) const {
+   return loc[a-mirageCliff];
 }
 
 mpfr::mpreal& Consecutive::getData (const size_t a) {
@@ -17,24 +34,36 @@ mpfr::mpreal Consecutive::getData (const size_t a) const {
 }
 
 size_t Consecutive::size() const {
-   return loc.size();
+  return mirageSize + mirageCliff;
+   //return loc.size();
 }
 
 size_t Consecutive::internalSize() const {
    return data.size();
 }
 
-bool Consecutive::self(const size_t a) const {
-   return isSelf[a];
-}
-
 void Consecutive::push_back(const mpfr::mpreal& a) {
-   isSelf.push_back(true);
    loc.push_back(data.size());
    data.push_back(a);
+   ++mirageSize;
 }
 
 void Consecutive::tie_back() {
-   isSelf.push_back(false);
    loc.push_back(data.size() - 1);
+   ++mirageSize;
+}
+
+void Consecutive::clear() {
+   data.clear();
+   loc.clear();
+   mirageCliff = 0;
+   mirageSize = 0;
+}
+
+size_t Consecutive::firstX() const {
+   return mirageCliff;
+}
+
+void Consecutive::setOffset(const long long a) {
+   mirageCliff = a;
 }

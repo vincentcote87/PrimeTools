@@ -5,6 +5,7 @@ std::map<uint64_t, mpfr::mpreal> psiMap;
 HigherPsi higherPsi;
 
 //1024, 309
+//Vincent (omits some digits): 192, 30
 void setupEnvironment() {
   mpfr::mpreal::set_default_prec(192);
   std::cout << std::setprecision(30) << std::scientific; //33-36 //15-17 //octuple: \log_10{2^237} = 71.344
@@ -36,6 +37,7 @@ mpfr::mpreal psi(uint64_t x) {
   return psiMap[x];
 }
 
+//I've run tino the case, so often, that one past the target is necessary, that I've added it directly in here.
 void expandPsiTable(long long target) {
    std::cout << "Now expanding the psiTable from " << psiTable.size() << " to " << target << "..." << std::flush;
    if (psiTable.size() == 0) { //note: this if statement fixes an issue that did not cause any issues (issue stems from walkK returning false for walkK(0))
@@ -49,6 +51,10 @@ void expandPsiTable(long long target) {
 	 psiTable.tie_back();
       }
    }
+   while (!higherPsi.walkK(psiTable.size())) {
+      psiTable.tie_back();
+   }
+   psiTable.push_back(higherPsi.sumThetas());
    std::cout << " unique values: " << psiTable.internalSize() << std::endl;
    psiMap.clear();
 }
@@ -82,6 +88,7 @@ mpfr::mpreal psi_work(uint64_t x) {
   std::cout << '4' << std::flush;
   #endif //VERBOSE_PSI
   s4 = fourthSummation(x, u);
+  //s4 = fourthSummation(x, u);
   #ifdef VERBOSE_PSI
   std::cout << "..done" << std::endl;
   #endif //VERBOSE_PSI

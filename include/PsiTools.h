@@ -32,6 +32,7 @@ void expandPsiTable(long long target);
 
 extern Consecutive psiTable;
 extern std::map<uint64_t, mpfr::mpreal> psiMap;
+extern HigherPsi higherPsi;
 
 #endif //PSITOOLS_H
 

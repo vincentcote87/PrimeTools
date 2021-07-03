@@ -30,16 +30,12 @@ int main(int argc, char* argv[]) {
   }
 
   std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> p1, p2;
-  for (long long i = 10; i <= 1000000000000000; i*=10) {
-  	 std::cout << i << std::endl;
-  	 x = i;
-     p1 = clk.now();
-     mpfr::mpreal temp = psi_work(x);
-     cout << temp << endl;
-     p2 = clk.now();
-     interpretClk(p2 - p1);
-     std::cout << "     Finished Execution" << std::endl;
-  }
-
+	std::cout << x << std::endl;
+	p1 = clk.now();
+	mpfr::mpreal temp = psi_work(x);
+	cout << temp << endl;
+	p2 = clk.now();
+	interpretClk(p2 - p1);
+	std::cout << "     Finished Execution" << std::endl;
   return 0;
 }
